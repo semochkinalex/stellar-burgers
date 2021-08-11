@@ -6,7 +6,7 @@ class AppHeaderItem extends React.Component {
     return (
         <ul className={headerStyles.item}>
             {this.props.icon} {/* Icon */}
-            <div className="m-2"></div>
+            <div className="m-1"></div>
             <p className={`text text_type_main-default`}>
                 {this.props.children}
             </p>
