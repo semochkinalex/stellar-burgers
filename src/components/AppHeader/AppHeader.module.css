@@ -1,0 +1,12 @@
+.header {
+    display: grid;
+    padding: 16px 10%;
+    place-items: center;
+    grid-template-columns: 2fr 2fr 2fr;
+
+}
+.list {
+    display: flex;
+    height: 100%;
+    width: fit-content;
+}
