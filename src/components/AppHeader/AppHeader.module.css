@@ -1,12 +1,15 @@
 .header {
     display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    justify-content: space-between;
     padding: 16px 10%;
     place-items: center;
-    grid-template-columns: 2fr 2fr 2fr;
     background-color: #1C1C21;
 }
 .list {
     display: flex;
     height: 100%;
     width: fit-content;
+    padding: 0;
+    justify-self: flex-start;
 }
