@@ -1,7 +1,48 @@
 .menu {
     margin: 40px 0 0;
+    width: fit-content;
+    max-width: 600px; /* Tab size */
 }
 .tab {
     margin: 20px 0 40px;
     display: flex;
 }
+.page {
+    overflow-y: scroll;
+    height: fit-content;
+    max-height: 75vh;
+}
+.list {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0 16px 0 16px;
+    margin: 24px 0 40px;
+    row-gap: 32px;
+    width: 100%;
+}
+.list:last-of-type{
+    margin-bottom: 0;
+}
+
+.page::-webkit-scrollbar {
+    width: 8px;
+}
+  
+  /* Track */
+.page::-webkit-scrollbar-track {
+    background: #2F2F37;
+  }
+   
+  /* Handle */
+.page::-webkit-scrollbar-thumb {
+    background: #8585AD;  
+  }
+  
+  /* Handle on hover */
+.page::-webkit-scrollbar-thumb:hover {
+    background: #8282da; 
+  }
