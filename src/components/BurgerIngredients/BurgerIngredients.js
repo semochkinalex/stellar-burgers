@@ -49,30 +49,44 @@ const BurgerIngredients = () => {
               </Tab>
             </div>
             <section className={styles.page}>
-              <h3 className="text text_type_main-medium">
-                Булки
-              </h3>
-              <ul className={styles.list}>
-                  {buns.map((bun, i) => {
-                    return <BurgerIngredient data={bun} key={i} />
-                  })}
-              </ul>
-              <h3 className="text text_type_main-medium">
-                Соусы
-              </h3>
-              <ul className={styles.list}>
-                  {sauce.map((sauce, i) => {
-                    return <BurgerIngredient data={sauce} key={i} />
-                  })}
-              </ul>
-              <h3 className="text text_type_main-medium">
-                Начинки
-              </h3>
-              <ul className={styles.list}>
-                  {main.map((main, i) => {
-                    return <BurgerIngredient data={main} key={i} />
-                  })}
-              </ul>
+              {selectedMeal === 'buns' && 
+              <>
+                <h3 className="text text_type_main-medium">
+                  Булки
+                </h3>
+                <ul className={styles.list}>
+                    {buns.map((bun, i) => {
+                      return <BurgerIngredient data={bun} key={i} />
+                    })}
+                </ul>
+              </>
+              }
+              {
+                selectedMeal === 'sauce' &&
+                <>
+                   <h3 className="text text_type_main-medium">
+                   Соусы
+                  </h3>
+                  <ul className={styles.list}>
+                     {sauce.map((sauce, i) => {
+                       return <BurgerIngredient data={sauce} key={i} />
+                     })}
+                  </ul>
+                </>
+              }
+              {
+                selectedMeal === 'main' && 
+              <>
+                <h3 className="text text_type_main-medium">
+                  Начинки
+                </h3>
+                <ul className={styles.list}>
+                    {main.map((main, i) => {
+                      return <BurgerIngredient data={main} key={i} />
+                    })}
+                </ul>
+              </>
+              }
             </section>
         </section>
     );
