@@ -1,10 +1,12 @@
 import data from '../../utils/data.js';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useRef, useState } from 'react';
 import styles from './BurgerIngredients.module.css';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
 
 const BurgerIngredients = () => {
+    const contentRef = useRef(null); // Скролл, когда меняем вкладку
+    
     const [buns, setBuns] = useState([]);
     const [main, setMain  ] = useState([]);
     const [sauce, setSauce] = useState([]);
@@ -32,6 +34,11 @@ const BurgerIngredients = () => {
       });
     }, []);
 
+    useEffect(() => {
+      if (!contentRef.current) return;
+      contentRef.current.scrollTop = 0;
+    }, [selectedMeal]);
+
     return (
         <section className={styles.menu}>
             <p className="text text_type_main-large">
@@ -48,45 +55,37 @@ const BurgerIngredients = () => {
                 Начинки
               </Tab>
             </div>
-            <section className={styles.page}>
-              {selectedMeal === 'buns' && 
-              <>
+            <section className={styles.page} ref={contentRef}>
+              <div className={styles.container} style={{order: `${selectedMeal === 'buns' ? -1 : 3}`}}>
                 <h3 className="text text_type_main-medium">
-                  Булки
+                    Булки
                 </h3>
                 <ul className={styles.list}>
                     {buns.map((bun, i) => {
                       return <BurgerIngredient data={bun} key={i} />
                     })}
                 </ul>
-              </>
-              }
-              {
-                selectedMeal === 'sauce' &&
-                <>
-                   <h3 className="text text_type_main-medium">
-                   Соусы
-                  </h3>
-                  <ul className={styles.list}>
-                     {sauce.map((sauce, i) => {
-                       return <BurgerIngredient data={sauce} key={i} />
-                     })}
-                  </ul>
-                </>
-              }
-              {
-                selectedMeal === 'main' && 
-              <>
-                <h3 className="text text_type_main-medium">
-                  Начинки
+              </div>
+              <div className={styles.container} style={{order: `${selectedMeal === 'sauce' ? -1 : 3}`}}>
+              <h3 className="text text_type_main-medium">
+                 Соусы
                 </h3>
+              <ul className={styles.list}>
+                 {sauce.map((sauce, i) => {
+                   return <BurgerIngredient data={sauce} key={i} />
+                 })}
+              </ul>
+              </div>
+              <div className={styles.container} style={{order: `${selectedMeal === 'main' ? -1 : 3}`}}>
+              <h3 className="text text_type_main-medium">
+                  Начинки
+              </h3>
                 <ul className={styles.list}>
                     {main.map((main, i) => {
                       return <BurgerIngredient data={main} key={i} />
                     })}
                 </ul>
-              </>
-              }
+              </div>
             </section>
         </section>
     );

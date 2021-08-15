@@ -9,8 +9,14 @@
 }
 .page {
     overflow-y: scroll; 
+    scroll-behavior: smooth;
     /* height: fit-content; */
     max-height: 75vh;
+    display: flex;
+    flex-direction: column;
+}
+.container {
+    margin: 24px 0 40px;
 }
 .list {
     box-sizing: border-box;
@@ -20,11 +26,10 @@
     justify-content: space-between;
     list-style-type: none;
     padding: 0 16px 0 16px;
-    margin: 24px 0 40px;
     row-gap: 32px;
     width: 100%;
 }
-.list:last-of-type{
+.container:last-of-type{
     margin-bottom: 0;
 }
 

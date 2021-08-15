@@ -30,7 +30,7 @@ const BurgerConstructor = ({data}) => {
             <CurrencyIcon type="primary" />
             <div className="m-4"></div>
             <Button type="primary" size="large">
-            Нажми на меня
+                Оформить заказ
             </Button>
         </div>
     </section>
