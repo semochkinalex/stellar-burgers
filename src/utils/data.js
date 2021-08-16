@@ -211,25 +211,39 @@ const data = [
     }
  ];
 
+
 const dataConstructor = [
    {
-     type: "top",
-     isLocked: true,
-     text: "Краторная булка N-200i (верх)",
-     price: 200,
-     thumbnail: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+      ...data[0],
+      isLocked: true,
    },
    {
-      text: "Краторная булка N-200i (середина)",
-      price: 200,
-      thumbnail: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
+      ...data[2],
+      isLocked: false,
     },
     {
-      type: "bottom",
+      ...data[3],
+      isLocked: false,
+    },
+    {
+      ...data[4],
+      isLocked: false,
+    },
+    {
+      ...data[5],
+      isLocked: false,
+    },
+    {
+      ...data[6],
+      isLocked: false,
+    },
+    {
+      ...data[7],
+      isLocked: false,
+    },
+    {
+      ...data[14],
       isLocked: true,
-      text: "Краторная булка N-200i (верх)",
-      price: 300,
-      thumbnail: "https://code.s3.yandex.net/react/code/bun-02-mobile.png",
     },
 ]
 

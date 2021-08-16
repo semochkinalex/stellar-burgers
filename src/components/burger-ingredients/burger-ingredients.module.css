@@ -1,11 +1,13 @@
 .menu {
     margin: 40px 0 0;
-    width: fit-content;
+    width: 100%;
     max-width: 600px; /* Tab size */
 }
 .tab {
+    width: 100%;
     margin: 20px 0 40px;
     display: flex;
+    overflow: hidden;
 }
 .page {
     overflow-y: scroll; 
@@ -14,6 +16,7 @@
     max-height: 75vh;
     display: flex;
     flex-direction: column;
+    width: 100%;
 }
 .container {
     margin: 24px 0 40px;
@@ -25,9 +28,10 @@
     flex-wrap: wrap;
     justify-content: space-between;
     list-style-type: none;
-    padding: 0 16px 0 16px;
+    padding: 0 16px 0 0;
     row-gap: 32px;
     width: 100%;
+    place-items: center;
 }
 .container:last-of-type{
     margin-bottom: 0;
@@ -50,4 +54,9 @@
   /* Handle on hover */
 .page::-webkit-scrollbar-thumb:hover {
     background: #8282da; 
-  }
+}
+@media screen and (max-width: 649px) {
+    .list {
+        justify-content: flex-start;
+    }
+} 

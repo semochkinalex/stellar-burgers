@@ -13,5 +13,11 @@
     margin-right: 5px;
 }
 .name {
+    max-width: 190px;
     text-align: center;
+}
+@media screen and (max-width: 649px) {
+    .name {
+        max-width: 130px;
+    }
 }

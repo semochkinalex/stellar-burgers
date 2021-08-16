@@ -1,11 +1,17 @@
-import data from '../../utils/data.js';
-import { useEffect, useReducer, useRef, useState } from 'react';
-import styles from './BurgerIngredients.module.css';
+import PropTypes from 'prop-types';
+import { useEffect, useRef, useState } from 'react';
+import styles from './burger-ingredients.module.css';
+import {FoodPropTypes} from '../../utils/prop-types.js';
+import useWindowSize from '../../utils/useWindowSize.js';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
 
-const BurgerIngredients = () => {
+const BurgerIngredients = ({data}) => {
     const contentRef = useRef(null); // Скролл, когда меняем вкладку
+
+    const {width, height} = useWindowSize();
+
+    const [mobileView, setMobileView] = useState(false);
     
     const [buns, setBuns] = useState([]);
     const [main, setMain  ] = useState([]);
@@ -35,13 +41,17 @@ const BurgerIngredients = () => {
     }, []);
 
     useEffect(() => {
+      setMobileView(width < 650);
+    }, [width, height])
+
+    useEffect(() => {
       if (!contentRef.current) return;
       contentRef.current.scrollTop = 0;
     }, [selectedMeal]);
 
     return (
         <section className={styles.menu}>
-            <p className="text text_type_main-large">
+            <p className={`text text_type_main-large ${styles.title}`}>
                 Соберите бургер
             </p>
             <div className={styles.tab}>
@@ -57,38 +67,42 @@ const BurgerIngredients = () => {
             </div>
             <section className={styles.page} ref={contentRef}>
               <div className={styles.container} style={{order: `${selectedMeal === 'buns' ? -1 : 3}`}}>
-                <h3 className="text text_type_main-medium">
+                <h3 className={`text text_type_main-medium ${styles.name}`}>
                     Булки
                 </h3>
                 <ul className={styles.list}>
                     {buns.map((bun, i) => {
-                      return <BurgerIngredient data={bun} key={i} />
+                      return <BurgerIngredient mobile={mobileView} data={bun} key={i} />
                     })}
                 </ul>
               </div>
               <div className={styles.container} style={{order: `${selectedMeal === 'sauce' ? -1 : 3}`}}>
-              <h3 className="text text_type_main-medium">
+              <h3 className={`text text_type_main-medium ${styles.name}`}>
                  Соусы
                 </h3>
               <ul className={styles.list}>
                  {sauce.map((sauce, i) => {
-                   return <BurgerIngredient data={sauce} key={i} />
+                   return <BurgerIngredient mobile={mobileView} data={sauce} key={i} />
                  })}
               </ul>
               </div>
               <div className={styles.container} style={{order: `${selectedMeal === 'main' ? -1 : 3}`}}>
-              <h3 className="text text_type_main-medium">
+              <h3 className={`text text_type_main-medium ${styles.name}`}>
                   Начинки
               </h3>
                 <ul className={styles.list}>
                     {main.map((main, i) => {
-                      return <BurgerIngredient data={main} key={i} />
+                      return <BurgerIngredient mobile={mobileView} data={main} key={i} />
                     })}
                 </ul>
               </div>
             </section>
         </section>
     );
+}
+
+BurgerIngredients.propTypes = {
+    data: PropTypes.arrayOf(FoodPropTypes),
 }
 
 export default BurgerIngredients;
