@@ -38,7 +38,7 @@ const BurgerIngredients = ({data}) => {
             break;
         }
       });
-    }, []);
+    }, [data]);
 
     useEffect(() => {
       setMobileView(width < 650);

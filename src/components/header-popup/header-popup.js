@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import styles from './header-popup.module.css';
 import closeIcon from '../../images/closeIcon.svg';
 import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
@@ -54,13 +55,13 @@ const HeaderPopup = ({isShown, togglePopup}) => {
                     </>
                 }
                 <li className={styles.element}>
-                    <img className={styles.icon} src={burgerIcon} />
+                    <img className={styles.icon} src={burgerIcon} alt="Constructor" />
                         <p className="text text_type_main-medium">
                             Конструктор
                         </p>
                 </li>
                 <li className={styles.element}>
-                    <img className={styles.icon} src={listIcon} />
+                    <img className={styles.icon} src={listIcon} alt="Orders" />
                     <p className="text text_type_main-medium">
                       Лента заказов
                     </p>
@@ -69,5 +70,11 @@ const HeaderPopup = ({isShown, togglePopup}) => {
         </nav>
     );
 }
+
+HeaderPopup.propTypes = {
+    isShown: PropTypes.bool.isRequired,
+    togglePopup: PropTypes.func.isRequired,
+}
+
 
 export default HeaderPopup;

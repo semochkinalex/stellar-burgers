@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import PropTypes from 'prop-types';
 import menuIcon from '../../images/menuIcon.svg';
 import headerStyles from './app-header.module.css';
 import mobileLogo from '../../images/mobileLogo.svg';
@@ -47,6 +48,10 @@ const AppHeader = ({togglePopup}) => {
         }
     </header>
     );
+}
+
+AppHeader.propTypes = {
+    togglePopup: PropTypes.func.isRequired,
 }
 
 export default AppHeader;

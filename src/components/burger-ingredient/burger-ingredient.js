@@ -1,4 +1,6 @@
+import PropTypes from 'prop-types';
 import styles from './burger-ingredient.module.css';
+import { FoodPropTypes } from '../../utils/prop-types';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const BurgerIngredient = ({data, mobile}) => {
@@ -20,5 +22,9 @@ const BurgerIngredient = ({data, mobile}) => {
     );
 }
 
+BurgerIngredient.propTypes = {
+    data: FoodPropTypes.isRequired,
+    mobile: PropTypes.bool.isRequired,
+}
 
 export default BurgerIngredient;

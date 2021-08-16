@@ -15,7 +15,7 @@ const BurgerConstructor = ({data}) => {
                 <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={first} />
                 <div className={styles.content}>
                     {data.map((card, index) => {
-                        if (index === 0 || index === data.length - 1) return;
+                        if (index === 0 || index === data.length - 1) return; // end
                         return <ConstructorItem card={card} key={index} />
                     })}
                 </div>
