@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from './AppHeaderProfile.module.css';
+import styles from './app-header-profile.module.css';
 import profileIcon from '../../images/profileIcon.svg';
 
 // import {ProfileIcon} from '@ya.praktikum/react-developer-burger-ui-components';

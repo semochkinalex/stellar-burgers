@@ -3,8 +3,8 @@ import menuIcon from '../../images/menuIcon.svg';
 import headerStyles from './app-header.module.css';
 import mobileLogo from '../../images/mobileLogo.svg';
 import useWindowSize from '../../utils/useWindowSize';
-import AppHeaderItem from '../AppHeaderItem/AppHeaderItem.js';
-import AppHeaderProfile from '../AppHeaderProfile/AppHeaderProfile.js';
+import AppHeaderItem from '../app-header-item/app-header-item.js';
+import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
 
 import { Logo, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 

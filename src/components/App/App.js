@@ -1,5 +1,5 @@
 import data from '../../utils/data.js';
-import AppHeader from '../AppHeader/app-header.js';
+import AppHeader from '../app-header/app-header.js';
 import HeaderPopup from '../header-popup/header-popup.js';
 import {dataConstructor} from '../../utils/data.js';
 import BurgerConstructor from '../burger-constructor/burger-constructor';

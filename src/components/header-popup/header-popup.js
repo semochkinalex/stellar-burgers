@@ -1,6 +1,6 @@
 import styles from './header-popup.module.css';
 import closeIcon from '../../images/closeIcon.svg';
-import AppHeaderProfile from '../AppHeaderProfile/AppHeaderProfile.js';
+import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
 import burgerIcon from '../../images/burgerIcon.svg';
 import listIcon from '../../images/listIcon.svg';
 

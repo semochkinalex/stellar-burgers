@@ -1,5 +1,5 @@
 import React from 'react';
-import headerStyles from './AppHeaderItem.module.css';
+import headerStyles from './app-header-item.module.css';
 
 class AppHeaderItem extends React.Component {
     render () {
