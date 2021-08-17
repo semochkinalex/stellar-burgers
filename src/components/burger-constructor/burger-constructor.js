@@ -1,10 +1,11 @@
+import {memo} from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
 import {FoodPropTypes} from '../../utils/prop-types.js';
 import ConstructorItem from '../constructor-item/constructor-item';
 import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-const BurgerConstructor = ({data}) => {
+const BurgerConstructor = memo(({data}) => {
     const sum = data.reduce((acc, el) => acc + el.price, 0);
     const first = data.length !== 0 ? data[0] : null;
     const last = data.length !== 0 ? (data.length !== 1 ? data[data.length - 1] : null)  : null;   
@@ -35,7 +36,7 @@ const BurgerConstructor = ({data}) => {
             </div>
         </section>
     );
-};
+});
 
 BurgerConstructor.propTypes = {
     data: PropTypes.arrayOf(FoodPropTypes),
