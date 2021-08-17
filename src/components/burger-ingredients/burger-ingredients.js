@@ -6,7 +6,7 @@ import useWindowSize from '../../utils/useWindowSize.js';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
 
-const BurgerIngredients = memo(({data}) => {
+const BurgerIngredients = memo(({ingredients}) => {
     const bunsRef = useRef(null);
     const sauceRef = useRef(null);
     const mainRef = useRef(null);
@@ -34,7 +34,7 @@ const BurgerIngredients = memo(({data}) => {
     // Сортировка из общей информации по категориям buns, main, sauce;
     useEffect(() => {
       if (buns.length || main.length || sauce.length) resetData();
-      data.forEach((food) => {
+      ingredients.forEach((food) => {
         switch (food.type) {
           case "bun":
             setBuns((arr) => [...arr, food]);
@@ -47,7 +47,7 @@ const BurgerIngredients = memo(({data}) => {
             break;
         }
       });
-    }, [data]);
+    }, [ingredients]);
 
     useEffect(() => {
       setMobileView(width < 650);
