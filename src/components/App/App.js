@@ -2,6 +2,7 @@ import api from '../../utils/api';
 import AppHeader from '../app-header/app-header.js';
 import {dataConstructor} from '../../utils/data.js';
 import HeaderPopup from '../header-popup/header-popup.js';
+import OrderDetails from '../order-details/order-details';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -11,7 +12,10 @@ import { useEffect, useState } from 'react';
 
 function App() {
 
-  const [isIngredientPopupOpen, setIsIngredientPopupOpen] = useState(true);
+  const [areOrderDetailsOpened, setAreOrderDetailsOpened] = useState(false); // Заменить на true, чтобы показать
+
+  const [selectedIngredient, setSelectedIngredient] = useState({});
+  const [isIngredientPopupOpen, setIsIngredientPopupOpen] = useState(false);
 
   const [ingredients, setIngredients] = useState([]);
   const [isHeaderPopupShown, setIsHeaderPopupShown] = useState(false);
@@ -22,6 +26,15 @@ function App() {
 
   const toggleIngredientPopup = () => {
     setIsIngredientPopupOpen(!isIngredientPopupOpen);
+  }
+
+  const toggleOrderDetails = () => {
+    setAreOrderDetailsOpened(!areOrderDetailsOpened);
+  }
+
+  const handleInspectIngredient = (ingredient) => {
+      setSelectedIngredient(ingredient);
+      setIsIngredientPopupOpen(true);
   }
 
   useEffect(() => {
@@ -37,12 +50,13 @@ function App() {
   return (
     <>
       {/* Popups */}
-      <IngredientDetails isOpen={isIngredientPopupOpen} togglePopup={toggleIngredientPopup} ingredient={ingredients[5]} />
+      <OrderDetails isOpen={areOrderDetailsOpened} togglePopup={toggleOrderDetails} />
+      <IngredientDetails isOpen={isIngredientPopupOpen} togglePopup={toggleIngredientPopup} ingredient={selectedIngredient} />
       <HeaderPopup isShown={isHeaderPopupShown} togglePopup={toggleHeaderPopup} />
       {/* Content */}
       <AppHeader togglePopup={toggleHeaderPopup} />
       <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredients} />
+        <BurgerIngredients ingredients={ingredients} selectIngredient={handleInspectIngredient} />
         <BurgerConstructor data={dataConstructor} />
       </main>
     </>

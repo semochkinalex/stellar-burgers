@@ -7,14 +7,14 @@ const ModalPopup = memo(({isOpen, togglePopup, children}) => {
     useEffect(() => {
         document.addEventListener('keydown', closeByKey);
         return () => {document.removeEventListener('keydown', closeByKey)};
-    }, [])
+    }, [children])
 
     const closeByKey = ({code}) => {
-        if (code === "Escape") return onClose();
+        if (code === "Escape") return isOpen && onClose();
     }
 
     const onClose = (e) => {
-        togglePopup();
+        isOpen && togglePopup();
     }
 
     return (

@@ -7,7 +7,7 @@ const IngredientDetails = ({isOpen, togglePopup, ingredient}) => {
         <ModalPopup isOpen={isOpen} togglePopup={togglePopup}>
             <p className="text text_type_main-large">Детали ингредиента</p>
             <img className={styles.image} src={ingredient.image_large} alt={ingredient.name} />
-            <p className="text text_type_main-medium">
+            <p className={`text text_type_main-medium ${styles.name}`}>
                 {ingredient.name}
             </p>
             <ul className={styles.list}>

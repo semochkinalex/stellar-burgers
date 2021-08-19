@@ -6,7 +6,7 @@ import useWindowSize from '../../utils/useWindowSize.js';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
 
-const BurgerIngredients = memo(({ingredients}) => {
+const BurgerIngredients = memo(({ingredients, selectIngredient}) => {
     const bunsRef = useRef(null);
     const sauceRef = useRef(null);
     const mainRef = useRef(null);
@@ -82,7 +82,7 @@ const BurgerIngredients = memo(({ingredients}) => {
                 </h3>
                 <ul className={styles.list}>
                     {buns.map((bun) => {
-                      return <BurgerIngredient mobile={mobileView} data={bun} key={bun._id} />
+                      return <BurgerIngredient mobile={mobileView} ingredient={bun} key={bun._id} onSelect={selectIngredient} />
                     })}
                 </ul>
               </div>
@@ -92,7 +92,7 @@ const BurgerIngredients = memo(({ingredients}) => {
                 </h3>
               <ul className={styles.list}>
                  {sauce.map((sauce) => {
-                   return <BurgerIngredient mobile={mobileView} data={sauce} key={sauce._id} />
+                   return <BurgerIngredient mobile={mobileView} ingredient={sauce} key={sauce._id} onSelect={selectIngredient} />
                  })}
               </ul>
               </div>
@@ -102,7 +102,7 @@ const BurgerIngredients = memo(({ingredients}) => {
               </h3>
                 <ul className={styles.list}>
                     {main.map((main) => {
-                      return <BurgerIngredient mobile={mobileView} data={main} key={main._id} />
+                      return <BurgerIngredient mobile={mobileView} ingredient={main} key={main._id} onSelect={selectIngredient} />
                     })}
                 </ul>
               </div>
