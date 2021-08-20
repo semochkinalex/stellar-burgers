@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styles from './constructor-item.module.css';
-import { FoodPropTypes } from '../../utils/prop-types';
+import { IngredientPropTypes } from '../../utils/prop-types';
 import {DragIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const ConstructorItem = ({card, type = undefined, style}) => {
@@ -20,7 +20,7 @@ const ConstructorItem = ({card, type = undefined, style}) => {
 }
 
 ConstructorItem.propTypes = {
-    card: FoodPropTypes.isRequired,
+    card: IngredientPropTypes.isRequired,
     type: PropTypes.string,
     style: PropTypes.object,
 };

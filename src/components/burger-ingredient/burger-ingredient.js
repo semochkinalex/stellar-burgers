@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import styles from './burger-ingredient.module.css';
-import { FoodPropTypes } from '../../utils/prop-types';
+import { IngredientPropTypes } from '../../utils/prop-types';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const BurgerIngredient = ({ingredient, mobile, onSelect}) => {
@@ -27,7 +27,7 @@ const BurgerIngredient = ({ingredient, mobile, onSelect}) => {
 }
 
 BurgerIngredient.propTypes = {
-    ingredient: FoodPropTypes.isRequired,
+    ingredient: IngredientPropTypes.isRequired,
     mobile: PropTypes.bool.isRequired,
 }
 

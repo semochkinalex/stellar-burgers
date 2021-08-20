@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import { useEffect, useRef, useState, memo, useCallback } from 'react';
 import styles from './burger-ingredients.module.css';
-import {FoodPropTypes} from '../../utils/prop-types.js';
+import {IngredientPropTypes} from '../../utils/prop-types.js';
 import useWindowSize from '../../utils/useWindowSize.js';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
@@ -112,7 +112,7 @@ const BurgerIngredients = memo(({ingredients, selectIngredient}) => {
 });
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(FoodPropTypes),
+    data: PropTypes.arrayOf(IngredientPropTypes),
 }
 
 export default BurgerIngredients;

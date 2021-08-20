@@ -14,8 +14,8 @@ function App() {
 
   const [areOrderDetailsOpened, setAreOrderDetailsOpened] = useState(false); // Заменить на true, чтобы показать
 
-  const [selectedIngredient, setSelectedIngredient] = useState({});
-  const [isIngredientPopupOpen, setIsIngredientPopupOpen] = useState(false);
+  const [selectedIngredient, setSelectedIngredient] = useState(null); // Здесь должен быть изначально объект, но propTypes ругается
+  const [isIngredientPopupOpen, setIsIngredientPopupOpen] = useState(true);
 
   const [ingredients, setIngredients] = useState([]);
   const [isHeaderPopupShown, setIsHeaderPopupShown] = useState(false);

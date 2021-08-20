@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import {memo, useEffect} from 'react';
 import styles from './modal-popup.module.css';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
@@ -30,5 +31,11 @@ const ModalPopup = memo(({isOpen, togglePopup, children}) => {
         </>
     );
 })
+
+ModalPopup.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    togglePopup: PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired,
+}
 
 export default ModalPopup;

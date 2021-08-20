@@ -1,7 +1,7 @@
 import {memo} from 'react';
 import PropTypes from 'prop-types';
 import styles from './burger-constructor.module.css';
-import {FoodPropTypes} from '../../utils/prop-types.js';
+import {IngredientPropTypes} from '../../utils/prop-types.js';
 import ConstructorItem from '../constructor-item/constructor-item';
 import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -39,7 +39,7 @@ const BurgerConstructor = memo(({data}) => {
 });
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(FoodPropTypes),
+    data: PropTypes.arrayOf(IngredientPropTypes),
 }
 
 export default BurgerConstructor;

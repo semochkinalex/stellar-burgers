@@ -1,7 +1,7 @@
+import PropTypes from 'prop-types';
 import styles from './order-details.module.css';
 import ModalPopup from '../modal-popup/modal-popup';
 import orderConfirmedIcon from '../../images/orderConfirmed.svg';
-// import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const OrderDetails = ({isOpen, togglePopup}) => {
     return (
@@ -19,6 +19,11 @@ const OrderDetails = ({isOpen, togglePopup}) => {
             </p>
         </ModalPopup>
     );
+}
+
+OrderDetails.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    togglePopup: PropTypes.func.isRequired,
 }
 
 export default OrderDetails;

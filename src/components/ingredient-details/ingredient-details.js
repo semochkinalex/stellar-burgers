@@ -1,5 +1,7 @@
+import PropTypes from 'prop-types';
 import ModalPopup from '../modal-popup/modal-popup';
 import styles from './ingredient-details.module.css';
+import { IngredientPropTypes } from '../../utils/prop-types'; 
 
 const IngredientDetails = ({isOpen, togglePopup, ingredient}) => {
     if (!ingredient) return null;
@@ -46,6 +48,12 @@ const IngredientDetails = ({isOpen, togglePopup, ingredient}) => {
             </ul>
         </ModalPopup>
     );
+}
+
+IngredientDetails.propTypes = {
+    isOpen: PropTypes.bool.isRequired,
+    togglePopup: PropTypes.func.isRequired,
+    ingredient: IngredientPropTypes,
 }
 
 export default IngredientDetails;
