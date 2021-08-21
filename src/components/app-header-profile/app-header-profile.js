@@ -10,8 +10,8 @@ const AppHeaderProfile = React.memo((props) =>
                 <p className={`${styles.text} text text_type_main-${props.text}`}>
                     Личный кабинет
                 </p>
-            </div>
-));
+            </div>)
+);
 
 AppHeaderProfile.propTypes = {
     text: PropTypes.string.isRequired,

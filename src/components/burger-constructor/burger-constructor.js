@@ -12,7 +12,7 @@ const BurgerConstructor = memo(({buns, ingredients, handleOrder}) => {
             <ul className={styles.list}>
                 <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={buns} />
                 <div className={styles.content}>
-                    {ingredients.map((card, index) => {
+                    {ingredients.map((card, index) => {     
                         return <ConstructorItem card={card} key={index} />
                     })}
                 </div>

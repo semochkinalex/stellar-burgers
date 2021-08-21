@@ -5,7 +5,7 @@ import headerStyles from './app-header-item.module.css';
 const AppHeaderItem = React.memo((props) => {
     return (
         <li className={headerStyles.item}>
-            {props.icon} {/* Icon */}
+            {props.icon}
             <div className="m-1"></div>
             <p className={`text text_type_main-default`}>
                 {props.children}
