@@ -1,12 +1,11 @@
 import PropTypes from 'prop-types';
-import ModalPopup from '../modal-popup/modal-popup';
 import styles from './ingredient-details.module.css';
 import { IngredientPropTypes } from '../../utils/prop-types'; 
 
 const IngredientDetails = ({isOpen, togglePopup, ingredient}) => {
     if (!ingredient) return null;
     return (
-        <ModalPopup isOpen={isOpen} togglePopup={togglePopup}>
+        <>
             <p className="text text_type_main-large">Детали ингредиента</p>
             <img className={styles.image} src={ingredient.image_large} alt={ingredient.name} />
             <p className={`text text_type_main-medium ${styles.name}`}>
@@ -46,13 +45,11 @@ const IngredientDetails = ({isOpen, togglePopup, ingredient}) => {
                 </p>
                 </li>
             </ul>
-        </ModalPopup>
+        </>
     );
 }
 
 IngredientDetails.propTypes = {
-    isOpen: PropTypes.bool.isRequired,
-    togglePopup: PropTypes.func.isRequired,
     ingredient: IngredientPropTypes,
 }
 

@@ -9,13 +9,14 @@ import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import styles from './App.module.css';
 import { useEffect, useState } from 'react';
+import ModalPopup from '../modal-popup/modal-popup';
 
 function App() {
 
-  const [areOrderDetailsOpened, setAreOrderDetailsOpened] = useState(false); // Заменить на true, чтобы показать
+  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = useState(false); // Заменить на true, чтобы показать
 
   const [selectedIngredient, setSelectedIngredient] = useState(null); // Здесь должен быть изначально объект, но propTypes ругается
-  const [isIngredientPopupOpen, setIsIngredientPopupOpen] = useState(true);
+  const [isIngredientPopupOpen, setIsIngredientPopupOpen] = useState(false);
 
   const [ingredients, setIngredients] = useState([]);
   const [isHeaderPopupShown, setIsHeaderPopupShown] = useState(false);
@@ -29,7 +30,7 @@ function App() {
   }
 
   const toggleOrderDetails = () => {
-    setAreOrderDetailsOpened(!areOrderDetailsOpened);
+    setIsOrderDetailsOpened(!isOrderDetailsOpened);
   }
 
   const handleInspectIngredient = (ingredient) => {
@@ -50,14 +51,21 @@ function App() {
   return (
     <>
       {/* Popups */}
-      <OrderDetails isOpen={areOrderDetailsOpened} togglePopup={toggleOrderDetails} />
-      <IngredientDetails isOpen={isIngredientPopupOpen} togglePopup={toggleIngredientPopup} ingredient={selectedIngredient} />
+      {isOrderDetailsOpened &&
+        <ModalPopup togglePopup={toggleOrderDetails}>
+          <OrderDetails />
+        </ModalPopup>
+      }
+      {isIngredientPopupOpen && 
+      <ModalPopup togglePopup={toggleIngredientPopup}>
+        <IngredientDetails ingredient={selectedIngredient} />
+      </ModalPopup>}
       <HeaderPopup isShown={isHeaderPopupShown} togglePopup={toggleHeaderPopup} />
       {/* Content */}
       <AppHeader togglePopup={toggleHeaderPopup} />
       <main className={styles.main}>
         <BurgerIngredients ingredients={ingredients} selectIngredient={handleInspectIngredient} />
-        <BurgerConstructor data={dataConstructor} />
+        <BurgerConstructor data={dataConstructor} handleOrder={toggleOrderDetails} />
       </main>
     </>
   );

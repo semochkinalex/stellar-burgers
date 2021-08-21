@@ -1,0 +1,18 @@
+.container {
+    margin: 24px 0 40px;
+}
+.list {
+    box-sizing: border-box;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    list-style-type: none;
+    padding: 0 16px 0 0;
+    row-gap: 32px;
+    height: 100%;
+    place-items: center;
+}
+.container:last-of-type{
+    margin-bottom: 0;
+}

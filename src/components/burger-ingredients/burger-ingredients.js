@@ -1,10 +1,10 @@
 import PropTypes from 'prop-types';
-import { useEffect, useRef, useState, memo, useCallback } from 'react';
+import { useEffect, useRef, useState, memo, useCallback, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import {IngredientPropTypes} from '../../utils/prop-types.js';
 import useWindowSize from '../../utils/useWindowSize.js';
 import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
-import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
+import IngredientsCategory from '../ingredients-category/ingredients-category';
 
 const BurgerIngredients = memo(({ingredients, selectIngredient}) => {
     const bunsRef = useRef(null);
@@ -15,39 +15,15 @@ const BurgerIngredients = memo(({ingredients, selectIngredient}) => {
 
     const [mobileView, setMobileView] = useState(false);
     
-    const [buns, setBuns] = useState([]);
-    const [main, setMain  ] = useState([]);
-    const [sauce, setSauce] = useState([]);
+    const buns = useMemo(() => ingredients.filter((item) => item.type === 'bun'), [ingredients]);
+    const main = useMemo(() => ingredients.filter((item) => item.type === 'main'), [ingredients]);
+    const sauce = useMemo(() => ingredients.filter((item) => item.type === 'sauce'), [ingredients]);
   
     const [selectedMeal, setSelectedMeal] = useState("buns");
 
     const handleMealChange = useCallback((evt) => {
         setSelectedMeal(evt);
     }, []);
-
-    const resetData = () => {
-      setBuns([]);
-      setMain([]);
-      setSauce([]);
-    }
-
-    // Сортировка из общей информации по категориям buns, main, sauce;
-    useEffect(() => {
-      if (buns.length || main.length || sauce.length) resetData();
-      ingredients.forEach((food) => {
-        switch (food.type) {
-          case "bun":
-            setBuns((arr) => [...arr, food]);
-            break;
-          case "main":
-            setMain((arr) => [...arr, food]);
-            break;
-          default:
-            setSauce((arr) => [...arr, food]);
-            break;
-        }
-      });
-    }, [ingredients]);
 
     useEffect(() => {
       setMobileView(width < 650);
@@ -76,36 +52,9 @@ const BurgerIngredients = memo(({ingredients, selectIngredient}) => {
               </Tab>
             </div>
             <section className={styles.page}>
-              <div className={styles.container} name="buns" ref={bunsRef}>
-                <h3 className={`text text_type_main-medium ${styles.name}`}>
-                    Булки
-                </h3>
-                <ul className={styles.list}>
-                    {buns.map((bun) => {
-                      return <BurgerIngredient mobile={mobileView} ingredient={bun} key={bun._id} onSelect={selectIngredient} />
-                    })}
-                </ul>
-              </div>
-              <div className={styles.container} name="sauce" ref={sauceRef}>
-              <h3 className={`text text_type_main-medium ${styles.name}`}>
-                 Соусы
-                </h3>
-              <ul className={styles.list}>
-                 {sauce.map((sauce) => {
-                   return <BurgerIngredient mobile={mobileView} ingredient={sauce} key={sauce._id} onSelect={selectIngredient} />
-                 })}
-              </ul>
-              </div>
-              <div className={styles.container} name="main" ref={mainRef}>
-              <h3 className={`text text_type_main-medium ${styles.name}`}>
-                  Начинки
-              </h3>
-                <ul className={styles.list}>
-                    {main.map((main) => {
-                      return <BurgerIngredient mobile={mobileView} ingredient={main} key={main._id} onSelect={selectIngredient} />
-                    })}
-                </ul>
-              </div>
+                <IngredientsCategory ingredients={buns} title="Булки" selectIngredient={selectIngredient} mobile={mobileView} ref={bunsRef} />
+                <IngredientsCategory ingredients={sauce} title="Соусы" selectIngredient={selectIngredient} mobile={mobileView} ref={sauceRef} />
+                <IngredientsCategory ingredients={main} title="Начинки" selectIngredient={selectIngredient} mobile={mobileView} ref={mainRef} />
             </section>
         </section>
     );

@@ -5,7 +5,7 @@ import {IngredientPropTypes} from '../../utils/prop-types.js';
 import ConstructorItem from '../constructor-item/constructor-item';
 import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-const BurgerConstructor = memo(({data}) => {
+const BurgerConstructor = memo(({data, handleOrder}) => {
     const sum = data.reduce((acc, el) => acc + el.price, 0);
     const first = data.length !== 0 ? data[0] : null;
     const last = data.length !== 0 ? (data.length !== 1 ? data[data.length - 1] : null)  : null;   
@@ -30,7 +30,7 @@ const BurgerConstructor = memo(({data}) => {
                 <div className="m-1"></div>
                 <CurrencyIcon type="primary" />
                 <div className="m-3"></div>
-                <Button type="primary" size="large">
+                <Button type="primary" size="large" onClick={handleOrder}>
                     Оформить заказ
                 </Button>
             </div>
