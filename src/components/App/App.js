@@ -2,7 +2,7 @@ import api from '../../utils/api';
 import { useEffect, useState } from 'react';
 import ModalPopup from '../modal-popup/modal-popup';
 import AppHeader from '../app-header/app-header.js';
-import {dataConstructor} from '../../utils/data.js';
+import {constructor} from '../../utils/data.js';
 import HeaderPopup from '../header-popup/header-popup.js';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -65,7 +65,7 @@ function App() {
       <AppHeader togglePopup={toggleHeaderPopup} />
       <main className={styles.main}>
         <BurgerIngredients ingredients={ingredients} selectIngredient={handleInspectIngredient} />
-        <BurgerConstructor data={dataConstructor} handleOrder={toggleOrderDetails} />
+        <BurgerConstructor buns={constructor.buns} ingredients={constructor.ingredients} handleOrder={toggleOrderDetails} />
       </main>
     </>
   );

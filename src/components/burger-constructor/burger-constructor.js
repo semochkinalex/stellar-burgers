@@ -5,23 +5,18 @@ import {IngredientPropTypes} from '../../utils/prop-types.js';
 import ConstructorItem from '../constructor-item/constructor-item';
 import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-const BurgerConstructor = memo(({data, handleOrder}) => {
-    const sum = data.reduce((acc, el) => acc + el.price, 0);
-    const first = data.length !== 0 ? data[0] : null;
-    const last = data.length !== 0 ? (data.length !== 1 ? data[data.length - 1] : null)  : null;   
-    
+const BurgerConstructor = memo(({buns, ingredients, handleOrder}) => {
+    const sum = ingredients.reduce((acc, el) => acc + el.price, 0) + (buns.price * 2);
     return (
         <section className={styles.constructor}>
             <ul className={styles.list}>
-                <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={first} />
+                <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={buns} />
                 <div className={styles.content}>
-                    {data.map((card, index) => {
-                        if (index === 0 || index === data.length - 1) return; // end
+                    {ingredients.map((card, index) => {
                         return <ConstructorItem card={card} key={index} />
                     })}
                 </div>
-                {/* Css first-of-type и last-of-type на все элементы с родительском блоком работают */}
-                <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={last} />
+                <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={buns} />
             </ul>
             <div className={styles.check}>
                 <p className="text text_type_main-large">
@@ -39,7 +34,8 @@ const BurgerConstructor = memo(({data, handleOrder}) => {
 });
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.arrayOf(IngredientPropTypes),
+    ingredients: PropTypes.arrayOf(IngredientPropTypes).isRequired,
+    buns: IngredientPropTypes.isRequired,
 }
 
 export default BurgerConstructor;
