@@ -27,8 +27,6 @@ const ModalPopup = memo(({togglePopup, children}) => {
                         {children}
                 </div>
             </ModalOverlay>
-            /* <section className={styles.popup + ' ' + `${isOpen && styles.open}`} onClick={onClose}>
-            </section> */
     );
 })
 

@@ -1,4 +1,6 @@
 import api from '../../utils/api';
+import { useEffect, useState } from 'react';
+import ModalPopup from '../modal-popup/modal-popup';
 import AppHeader from '../app-header/app-header.js';
 import {dataConstructor} from '../../utils/data.js';
 import HeaderPopup from '../header-popup/header-popup.js';
@@ -7,9 +9,7 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
-import styles from './App.module.css';
-import { useEffect, useState } from 'react';
-import ModalPopup from '../modal-popup/modal-popup';
+import styles from './app.module.css';
 
 function App() {
 
