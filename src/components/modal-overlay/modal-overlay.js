@@ -2,7 +2,7 @@ import { createPortal } from 'react-dom';
 import styles from './modal-overlay.module.css';
 import React from 'react';
 
-const root = document.getElementById('root');
+const modalSection = document.getElementById('modals');
 
 class ModalOverlay extends React.PureComponent {
     render () {
@@ -10,7 +10,7 @@ class ModalOverlay extends React.PureComponent {
             <section className={styles.popup} onClick={this.props.onClose}>
                 {this.props.children}
             </section>,
-            root
+            modalSection
         )
     }
 }
