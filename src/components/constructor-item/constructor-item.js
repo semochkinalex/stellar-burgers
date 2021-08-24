@@ -1,7 +1,8 @@
 import PropTypes from 'prop-types';
 import styles from './constructor-item.module.css';
 import { IngredientPropTypes } from '../../utils/prop-types';
-import {DragIcon, ConstructorElement} from '@ya.praktikum/react-developer-burger-ui-components';
+import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const ConstructorItem = ({card, type = undefined, style}) => {
     const {isLocked = false, name, price, image} = card;
@@ -13,7 +14,7 @@ const ConstructorItem = ({card, type = undefined, style}) => {
                         <DragIcon type="primary" />
                         <div className="m-1"></div>
                     </>}
-                    <ConstructorElement type={type} isLocked={isLocked} text={name} price={price} thumbnail={image} />
+                    <ConstructorElement type={type} isLocked={isLocked} text={name} price={price} thumbnail={image} /> {/* Создать свой констрактор елемент для мобилок */}
             </li>
         </>
     );

@@ -16,3 +16,8 @@
 .container:last-of-type{
     margin-bottom: 0;
 }
+@media screen and (max-width: 1400px) {
+    .list {
+        padding: 0;
+    }
+} 

@@ -3,7 +3,7 @@ import { useEffect, useRef, useState, memo, useCallback, useMemo } from 'react';
 import styles from './burger-ingredients.module.css';
 import {IngredientPropTypes} from '../../utils/prop-types.js';
 import useWindowSize from '../../utils/useWindowSize.js';
-import {Tab} from '@ya.praktikum/react-developer-burger-ui-components';
+import {Tab} from '../tab/tab';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 
 const BurgerIngredients = memo(({ingredients, selectIngredient}) => {

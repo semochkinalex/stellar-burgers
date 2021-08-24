@@ -8,14 +8,7 @@
     max-width: 1250px;
     max-height: 88vh;
     overflow: hidden;
-}
-
-@media screen and (max-width: 1400px) {
-    .main {
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
+    width: 90%;
 }
 
 @media screen and (max-height: 880px) {

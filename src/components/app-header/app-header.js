@@ -16,7 +16,7 @@ const AppHeader = ({togglePopup}) => {
     const [isMobile, setIsMobile] = useState(false);
 
     useEffect(() => {
-        setIsMobile(width <= 1300);
+        setIsMobile(width <= 1400);
     }, [width]);
     
     return (
