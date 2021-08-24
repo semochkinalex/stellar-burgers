@@ -212,11 +212,12 @@ const data = [
  ];
 
 
-const dataConstructor = [
-   {
+const constructor = {
+   buns: {
       ...data[0],
       isLocked: true,
    },
+   ingredients: [
    {
       ...data[2],
       isLocked: false,
@@ -241,11 +242,7 @@ const dataConstructor = [
       ...data[7],
       isLocked: false,
     },
-    {
-      ...data[14],
-      isLocked: true,
-    },
-]
+   ]
+}
 
-export {dataConstructor};
-export default data;
+export {constructor};
