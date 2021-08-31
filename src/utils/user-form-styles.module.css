@@ -1,0 +1,19 @@
+.text {
+    text-align: center;
+}
+.link {
+    color: var(--colors-interface-accent);
+	background: transparent;
+    transition: all .5s ease-in-out;
+}
+.link:hover {
+    color: var(--text-primary-color);
+	opacity: 0.9;
+}
+.link:active {
+    color: var(--text-primary-color);
+}
+.link[disabled] {
+    color: var(--text-inactive-color);
+	pointer-events: none;
+}

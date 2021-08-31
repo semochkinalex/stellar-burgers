@@ -1,0 +1,22 @@
+.profile {
+    width: 100%;
+    margin-top: 100px;
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    justify-content: space-between;
+}
+.navigation {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    max-width: 300px;
+}
+.hint {
+    margin-top: 50px;
+}
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 320px;
+}

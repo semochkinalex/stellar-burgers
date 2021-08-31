@@ -7,8 +7,9 @@
     justify-content: space-between;
     max-width: 1250px;
     max-height: 88vh;
-    overflow: hidden;
+    /* overflow: hidden; */
     width: 90%;
+    /* box-sizing: border-box; */
 }
 
 @media screen and (max-height: 880px) {

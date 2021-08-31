@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, {useMemo } from 'react';
 import PropTypes from 'prop-types';
 import menuIcon from '../../images/menuIcon.svg';
 import headerStyles from './app-header.module.css';
@@ -11,13 +11,9 @@ import { Logo, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger
 
 const AppHeader = ({togglePopup}) => {
 
-    const {width, height} = useWindowSize();
+    const {width} = useWindowSize();
 
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        setIsMobile(width <= 1400);
-    }, [width]);
+    const isMobile = useMemo(() => width < 1400, [width]);
     
     return (
     <header className={headerStyles.header}>

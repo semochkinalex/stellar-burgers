@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+// import PropTypes from 'prop-types';
 import styles from './order-details.module.css';
 import orderConfirmedIcon from '../../images/orderConfirmed.svg';
 
@@ -14,7 +14,7 @@ const OrderDetails = () => {
                 Ваш заказ начали готовить
             </p>
             <p className={`text text_type_main-default text_color_inactive ${styles.text}`}>
-            Дождитесь готовности на орбитальной станции
+                Дождитесь готовности на орбитальной станции
             </p>
         </>
     );

@@ -37,3 +37,18 @@
 .content::-webkit-scrollbar-thumb:hover {
     background: #8282da; 
 }
+@media screen and (max-height: 1024px) {
+    .content {
+        max-height: 380px;
+    }
+}
+@media screen and (max-height: 900px) {
+    .content {
+        max-height: 285px;
+    }
+}
+@media screen and (max-height: 830px) {
+    .content {
+        max-height: 190px;
+    }
+}

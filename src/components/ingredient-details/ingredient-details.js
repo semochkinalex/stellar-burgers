@@ -1,8 +1,7 @@
-import PropTypes from 'prop-types';
 import styles from './ingredient-details.module.css';
 import { IngredientPropTypes } from '../../utils/prop-types'; 
 
-const IngredientDetails = ({isOpen, togglePopup, ingredient}) => {
+const IngredientDetails = ({ingredient}) => {
     if (!ingredient) return null;
     return (
         <>

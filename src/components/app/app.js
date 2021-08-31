@@ -1,10 +1,15 @@
 import api from '../../utils/api';
+import SignIn from '../sign-in/sign-in';
+import SignUp from '../sign-up/sign-up';
 import { useEffect, useState } from 'react';
+import {constructor} from '../../utils/data.js';
 import ModalPopup from '../modal-popup/modal-popup';
 import AppHeader from '../app-header/app-header.js';
-import {constructor} from '../../utils/data.js';
 import HeaderPopup from '../header-popup/header-popup.js';
 import OrderDetails from '../order-details/order-details';
+import UserProfile from '../user-profile/user-profile';
+import ResetPassword from '../reset-password/reset-password';
+import ForgotPassword from '../forgot-password/forgot-password';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
@@ -64,8 +69,9 @@ function App() {
       {/* Content */}
       <AppHeader togglePopup={toggleHeaderPopup} />
       <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredients} selectIngredient={handleInspectIngredient} />
-        <BurgerConstructor buns={constructor.buns} ingredients={constructor.ingredients} handleOrder={toggleOrderDetails} />
+        {/* <BurgerIngredients ingredients={ingredients} selectIngredient={handleInspectIngredient} />
+        <BurgerConstructor buns={constructor.buns} ingredients={constructor.ingredients} handleOrder={toggleOrderDetails} /> */} 
+        <UserProfile />
       </main>
     </>
   );
