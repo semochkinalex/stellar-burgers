@@ -1,0 +1,24 @@
+#root {
+    position: relative;
+}
+.main {
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    max-width: 1250px;
+    max-height: 88vh;
+    overflow: hidden;
+    width: 90%;
+}
+
+@media screen and (max-height: 880px) {
+    .main {
+        max-height: 83vh;
+    }   
+}
+
+@media screen and (max-width: 660px) {
+    .main {
+        padding: 0;
+    }
+}

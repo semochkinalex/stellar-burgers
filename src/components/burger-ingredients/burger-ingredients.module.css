@@ -1,0 +1,43 @@
+.menu {
+    margin: 40px 0 0;
+    width: 100%;
+    max-width: 600px; /* Tab size */
+}
+.tab {
+    width: 100%;
+    margin: 20px 0 40px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+.page {
+    overflow-y: scroll; 
+    scroll-behavior: smooth;
+    height: fit-content;
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.page::-webkit-scrollbar {
+    width: 8px;
+}
+  
+  /* Track */
+.page::-webkit-scrollbar-track {
+    background: #2F2F37;
+  }
+   
+  /* Handle */
+.page::-webkit-scrollbar-thumb {
+    background: #8585AD;  
+  }
+  
+  /* Handle on hover */
+.page::-webkit-scrollbar-thumb:hover {
+    background: #8282da; 
+}
+@media screen and (max-width: 1400px) {
+    .menu {
+        max-width: 500px;
+    }
+} 

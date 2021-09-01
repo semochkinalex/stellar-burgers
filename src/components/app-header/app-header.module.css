@@ -1,0 +1,31 @@
+.header {
+    display: flex;
+    justify-content: center;
+    padding: 16px 0;
+    background-color: #1C1C21;
+}
+.content {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    justify-content: space-between;
+    place-items: center;
+    width: 90%;
+    max-width: 1250px;
+}
+.list {
+    display: flex;
+    height: 100%;
+    width: fit-content;
+    padding: 0;
+    justify-self: flex-start;
+}
+.menu  {
+    width: 40px;
+    height: 40px;
+}
+@media screen and (max-width: 1400px) {
+    .header {
+        justify-content: space-between;
+        padding: 16px 5%;
+    }
+}
