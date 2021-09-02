@@ -60,29 +60,6 @@ function App() {
     })
   }
 
-  // В доке нельзя добавить этот обработчик в ConstructorElement
-  const handleDeleteIngredient = (ingredient) => {
-    console.log(ingredient);
-    constructorDispatch({
-      type: "remove-main",
-      data: ingredient,
-    })
-  }
-
-
-  const handleSelectIngredient = (ingredient) => {
-    ingredient.type == 'bun' ?  
-    constructorDispatch({
-      type: "add-bun",
-      data: {...ingredient, isLocked: true},
-    })
-    :
-    constructorDispatch({
-      type: "add-main",
-      data: ingredient,
-    })
-  }
-
   useEffect(() => {
       api.getIngredients()
       .then(({data}) => {
@@ -111,8 +88,8 @@ function App() {
       <main className={styles.main}>
         <IngredientContext.Provider value={{ingredients}}>
           <ConstructorContext.Provider value={{constructorState, constructorDispatch}}>
-            <BurgerIngredients selectIngredient={handleSelectIngredient} />
-            <BurgerConstructor deleteIngredient={handleDeleteIngredient} order={order} />
+            <BurgerIngredients />
+            <BurgerConstructor order={order} />
           </ConstructorContext.Provider>
         </IngredientContext.Provider>
       </main>

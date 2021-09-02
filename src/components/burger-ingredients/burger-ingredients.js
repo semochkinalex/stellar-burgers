@@ -7,7 +7,7 @@ import IngredientContext from '../../contexts/ingredients-context';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import { useEffect, useRef, useState, memo, useCallback, useMemo, useContext } from 'react';
 
-const BurgerIngredients = memo(({selectIngredient}) => {
+const BurgerIngredients = memo(() => {
     const {ingredients} = useContext(IngredientContext);
     
     const bunsRef = useRef(null);
@@ -55,16 +55,12 @@ const BurgerIngredients = memo(({selectIngredient}) => {
               </Tab>
             </div>
             <section className={styles.page}>
-                <IngredientsCategory ingredients={buns} title="Булки" selectIngredient={selectIngredient} mobile={mobileView} ref={bunsRef} />
-                <IngredientsCategory ingredients={sauce} title="Соусы" selectIngredient={selectIngredient} mobile={mobileView} ref={sauceRef} />
-                <IngredientsCategory ingredients={main} title="Начинки" selectIngredient={selectIngredient} mobile={mobileView} ref={mainRef} />
+                <IngredientsCategory ingredients={buns} title="Булки" mobile={mobileView} ref={bunsRef} />
+                <IngredientsCategory ingredients={sauce} title="Соусы" mobile={mobileView} ref={sauceRef} />
+                <IngredientsCategory ingredients={main} title="Начинки" mobile={mobileView} ref={mainRef} />
             </section>
         </section>
     );
 });
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(IngredientPropTypes),
-}
 
 export default BurgerIngredients;

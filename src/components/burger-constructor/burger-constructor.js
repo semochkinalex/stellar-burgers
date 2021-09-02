@@ -1,12 +1,13 @@
 import PropTypes from 'prop-types';
 import {memo, useContext, useMemo} from 'react';
 import styles from './burger-constructor.module.css';
+import BurgerCheck from '../burger-check/burger-check';
 import ConstructorItem from '../constructor-item/constructor-item';
 import ConstructorContext from '../../contexts/constructor-context';
-import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-const BurgerConstructor = memo(({order, deleteIngredient}) => {
-    const {constructorState : {bun, ingredients}, constructorDispatch} = useContext(ConstructorContext);
+const BurgerConstructor = memo(({order}) => {
+    const {constructorState : {bun, ingredients}} = useContext(ConstructorContext);
+    const isBunValid = useMemo(() => Object.keys(bun).length, [bun]);
     const sum = useMemo(() => (ingredients.reduce((sum, ingredient) => sum + ingredient.price, 0) + (Object.keys(bun).length ? bun.price*2 : 0)), [bun, ingredients]);
 
     const handleOrder = () => {
@@ -16,28 +17,18 @@ const BurgerConstructor = memo(({order, deleteIngredient}) => {
 
     return (
         <section className={styles.constructor}>
-            {Object.keys(bun).length || ingredients.length ? (
+            {isBunValid || ingredients.length ? (
             <>
             <ul className={styles.list}>
-                {Object.keys(bun).length ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={bun} /> : ''}
+                {isBunValid ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={bun} /> : ''}
                 <div className={styles.content}>
                     {ingredients.map((card, index) => {     
-                        return <ConstructorItem card={card} key={index} onDelete={deleteIngredient} />
+                        return <ConstructorItem card={card} key={index} />
                     })}
                 </div>
-                {Object.keys(bun).length ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={bun} /> : ''}
+                {isBunValid ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={bun} /> : ''}
             </ul>
-            <div className={styles.check}>
-            <p className="text text_type_main-large">
-                {sum}    
-            </p>
-            <div className="m-1"></div>
-            <CurrencyIcon type="primary" />
-            <div className="m-3"></div>
-            <Button type="primary" size="large" onClick={handleOrder}>
-                Оформить заказ
-            </Button>
-            </div>
+            <BurgerCheck sum={sum} handleOrder={handleOrder} isValid={isBunValid} />
             </>)
             : 
             <p className={`text text_type_main-large ${styles.none}`}>
@@ -50,7 +41,6 @@ const BurgerConstructor = memo(({order, deleteIngredient}) => {
 
 BurgerConstructor.propTypes = {
     order: PropTypes.func.isRequired,
-    deleteIngredient: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructor;

@@ -4,11 +4,8 @@ import { IngredientPropTypes } from '../../utils/prop-types';
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const ConstructorItem = ({card, onDelete, type = undefined, style}) => {
+const ConstructorItem = ({card, type = undefined, style}) => {
     const {isLocked = false, name, price, image} = card;
-
-    const handleDelete = () => {
-    }
 
     return (
         <>
@@ -28,7 +25,6 @@ ConstructorItem.propTypes = {
     card: IngredientPropTypes.isRequired,
     type: PropTypes.string,
     style: PropTypes.object,
-    onDelete: PropTypes.func,
 };
 
 export default ConstructorItem;
