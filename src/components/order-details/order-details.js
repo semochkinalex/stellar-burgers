@@ -5,7 +5,7 @@ import orderConfirmedIcon from '../../images/orderConfirmed.svg';
 const OrderDetails = ({order: {number}}) => {
     return (
         <>
-            <p className={`text text_type_digits-large ${styles.id}`}>{number}</p>
+            <p className={`text text_type_digits-large ${styles.id}`}>{number || "Тут будет"}</p>
             <p className={`text text_type_main-medium ${styles.identification}`}>
                 идентификатор заказа
             </p>

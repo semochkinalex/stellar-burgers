@@ -15,17 +15,19 @@ import styles from './app.module.css';
 
 const constructorReducer = (state, {type, data}) => {
   switch (type) {
-    case "bun":
+    case "add-bun":
       return {...state, bun: data};
-    case "main":
-      return {...state, ingredients: data};
+    case "add-main":
+      return {...state, ingredients: [...state.ingredients, data]};
+    case "remove-main":
+      return {...state, ingredients: state.ingredient.filter((ingredient) => ingredient._id !== data.id)};
     default:
       throw new Error("Error in Reducer: " + type);
   }
 }
 
 function App() {
-  const [constructorState, constructorDispatch] = useReducer(constructorReducer, initialConstructorData);
+  const [constructorState, constructorDispatch] = useReducer(constructorReducer, {bun: {}, ingredients: []});
 
   const [currentOrder, setCurrentOrder] = useState({});
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = useState(false); // Заменить на true, чтобы показать
@@ -47,19 +49,37 @@ function App() {
     setIsOrderDetailsOpened(!isOrderDetailsOpened);
   }
 
-  const handleInspectIngredient = (ingredient) => {
-      setSelectedIngredient(ingredient);
-      setIsIngredientPopupOpen(true);
-  }
-
   const order = (ingredients) => {
     api.handleOrder(ingredients)
     .then(({name, order: {number}}) => {
+        toggleOrderDetails();
         setCurrentOrder({
           name,
           number,
         });
-        toggleOrderDetails();
+    })
+  }
+
+  // В доке нельзя добавить этот обработчик в ConstructorElement
+  const handleDeleteIngredient = (ingredient) => {
+    console.log(ingredient);
+    constructorDispatch({
+      type: "remove-main",
+      data: ingredient,
+    })
+  }
+
+
+  const handleSelectIngredient = (ingredient) => {
+    ingredient.type == 'bun' ?  
+    constructorDispatch({
+      type: "add-bun",
+      data: {...ingredient, isLocked: true},
+    })
+    :
+    constructorDispatch({
+      type: "add-main",
+      data: ingredient,
     })
   }
 
@@ -91,8 +111,8 @@ function App() {
       <main className={styles.main}>
         <IngredientContext.Provider value={{ingredients}}>
           <ConstructorContext.Provider value={{constructorState, constructorDispatch}}>
-            <BurgerIngredients selectIngredient={handleInspectIngredient} />
-            <BurgerConstructor order={order} />
+            <BurgerIngredients selectIngredient={handleSelectIngredient} />
+            <BurgerConstructor deleteIngredient={handleDeleteIngredient} order={order} />
           </ConstructorContext.Provider>
         </IngredientContext.Provider>
       </main>
