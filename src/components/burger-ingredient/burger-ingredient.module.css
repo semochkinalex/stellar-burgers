@@ -4,6 +4,9 @@
     align-items: center;
     max-width: 270px;
 }
+.card { 
+    cursor: pointer;
+}
 .price {
     display: flex;
     align-items: center;

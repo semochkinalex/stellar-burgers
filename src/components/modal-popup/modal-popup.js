@@ -3,8 +3,11 @@ import {memo, useEffect} from 'react';
 import styles from './modal-popup.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch } from 'react-redux';
 
-const ModalPopup = memo(({togglePopup, children}) => {   
+const ModalPopup = memo(({actionType, children}) => {
+    const dispatch = useDispatch();  
+    
     useEffect(() => {
         document.addEventListener('keydown', closeByKey);
         return () => {document.removeEventListener('keydown', closeByKey)};
@@ -14,8 +17,8 @@ const ModalPopup = memo(({togglePopup, children}) => {
         if (code === "Escape") return onClose();
     }
 
-    const onClose = (e) => {
-        togglePopup();
+    const onClose = () => {
+        dispatch({type: actionType});
     }
 
     return (
@@ -31,7 +34,6 @@ const ModalPopup = memo(({togglePopup, children}) => {
 })
 
 ModalPopup.propTypes = {
-    togglePopup: PropTypes.func.isRequired,
     children: PropTypes.node.isRequired,
 }
 

@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
 import styles from './order-details.module.css';
 import orderConfirmedIcon from '../../images/orderConfirmed.svg';
+import { useSelector } from 'react-redux';
 
-const OrderDetails = ({order: {number}}) => {
+const OrderDetails = () => {
+    const {number} = useSelector(store => store.popups.orderData);
+    
     return (
         <>
             <p className={`text text_type_digits-large ${styles.id}`}>{number || "Тут будет"}</p>
@@ -18,10 +21,6 @@ const OrderDetails = ({order: {number}}) => {
             </p>
         </>
     );
-}
-
-OrderDetails.propTypes = {
-    order: PropTypes.object.isRequired,
 }
 
 export default OrderDetails;

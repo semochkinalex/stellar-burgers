@@ -1,14 +1,25 @@
-import PropTypes from 'prop-types';
+import { useCallback } from 'react';
 import styles from './burger-ingredient.module.css';
+import { OPEN_INSPECTED_INGREDIENT } from '../../services/actions/popups-info';
 import { IngredientPropTypes } from '../../utils/prop-types';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector, useDispatch } from 'react-redux';
 
-const BurgerIngredient = ({ingredient, mobile, onSelect}) => {
+const BurgerIngredient = ({ingredient}) => {
+    const dispatch = useDispatch();
+
+    const {mobile} = useSelector(store => ({
+        mobile: store.config.isMobileIngredients,
+    }));
+
     const {name, price, image, image_mobile} = ingredient;
 
-    const handleSelect = () => {
-        onSelect(ingredient);
-    }
+    const handleSelect = useCallback(() => {
+        dispatch({
+            type: OPEN_INSPECTED_INGREDIENT,
+            ingredient: ingredient,
+        })
+    }, [dispatch]);
     
     return (
         <li className={styles.card} onClick={handleSelect}>
@@ -28,7 +39,6 @@ const BurgerIngredient = ({ingredient, mobile, onSelect}) => {
 
 BurgerIngredient.propTypes = {
     ingredient: IngredientPropTypes.isRequired,
-    mobile: PropTypes.bool.isRequired,
 }
 
 export default BurgerIngredient;

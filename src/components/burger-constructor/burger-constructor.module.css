@@ -18,6 +18,9 @@
 .none {
     text-align: center;
     margin-top: 45%;
+    max-width: 100%;
+    box-sizing: border-box;
+    padding: 0 10%;
 }
 .content::-webkit-scrollbar {
     width: 8px;

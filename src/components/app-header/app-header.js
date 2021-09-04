@@ -1,28 +1,24 @@
-import { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import menuIcon from '../../images/menuIcon.svg';
 import headerStyles from './app-header.module.css';
 import mobileLogo from '../../images/mobileLogo.svg';
-import useWindowSize from '../../utils/useWindowSize';
 import AppHeaderItem from '../app-header-item/app-header-item.js';
 import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
+import { OPEN_HEADER_POPUP } from '../../services/actions/popups-info';
 
 import { Logo, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
 
-const AppHeader = ({togglePopup}) => {
+const AppHeader = () => {
+    const dispatch = useDispatch();
+    const isMobileHeader = useSelector(store => store.config.isMobileHeader);
 
-    const {width} = useWindowSize();
-
-    const [isMobile, setIsMobile] = useState(false);
-
-    useEffect(() => {
-        setIsMobile(width <= 1400);
-    }, [width]);
+    const togglePopup = () =>  dispatch({type: OPEN_HEADER_POPUP})
     
     return (
     <header className={headerStyles.header}>
         {
-            !isMobile ?
+            !isMobileHeader ?
                 <nav className={headerStyles.content}>
                     <ul className={headerStyles.list}>
                             <AppHeaderItem icon={<BurgerIcon type="primary" />}>
@@ -48,10 +44,6 @@ const AppHeader = ({togglePopup}) => {
         }
     </header>
     );
-}
-
-AppHeader.propTypes = {
-    togglePopup: PropTypes.func.isRequired,
 }
 
 export default AppHeader;

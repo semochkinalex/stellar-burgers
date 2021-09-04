@@ -3,8 +3,14 @@ import PropTypes from 'prop-types';
 import styles from './ingredients-category.module.css';
 import { IngredientPropTypes } from '../../utils/prop-types';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
+import { useSelector } from 'react-redux';
 
-const IngredientsCategory = React.forwardRef(({ingredients, title, mobile, inspectIngredient}, ref) => {
+const IngredientsCategory = React.forwardRef(({title, mobile, inspectIngredient}, ref) => {
+
+    const {ingredients} = useSelector((store) => ({
+      ingredients: title === "Булки" ? store.ingredients.buns : title === "Соусы" ? store.ingredients.sauces : store.ingredients.mains,
+    }));
+
     const selectIngredient = (ingredient) => {
       inspectIngredient(ingredient);
     }
@@ -16,16 +22,14 @@ const IngredientsCategory = React.forwardRef(({ingredients, title, mobile, inspe
             </h3>
             <ul className={styles.list}>
                   {ingredients.map((ingredient) => {
-                    return <BurgerIngredient mobile={mobile} ingredient={ingredient} key={ingredient._id} onSelect={selectIngredient} />
+                    return <BurgerIngredient ingredient={ingredient} key={ingredient._id} onSelect={selectIngredient} />
                    })}
             </ul>
         </div>)
 })
 
 IngredientsCategory.propTypes = {
-    ingredients: PropTypes.arrayOf(IngredientPropTypes).isRequired,
     title: PropTypes.string.isRequired,
-    mobile: PropTypes.bool.isRequired,
 };
 
 export default IngredientsCategory;
