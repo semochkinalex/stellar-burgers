@@ -1,25 +1,40 @@
 import api from '../../utils/api';
-import { useEffect, useState } from 'react';
+import { useEffect, useReducer, useState } from 'react';
 import ModalPopup from '../modal-popup/modal-popup';
 import AppHeader from '../app-header/app-header.js';
-import {constructor} from '../../utils/data.js';
 import HeaderPopup from '../header-popup/header-popup.js';
 import OrderDetails from '../order-details/order-details';
+import IngredientContext from '../../contexts/ingredients-context';
+import ConstructorContext from '../../contexts/constructor-context';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 
 import styles from './app.module.css';
 
+const constructorReducer = (state, {type, data}) => {
+  switch (type) {
+    case "add-bun":
+      return {...state, bun: data};
+    case "add-main":
+      return {...state, ingredients: [...state.ingredients, data]};
+    case "remove-main":
+      return {...state, ingredients: state.ingredient.filter((ingredient) => ingredient._id !== data.id)};
+    default:
+      throw new Error("Error in Reducer: " + type);
+  }
+}
+
 function App() {
+  const [constructorState, constructorDispatch] = useReducer(constructorReducer, {bun: {}, ingredients: []});
 
+  const [currentOrder, setCurrentOrder] = useState({});
   const [isOrderDetailsOpened, setIsOrderDetailsOpened] = useState(false); // Заменить на true, чтобы показать
-
   const [selectedIngredient, setSelectedIngredient] = useState(null); // Здесь должен быть изначально объект, но propTypes ругается
   const [isIngredientPopupOpen, setIsIngredientPopupOpen] = useState(false);
+  const [isHeaderPopupShown, setIsHeaderPopupShown] = useState(false);
 
   const [ingredients, setIngredients] = useState([]);
-  const [isHeaderPopupShown, setIsHeaderPopupShown] = useState(false);
 
   const toggleHeaderPopup = () => {
     setIsHeaderPopupShown(!isHeaderPopupShown);
@@ -33,9 +48,23 @@ function App() {
     setIsOrderDetailsOpened(!isOrderDetailsOpened);
   }
 
-  const handleInspectIngredient = (ingredient) => {
-      setSelectedIngredient(ingredient);
-      setIsIngredientPopupOpen(true);
+  const inspectIngredient = (ingredient) => {
+    toggleIngredientPopup();
+    setSelectedIngredient(ingredient);
+  }
+
+  const order = (ingredients) => {
+    api.handleOrder(ingredients)
+    .then(({name, order: {number}}) => {
+        toggleOrderDetails();
+        setCurrentOrder({
+          name,
+          number,
+        });
+    })
+    .catch((err) => {
+      console.log("Произошла ошибка при создании заказа");
+    })
   }
 
   useEffect(() => {
@@ -53,7 +82,7 @@ function App() {
       {/* Popups */}
       {isOrderDetailsOpened &&
         <ModalPopup togglePopup={toggleOrderDetails}>
-          <OrderDetails />
+          <OrderDetails order={currentOrder} />
         </ModalPopup>
       }
       {isIngredientPopupOpen && 
@@ -64,8 +93,12 @@ function App() {
       {/* Content */}
       <AppHeader togglePopup={toggleHeaderPopup} />
       <main className={styles.main}>
-        <BurgerIngredients ingredients={ingredients} selectIngredient={handleInspectIngredient} />
-        <BurgerConstructor buns={constructor.buns} ingredients={constructor.ingredients} handleOrder={toggleOrderDetails} />
+        <IngredientContext.Provider value={{ingredients}}>
+          <ConstructorContext.Provider value={{constructorState, constructorDispatch}}>
+            <BurgerIngredients inspectIngredient={inspectIngredient} />
+            <BurgerConstructor order={order} />
+          </ConstructorContext.Provider>
+        </IngredientContext.Provider>
       </main>
     </>
   );

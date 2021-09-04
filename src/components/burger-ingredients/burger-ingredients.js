@@ -1,12 +1,15 @@
-import PropTypes from 'prop-types';
-import { useEffect, useRef, useState, memo, useCallback, useMemo } from 'react';
-import styles from './burger-ingredients.module.css';
-import {IngredientPropTypes} from '../../utils/prop-types.js';
-import useWindowSize from '../../utils/useWindowSize.js';
 import {Tab} from '../tab/tab';
+import PropTypes from 'prop-types';
+import styles from './burger-ingredients.module.css';
+import useWindowSize from '../../utils/useWindowSize.js';
+import {IngredientPropTypes} from '../../utils/prop-types.js';
+import IngredientContext from '../../contexts/ingredients-context';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
+import { useEffect, useRef, useState, memo, useCallback, useMemo, useContext } from 'react';
 
-const BurgerIngredients = memo(({ingredients, selectIngredient}) => {
+const BurgerIngredients = memo(({inspectIngredient}) => {
+    const {ingredients} = useContext(IngredientContext);
+    
     const bunsRef = useRef(null);
     const sauceRef = useRef(null);
     const mainRef = useRef(null);
@@ -52,16 +55,12 @@ const BurgerIngredients = memo(({ingredients, selectIngredient}) => {
               </Tab>
             </div>
             <section className={styles.page}>
-                <IngredientsCategory ingredients={buns} title="Булки" selectIngredient={selectIngredient} mobile={mobileView} ref={bunsRef} />
-                <IngredientsCategory ingredients={sauce} title="Соусы" selectIngredient={selectIngredient} mobile={mobileView} ref={sauceRef} />
-                <IngredientsCategory ingredients={main} title="Начинки" selectIngredient={selectIngredient} mobile={mobileView} ref={mainRef} />
+                <IngredientsCategory ingredients={buns} title="Булки" inspectIngredient={inspectIngredient} mobile={mobileView} ref={bunsRef} />
+                <IngredientsCategory ingredients={sauce} title="Соусы"  inspectIngredient={inspectIngredient} mobile={mobileView} ref={sauceRef} />
+                <IngredientsCategory ingredients={main} title="Начинки"  inspectIngredient={inspectIngredient} mobile={mobileView} ref={mainRef} />
             </section>
         </section>
     );
 });
-
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(IngredientPropTypes),
-}
 
 export default BurgerIngredients;

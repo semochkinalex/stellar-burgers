@@ -6,6 +6,7 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 
 const ConstructorItem = ({card, type = undefined, style}) => {
     const {isLocked = false, name, price, image} = card;
+
     return (
         <>
             <li className={styles.card} style={style}>

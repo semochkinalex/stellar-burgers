@@ -1,41 +1,46 @@
-import {memo} from 'react';
 import PropTypes from 'prop-types';
+import {memo, useContext, useMemo} from 'react';
 import styles from './burger-constructor.module.css';
-import {IngredientPropTypes} from '../../utils/prop-types.js';
+import BurgerCheck from '../burger-check/burger-check';
 import ConstructorItem from '../constructor-item/constructor-item';
-import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import ConstructorContext from '../../contexts/constructor-context';
 
-const BurgerConstructor = memo(({buns, ingredients, handleOrder}) => {
-    const sum = ingredients.reduce((acc, el) => acc + el.price, 0) + (buns.price * 2);
+const BurgerConstructor = memo(({order}) => {
+    const {constructorState : {bun, ingredients}} = useContext(ConstructorContext);
+    const isBunValid = useMemo(() => Boolean(Object.keys(bun).length), [bun]);
+    const sum = useMemo(() => (ingredients.reduce((sum, ingredient) => sum + ingredient.price, 0) + (Object.keys(bun).length ? bun.price*2 : 0)), [bun, ingredients]);
+
+    const handleOrder = () => {
+        const array = ingredients.concat([bun, bun]);
+        order(array.map((food) => food._id));
+    }
+
     return (
         <section className={styles.constructor}>
+            {isBunValid || ingredients.length ? (
+            <>
             <ul className={styles.list}>
-                <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={buns} />
+                {isBunValid ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={bun} /> : ''}
                 <div className={styles.content}>
                     {ingredients.map((card, index) => {     
                         return <ConstructorItem card={card} key={index} />
                     })}
                 </div>
-                <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={buns} />
+                {isBunValid ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={bun} /> : ''}
             </ul>
-            <div className={styles.check}>
-                <p className="text text_type_main-large">
-                    {sum}    
-                </p>
-                <div className="m-1"></div>
-                <CurrencyIcon type="primary" />
-                <div className="m-3"></div>
-                <Button type="primary" size="large" onClick={handleOrder}>
-                    Оформить заказ
-                </Button>
-            </div>
+            <BurgerCheck sum={sum} handleOrder={handleOrder} isValid={isBunValid} />
+            </>)
+            : 
+            <p className={`text text_type_main-large ${styles.none}`}>
+                Выбирайте ингредиенты и составьте себе бургер
+            </p>
+            }
         </section>
     );
 });
 
 BurgerConstructor.propTypes = {
-    ingredients: PropTypes.arrayOf(IngredientPropTypes).isRequired,
-    buns: IngredientPropTypes.isRequired,
+    order: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructor;

@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import styles from './order-details.module.css';
 import orderConfirmedIcon from '../../images/orderConfirmed.svg';
 
-const OrderDetails = () => {
+const OrderDetails = ({order: {number}}) => {
     return (
         <>
-            <p className={`text text_type_digits-large ${styles.id}`}>034536</p>
+            <p className={`text text_type_digits-large ${styles.id}`}>{number || "Тут будет"}</p>
             <p className={`text text_type_main-medium ${styles.identification}`}>
                 идентификатор заказа
             </p>
@@ -18,6 +18,10 @@ const OrderDetails = () => {
             </p>
         </>
     );
+}
+
+OrderDetails.propTypes = {
+    order: PropTypes.object.isRequired,
 }
 
 export default OrderDetails;

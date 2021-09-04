@@ -15,9 +15,9 @@
     padding-right: 8px;
     max-height: 475px;
 }
-.check {
-    display: flex;
-    align-items: center;
+.none {
+    text-align: center;
+    margin-top: 45%;
 }
 .content::-webkit-scrollbar {
     width: 8px;
