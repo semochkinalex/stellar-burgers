@@ -1,8 +1,7 @@
-import React, {createContext, useContext} from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ingredients-category.module.css';
 import { IngredientPropTypes } from '../../utils/prop-types';
-import ConstructorContext from '../../contexts/constructor-context';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
 
 const IngredientsCategory = React.forwardRef(({ingredients, title, mobile, inspectIngredient}, ref) => {

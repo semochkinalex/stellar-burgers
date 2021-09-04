@@ -2,7 +2,6 @@ import api from '../../utils/api';
 import { useEffect, useReducer, useState } from 'react';
 import ModalPopup from '../modal-popup/modal-popup';
 import AppHeader from '../app-header/app-header.js';
-import {initialConstructorData} from '../../utils/data.js';
 import HeaderPopup from '../header-popup/header-popup.js';
 import OrderDetails from '../order-details/order-details';
 import IngredientContext from '../../contexts/ingredients-context';
