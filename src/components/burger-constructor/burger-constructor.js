@@ -7,7 +7,7 @@ import ConstructorContext from '../../contexts/constructor-context';
 
 const BurgerConstructor = memo(({order}) => {
     const {constructorState : {bun, ingredients}} = useContext(ConstructorContext);
-    const isBunValid = useMemo(() => Object.keys(bun).length, [bun]);
+    const isBunValid = useMemo(() => Boolean(Object.keys(bun).length), [bun]);
     const sum = useMemo(() => (ingredients.reduce((sum, ingredient) => sum + ingredient.price, 0) + (Object.keys(bun).length ? bun.price*2 : 0)), [bun, ingredients]);
 
     const handleOrder = () => {

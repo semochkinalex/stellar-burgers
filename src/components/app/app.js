@@ -49,6 +49,11 @@ function App() {
     setIsOrderDetailsOpened(!isOrderDetailsOpened);
   }
 
+  const inspectIngredient = (ingredient) => {
+    toggleIngredientPopup();
+    setSelectedIngredient(ingredient);
+  }
+
   const order = (ingredients) => {
     api.handleOrder(ingredients)
     .then(({name, order: {number}}) => {
@@ -57,6 +62,9 @@ function App() {
           name,
           number,
         });
+    })
+    .catch((err) => {
+      console.log("Произошла ошибка при создании заказа");
     })
   }
 
@@ -88,7 +96,7 @@ function App() {
       <main className={styles.main}>
         <IngredientContext.Provider value={{ingredients}}>
           <ConstructorContext.Provider value={{constructorState, constructorDispatch}}>
-            <BurgerIngredients />
+            <BurgerIngredients inspectIngredient={inspectIngredient} />
             <BurgerConstructor order={order} />
           </ConstructorContext.Provider>
         </IngredientContext.Provider>

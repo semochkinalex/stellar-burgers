@@ -5,20 +5,9 @@ import { IngredientPropTypes } from '../../utils/prop-types';
 import ConstructorContext from '../../contexts/constructor-context';
 import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
 
-const IngredientsCategory = React.forwardRef(({ingredients, title, mobile}, ref) => {
-    const {constructorDispatch} = useContext(ConstructorContext);
-
+const IngredientsCategory = React.forwardRef(({ingredients, title, mobile, inspectIngredient}, ref) => {
     const selectIngredient = (ingredient) => {
-        ingredient.type == 'bun' ?  
-        constructorDispatch({
-          type: "add-bun",
-          data: {...ingredient, isLocked: true},
-        })
-        :
-        constructorDispatch({
-          type: "add-main",
-          data: ingredient,
-        })
+      inspectIngredient(ingredient);
     }
 
     return (
