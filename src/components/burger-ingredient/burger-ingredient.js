@@ -4,6 +4,7 @@ import { OPEN_INSPECTED_INGREDIENT } from '../../services/actions/popups-info';
 import { IngredientPropTypes } from '../../utils/prop-types';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
+import { CHANGE_BURGER_BUN, ADD_BURGER_INDREDIENT } from '../../services/actions/constructor';
 
 const BurgerIngredient = ({ingredient}) => {
     const dispatch = useDispatch();
@@ -20,9 +21,16 @@ const BurgerIngredient = ({ingredient}) => {
             ingredient: ingredient,
         })
     }, [dispatch]);
+
+    const addIngredient = useCallback(() => {
+        dispatch({
+            type: ingredient.type === 'bun' ? CHANGE_BURGER_BUN : ADD_BURGER_INDREDIENT,
+            ingredient: ingredient,
+        })
+    }, [dispatch]);
     
     return (
-        <li className={styles.card} onClick={handleSelect}>
+        <li className={styles.card} onClick={addIngredient}> {/* onClick={addIngredient} */}
             <img className={styles.image} alt={`${name}`} src={mobile ? image_mobile : image} />
             <div className={styles.price}>
                 <span className={`text text_type_main-medium ${styles.money}`}>

@@ -1,9 +1,10 @@
 import {Tab} from '../tab/tab';
 import styles from './burger-ingredients.module.css';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
-import { useEffect, useRef, useState, memo, useCallback, useMemo, useContext } from 'react';
+import { useEffect, useRef, useState, memo, useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 
-const BurgerIngredients = memo(({inspectIngredient}) => {
+const BurgerIngredients = memo(() => {
     const bunsRef = useRef(null);
     const sauceRef = useRef(null);
     const mainRef = useRef(null);
@@ -37,9 +38,9 @@ const BurgerIngredients = memo(({inspectIngredient}) => {
               </Tab>
             </div>
             <section className={styles.page}>
-                <IngredientsCategory title="Булки" inspectIngredient={inspectIngredient} ref={bunsRef} />
-                <IngredientsCategory title="Соусы"  inspectIngredient={inspectIngredient} ref={sauceRef} />
-                <IngredientsCategory title="Начинки"  inspectIngredient={inspectIngredient} ref={mainRef} />
+                <IngredientsCategory title="Булки" ref={bunsRef} />
+                <IngredientsCategory title="Соусы" ref={sauceRef} />
+                <IngredientsCategory title="Начинки" ref={mainRef} />
             </section>
         </section>
     );

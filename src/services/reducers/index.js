@@ -3,6 +3,7 @@ import { SWITCH_IS_MOBILE_VALUE } from '../actions/index';
 
 import { popupsReducer } from './popups-info';
 import { ingredientReducer } from './ingredients-reducer';
+import { constructorReducer } from './constructor-reducer';
 
 const initialState = {
     isMobileHeader: false,
@@ -22,5 +23,6 @@ const globalConfig = (state = initialState, action) => {
 export const rootReducer = combineReducers({
     ingredients: ingredientReducer,
     config: globalConfig,
+    burger: constructorReducer,
     popups: popupsReducer,
 });

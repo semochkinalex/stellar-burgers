@@ -33,7 +33,7 @@ export const popupsReducer = (state = initialState, action) => {
             return {...state, inspectedIngredientPopupOpen: true, inspectedIngredient: action.ingredient};
         }
         case CLOSE_INSPECTED_INGREDIENT : {
-            return {...state, inspectedIngredientPopupOpen: false};
+            return {...state, inspectedIngredientPopupOpen: false, inspectedIngredient: {}};
         }
         case OPEN_ORDER_POPUP : {
             return {...state, orderPopupOpen: true, orderData: action.order, orderRequestFailed: false, orderRequestSent: false};
