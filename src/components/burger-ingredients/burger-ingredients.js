@@ -2,7 +2,6 @@ import {Tab} from '../tab/tab';
 import styles from './burger-ingredients.module.css';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
 import { useEffect, useRef, useState, memo, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
 
 const BurgerIngredients = memo(() => {
     const bunsRef = useRef(null);
@@ -14,12 +13,12 @@ const BurgerIngredients = memo(() => {
     const handleMealChange = useCallback((evt) => {
         setSelectedMeal(evt);
     }, []);
-
-    useEffect(() => {
-      if (selectedMeal === 'buns') return bunsRef.current.scrollIntoView();
-      if (selectedMeal === 'sauce') return sauceRef.current.scrollIntoView();
-      if (selectedMeal === 'main') return mainRef.current.scrollIntoView();
-    }, [selectedMeal]);
+    
+    const handleScroll = () => {
+      const buns = bunsRef.current.getBoundingClientRect();
+      const sauces = sauceRef.current.getBoundingClientRect();
+      buns.y <= 0 ? (sauces.y <= 0 ? setSelectedMeal('main') : setSelectedMeal('sauce')): setSelectedMeal('buns');
+    }
 
     return (
         <section className={styles.menu}>
@@ -37,7 +36,7 @@ const BurgerIngredients = memo(() => {
                 Начинки
               </Tab>
             </div>
-            <section className={styles.page}>
+            <section className={styles.page} id="ingredient-scroll" onScroll={handleScroll}>
                 <IngredientsCategory title="Булки" ref={bunsRef} />
                 <IngredientsCategory title="Соусы" ref={sauceRef} />
                 <IngredientsCategory title="Начинки" ref={mainRef} />

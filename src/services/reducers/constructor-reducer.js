@@ -12,13 +12,12 @@ const initialState = {
 }
 
 const calculateSum = (bun, ingredients) => {
-    return ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0) + bun.price * 2;
+    return ingredients.reduce((acc, ingredient) => acc + ingredient.price, 0) + (Object.keys(bun).length ? bun.price * 2 : 0);
 }
 
 export const constructorReducer = (state = initialState, action) => {   
     switch (action.type) {
         case CHANGE_BURGER_BUN : {
-            console.log(state.bun);
             return {...state, bun: action.ingredient, priceSum: calculateSum(action.ingredient, state.ingredients), isValidBurger: true};
         }
         case ADD_BURGER_INDREDIENT : {
