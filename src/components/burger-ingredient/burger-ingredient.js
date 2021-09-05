@@ -1,10 +1,10 @@
 import { useCallback } from 'react';
+import { useDrag } from "react-dnd";
 import styles from './burger-ingredient.module.css';
 import { OPEN_INSPECTED_INGREDIENT } from '../../services/actions/popups-info';
 import { IngredientPropTypes } from '../../utils/prop-types';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
-import { CHANGE_BURGER_BUN, ADD_BURGER_INDREDIENT } from '../../services/actions/constructor';
 
 const BurgerIngredient = ({ingredient}) => {
     const dispatch = useDispatch();
@@ -13,25 +13,26 @@ const BurgerIngredient = ({ingredient}) => {
         mobile: store.config.isMobileIngredients,
     }));
 
-    const {name, price, image, image_mobile} = ingredient;
+    const {_id, name, price, type, image, image_mobile} = ingredient;
 
-    const handleSelect = useCallback(() => {
+    const [{isDragging}, dragRef] = useDrag({
+        type: type,
+        item: {ingredient},
+        collect: monitor => ({
+            isDragging: monitor.isDragging(),
+        })
+    });
+
+    const handleInspect = useCallback(() => {
         dispatch({
             type: OPEN_INSPECTED_INGREDIENT,
             ingredient: ingredient,
         })
     }, [dispatch]);
-
-    const addIngredient = useCallback(() => {
-        dispatch({
-            type: ingredient.type === 'bun' ? CHANGE_BURGER_BUN : ADD_BURGER_INDREDIENT,
-            ingredient: ingredient,
-        })
-    }, [dispatch]);
     
     return (
-        <li className={styles.card} onClick={addIngredient}> {/* onClick={addIngredient} */}
-            <img className={styles.image} alt={`${name}`} src={mobile ? image_mobile : image} />
+        <li className={styles.card} onClick={handleInspect} draggable ref={dragRef}> {/* onClick={addIngredient} */}
+            <img className={styles.image} alt={`${name}`} src={mobile ? image_mobile : image} draggable={false} />
             <div className={styles.price}>
                 <span className={`text text_type_main-medium ${styles.money}`}>
                     {price}

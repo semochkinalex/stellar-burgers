@@ -3,4 +3,5 @@
     align-items: center;
     margin-bottom: 15px;
     justify-content: flex-end;
+    transition: all .5s ease-in-out;
 }

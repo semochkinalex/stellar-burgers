@@ -1,7 +1,9 @@
 import api from '../../utils/api';
+import { useEffect } from 'react';
+import { DndProvider } from "react-dnd";
 import ModalPopup from '../modal-popup/modal-popup';
 import AppHeader from '../app-header/app-header.js';
-import { useEffect } from 'react';
+import { HTML5Backend } from "react-dnd-html5-backend";
 import HeaderPopup from '../header-popup/header-popup.js';
 import OrderDetails from '../order-details/order-details';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
@@ -63,8 +65,10 @@ function App() {
 
       <AppHeader />
       <main className={styles.main}>
+        <DndProvider backend={HTML5Backend}>
           <BurgerIngredients />
           <BurgerConstructor />
+        </DndProvider>
       </main>
     </>
   );
