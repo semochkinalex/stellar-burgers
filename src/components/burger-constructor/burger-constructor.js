@@ -7,21 +7,15 @@ import BurgerCheck from '../burger-check/burger-check';
 import ConstructorItem from '../constructor-item/constructor-item';
 import { CHANGE_BURGER_BUN, ADD_BURGER_INDREDIENT } from '../../services/actions/constructor';
 
-const BurgerConstructor = memo(() => {
+const BurgerConstructor = () => {
     const dispatch = useDispatch();
-
     const bun = useSelector(store => store.burger.bun);
     const ingredients = useSelector(store => store.burger.ingredients);
 
+    
+
     const [, constructorTarget] = useDrop({
         accept: ["bun", "sauce", "main"],
-        drop({ingredient}) {
-            addIngredient(ingredient);
-        }
-    });
-
-    const [, dropTarget] = useDrop({
-        accept: "constructor",
         drop({ingredient}) {
             addIngredient(ingredient);
         }
@@ -56,6 +50,6 @@ const BurgerConstructor = memo(() => {
             }
         </section>
     );
-});
+};
 
 export default BurgerConstructor;
