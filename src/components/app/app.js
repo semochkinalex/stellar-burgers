@@ -22,6 +22,13 @@ import {
 
 import styles from './app.module.css';
 
+/*
+Свериться с чек-листом
+Использовать redux-thunk
+Поправить экшены
+Разделить редюсер с попапами на несколько частей
+*/
+
 function App() {
   const dispatch = useDispatch();
   const {isInspectedElementPopupOpen, isOrderPopupOpen} = useSelector(state => ({

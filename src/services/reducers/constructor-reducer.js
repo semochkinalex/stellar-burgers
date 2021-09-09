@@ -34,7 +34,7 @@ export const constructorReducer = (state = initialState, action) => {
             return {...state, ingredients: updatedIngredients, priceSum: calculateSum(state.bun, updatedIngredients), index: state.index + 1};
         }
         case REMOVE_BURGER_INGREDIENT : {
-            const updatedIngredients = state.ingredients.filter((ingredient) => ingredient._id !== action.ingredient._id);
+            const updatedIngredients = state.ingredients.filter((ingredient) => ingredient._id !== action.id);
             return {...state, ingredients: updatedIngredients, priceSum: calculateSum(state.bun, updatedIngredients)};
         }
         case UPDATE_BURGER_ORDER : {

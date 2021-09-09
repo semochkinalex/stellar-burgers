@@ -2,15 +2,15 @@ import useRef, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import styles from './constructor-item.module.css';
+import { useDispatch } from 'react-redux';
 import { IngredientPropTypes } from '../../utils/prop-types';
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { UPDATE_BURGER_ORDER } from '../../services/actions/constructor';
-import { useDispatch } from 'react-redux';
+import { UPDATE_BURGER_ORDER, REMOVE_BURGER_INGREDIENT } from '../../services/actions/constructor';
 
 const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
     const dispatch = useDispatch();
-    const {isLocked = false, name, price, image, index} = ingredient;
+    const {isLocked = false, name, price, image, index, _id} = ingredient;
 
     const [, dropTarget] = useDrop({
         accept: "constructor",
@@ -34,7 +34,13 @@ const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
             fromIndex: index,
             toIndex: ingredient.index
         })
-        // console.log(ingredient.index, " to ", index);
+    }
+
+    const handleRemoveElement = () => {
+        dispatch({
+            type: REMOVE_BURGER_INGREDIENT,
+            id: _id,
+        })
     }
 
     return (
@@ -45,7 +51,7 @@ const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
                         <DragIcon type="primary" />
                         <div className="m-1"></div>
                     </>}
-                    <ConstructorElement type={type} isLocked={isLocked} text={name} price={price} thumbnail={image} /> {/* Создать свой констрактор елемент для мобилок */}
+                    <ConstructorElement handleClose={handleRemoveElement} type={type} isLocked={isLocked} text={name} price={price} thumbnail={image} /> {/* Создать свой констрактор елемент для мобилок */}
                 </div>
             </li>
     );
