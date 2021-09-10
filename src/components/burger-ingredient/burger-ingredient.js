@@ -1,21 +1,21 @@
 import { useCallback } from 'react';
 import { useDrag } from "react-dnd";
 import styles from './burger-ingredient.module.css';
-import { OPEN_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
-import { IngredientPropTypes } from '../../utils/prop-types';
-import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';
+import { IngredientPropTypes } from '../../utils/prop-types';
+import { OPEN_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
+import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
 
 const BurgerIngredient = ({ingredient}) => {
     const dispatch = useDispatch();
 
-    const {mobile} = useSelector(store => ({
+    const {name, price, type, image, image_mobile, _id} = ingredient;
+    const {mobile, count} = useSelector(store => ({
         mobile: store.config.isMobileIngredients,
+        count : store.burger.ingredients.filter(ingredient => ingredient._id == _id).length, // mb not the best decision
     }));
 
-    const {_id, name, price, type, image, image_mobile} = ingredient;
-
-    const [{isDragging}, dragRef] = useDrag({
+    const [, dragRef] = useDrag({
         type: type,
         item: {ingredient},
         collect: monitor => ({
@@ -42,6 +42,7 @@ const BurgerIngredient = ({ingredient}) => {
             <p className={`text text_type_main-small ${styles.name}`}>
                 {name}
             </p>
+            {count && <div className={styles.wrapper}><Counter count={count} size="default" /></div>}
         </li>
     );
 }

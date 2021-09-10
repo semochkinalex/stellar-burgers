@@ -16,16 +16,14 @@ import { CLOSE_INSPECTED_INGREDIENT } from '../../services/actions/inspected-ele
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  INGREDIENT_REQUEST_FAIL,
-  INGREDIENT_REQUEST_PENDING,
-  INGREDIENT_REQUEST_SUCCESS,
+  getIngredients
 } from '../../services/actions/ingredients';
 
 import styles from './app.module.css';
 
 /*
   Свериться с чек-листом
-  Использовать redux-thunk
+  => Использовать redux-thunk
   => Поправить экшены
   => Разделить редюсер с попапами на несколько частей
 */
@@ -44,16 +42,7 @@ function App() {
   }, [width]);
 
   useEffect(() => {
-      dispatch({type: INGREDIENT_REQUEST_PENDING});
-      api.getIngredients()
-      .then((res) => {
-        if (res.data && res.success) return dispatch({type: INGREDIENT_REQUEST_SUCCESS, ingredients: res.data});
-        throw new Error("Произошла ошибка при получении ингредиентов.");
-      })
-      .catch((err) => {
-        console.log(err);
-        dispatch({type: INGREDIENT_REQUEST_FAIL});
-      })
+      dispatch(getIngredients());
   }, [])
 
   return (

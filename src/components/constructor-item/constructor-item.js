@@ -10,7 +10,7 @@ import { UPDATE_BURGER_ORDER, REMOVE_BURGER_INGREDIENT } from '../../services/ac
 
 const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
     const dispatch = useDispatch();
-    const {isLocked = false, name, price, image, index, _id} = ingredient;
+    const {isLocked = false, name, price, image, index} = ingredient;
 
     const [, dropTarget] = useDrop({
         accept: "constructor",
@@ -39,7 +39,7 @@ const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
     const handleRemoveElement = () => {
         dispatch({
             type: REMOVE_BURGER_INGREDIENT,
-            id: _id,
+            id: index,
         })
     }
 
