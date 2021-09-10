@@ -1,13 +1,9 @@
 import { 
-    OPEN_INSPECTED_INGREDIENT, 
-    CLOSE_INSPECTED_INGREDIENT,
     OPEN_ORDER_POPUP,
     CLOSE_ORDER_POPUP,
     ORDER_REQUEST_PENDING,
     ORDER_REQUEST_FAIL,
-    OPEN_HEADER_POPUP,
-    CLOSE_HEADER_POPUP 
- } from '../actions/popups-info';
+ } from '../actions/order';
 
 const initialState = {
     inspectedIngredientPopupOpen: false,
@@ -18,23 +14,10 @@ const initialState = {
     orderRequestSent: false,
     orderRequestFailed: false,
 
-    headerPopupOpen: false
 }
 
-export const popupsReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action) => {
     switch (action.type) {
-        case OPEN_HEADER_POPUP : {
-            return {...state, headerPopupOpen: true};
-        }
-        case CLOSE_HEADER_POPUP : {
-            return {...state, headerPopupOpen: false};
-        }
-        case OPEN_INSPECTED_INGREDIENT : {
-            return {...state, inspectedIngredientPopupOpen: true, inspectedIngredient: action.ingredient};
-        }
-        case CLOSE_INSPECTED_INGREDIENT : {
-            return {...state, inspectedIngredientPopupOpen: false, inspectedIngredient: {}};
-        }
         case OPEN_ORDER_POPUP : {
             return {...state, orderPopupOpen: true, orderData: action.order, orderRequestFailed: false, orderRequestSent: false};
         }

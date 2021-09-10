@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './header-popup.module.css';
 import closeIcon from '../../images/closeIcon.svg';
 import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
@@ -8,12 +7,12 @@ import listIcon from '../../images/listIcon.svg';
 import { ArrowDownIcon, ArrowUpIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { CLOSE_HEADER_POPUP } from '../../services/actions/popups-info';
+import { CLOSE_HEADER_POPUP } from '../../services/actions/index';
 
 
 const HeaderPopup = () => {
     const dispatch = useDispatch();
-    const isShown = useSelector(store => store.popups.headerPopupOpen);
+    const isShown = useSelector(store => store.config.headerPopupOpen);
     // В будущем для адаптивной вёрстки, сейчас тут плохой код:(
     const [profileShown, setProfileShown] = useState(false);
     const toggleProfile = () => setProfileShown(!profileShown);

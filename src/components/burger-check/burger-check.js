@@ -2,7 +2,7 @@ import api from '../../utils/api';
 import styles from './burger-check.module.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { OPEN_ORDER_POPUP, ORDER_REQUEST_PENDING, ORDER_REQUEST_FAIL } from '../../services/actions/popups-info';
+import { OPEN_ORDER_POPUP, ORDER_REQUEST_PENDING, ORDER_REQUEST_FAIL } from '../../services/actions/order';
 
 const BurgerCheck = () => {
     const dispatch = useDispatch();

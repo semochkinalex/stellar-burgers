@@ -3,7 +3,7 @@ import { IngredientPropTypes } from '../../utils/prop-types';
 import { useSelector } from 'react-redux';
 
 const IngredientDetails = () => {
-    const inspectedIngredient = useSelector(store => store.popups.inspectedIngredient);
+    const inspectedIngredient = useSelector(store => store.inspectedElement.inspectedIngredient);
     if (!inspectedIngredient) return null;
     return (
         <>

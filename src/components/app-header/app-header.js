@@ -4,7 +4,7 @@ import headerStyles from './app-header.module.css';
 import mobileLogo from '../../images/mobileLogo.svg';
 import AppHeaderItem from '../app-header-item/app-header-item.js';
 import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
-import { OPEN_HEADER_POPUP } from '../../services/actions/popups-info';
+import { OPEN_HEADER_POPUP } from '../../services/actions/index';
 
 import { Logo, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';

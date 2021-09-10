@@ -1,7 +1,7 @@
 import { useCallback } from 'react';
 import { useDrag } from "react-dnd";
 import styles from './burger-ingredient.module.css';
-import { OPEN_INSPECTED_INGREDIENT } from '../../services/actions/popups-info';
+import { OPEN_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
 import { IngredientPropTypes } from '../../utils/prop-types';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useSelector, useDispatch } from 'react-redux';

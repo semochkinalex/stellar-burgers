@@ -4,7 +4,7 @@ import orderConfirmedIcon from '../../images/orderConfirmed.svg';
 import { useSelector } from 'react-redux';
 
 const OrderDetails = () => {
-    const {number} = useSelector(store => store.popups.orderData);
+    const {number} = useSelector(store => store.order.orderData);
     
     return (
         <>

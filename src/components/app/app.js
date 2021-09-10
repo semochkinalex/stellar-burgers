@@ -11,7 +11,8 @@ import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
 import useWindowSize from '../../utils/useWindowSize';
 import { SWITCH_IS_MOBILE_VALUE } from '../../services/actions/index';
-import { CLOSE_INSPECTED_INGREDIENT, CLOSE_ORDER_POPUP } from '../../services/actions/popups-info';
+import { CLOSE_ORDER_POPUP } from '../../services/actions/order';
+import { CLOSE_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
 
 import { useDispatch, useSelector } from 'react-redux';
 import {
@@ -23,17 +24,17 @@ import {
 import styles from './app.module.css';
 
 /*
-Свериться с чек-листом
-Использовать redux-thunk
-Поправить экшены
-Разделить редюсер с попапами на несколько частей
+  Свериться с чек-листом
+  Использовать redux-thunk
+  => Поправить экшены
+  => Разделить редюсер с попапами на несколько частей
 */
 
 function App() {
   const dispatch = useDispatch();
   const {isInspectedElementPopupOpen, isOrderPopupOpen} = useSelector(state => ({
-      isInspectedElementPopupOpen: state.popups.inspectedIngredientPopupOpen,
-      isOrderPopupOpen: state.popups.orderPopupOpen,
+      isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
+      isOrderPopupOpen: state.order.orderPopupOpen,
   }));
 
   const {width} = useWindowSize();
