@@ -17,7 +17,7 @@ const IngredientsCategory = React.forwardRef(({title}, ref) => {
             </h3>
             <ul className={styles.list}>
                   {ingredients.map((ingredient) => {
-                    return <BurgerIngredient ingredient={ingredient} key={ingredient.index} />
+                    return <BurgerIngredient ingredient={ingredient} key={ingredient._id} />
                    })}
             </ul>
         </div>)

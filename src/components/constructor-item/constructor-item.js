@@ -14,10 +14,16 @@ const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
     const dispatch = useDispatch();
     const {isLocked = false, name, price, image, index} = ingredient;
 
+    const handleRemoveElement = () => {
+        dispatch({
+            type: REMOVE_BURGER_INGREDIENT,
+            id: index,
+        })
+    }
+
     const [, drop] = useDrop({
         accept: "constructor",
         hover(item, monitor) {
-            if (!ref.current) return;
             const [dragIndex, hoverIndex] = [item.index, index];
             if (dragIndex === hoverIndex) return;
             const hoverBoundingRect = ref.current?.getBoundingClientRect();
@@ -26,11 +32,7 @@ const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
-            dispatch({
-                type: SWAP_INGREDIENTS,
-                from: dragIndex,
-                to: hoverIndex,
-            })
+            dispatch({type: SWAP_INGREDIENTS, from: dragIndex, to: hoverIndex});
             item.index = hoverIndex;
         }
     });
@@ -43,15 +45,7 @@ const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
         }),
     });
 
-    const handleRemoveElement = () => {
-        dispatch({
-            type: REMOVE_BURGER_INGREDIENT,
-            id: index,
-        })
-    }
-
     drag(drop(ref));
-    if (!ingredient) return;
 
     return (
             <li ref={!isLocked ? ref : null} className={styles.card} style={{...style, opacity: isDragging ? 0 : 1}} draggable={!isLocked}> {/* wrapper */ }
