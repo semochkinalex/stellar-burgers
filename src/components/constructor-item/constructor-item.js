@@ -1,4 +1,4 @@
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import styles from './constructor-item.module.css';
@@ -20,8 +20,7 @@ const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
             if (!ref.current) return;
             const [dragIndex, hoverIndex] = [item.index, index];
             if (dragIndex === hoverIndex) return;
-            if (hoverIndex != 0 && !hoverIndex) return;
-            const hoverBoundingRect = ref.current.getBoundingClientRect();
+            const hoverBoundingRect = ref.current?.getBoundingClientRect();
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
