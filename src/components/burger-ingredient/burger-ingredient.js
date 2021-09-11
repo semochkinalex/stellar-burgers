@@ -11,8 +11,8 @@ const BurgerIngredient = ({ingredient}) => {
 
     const {name, price, type, image, image_mobile, _id} = ingredient;
     const {mobile, count} = useSelector(store => ({
+        count: type == "bun" ? store.burger.bun._id == _id && 2 : store.burger.ingredients.filter(ingredient => ingredient._id == _id).length, // mb not the best decision 
         mobile: store.config.isMobileIngredients,
-        count : store.burger.ingredients.filter(ingredient => ingredient._id == _id).length, // mb not the best decision
     }));
 
     const [, dragRef] = useDrag({

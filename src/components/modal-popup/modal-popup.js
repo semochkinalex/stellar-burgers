@@ -34,6 +34,7 @@ const ModalPopup = memo(({actionType, children}) => {
 })
 
 ModalPopup.propTypes = {
+    actionType: PropTypes.string.isRequired,
     children: PropTypes.node.isRequired,
 }
 

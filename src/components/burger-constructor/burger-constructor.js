@@ -1,5 +1,5 @@
 import { useDrop } from "react-dnd";
-import {memo, useCallback, useMemo} from 'react';
+import {memo, useCallback, useMemo, useState} from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
@@ -11,8 +11,6 @@ const BurgerConstructor = () => {
     const dispatch = useDispatch();
     const bun = useSelector(store => store.burger.bun);
     const ingredients = useSelector(store => store.burger.ingredients);
-
-    
 
     const [, constructorTarget] = useDrop({
         accept: ["bun", "sauce", "main"],
@@ -33,13 +31,13 @@ const BurgerConstructor = () => {
             { Object.keys(bun).length || ingredients.length ? 
                 <>
                 <ul className={styles.list}>
-                    {Object.keys(bun).length ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={{...bun, isLocked: true}} /> : ''}
+                    {Object.keys(bun).length ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={{...bun, isLocked: true, name: bun.name + " (верх)"}} /> : ''}
                     <div className={styles.content}>
-                            {ingredients.map((card, index) => {     
-                                return <ConstructorItem card={card} key={index} />
+                            {ingredients.map((ingredient) => {     
+                                return <ConstructorItem card={ingredient} key={ingredient.index} />
                             })}
                     </div>
-                    {Object.keys(bun).length ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={{...bun, isLocked: true}} /> : ''}
+                    {Object.keys(bun).length ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={{...bun, isLocked: true, name: bun.name + " (низ)"}} /> : ''}
                 </ul>
                 <BurgerCheck sum={0} />
                 </>
