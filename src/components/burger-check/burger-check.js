@@ -1,4 +1,3 @@
-import api from '../../utils/api';
 import styles from './burger-check.module.css';
 import { handleOrder } from '../../services/actions/order';
 import { useDispatch, useSelector } from 'react-redux';

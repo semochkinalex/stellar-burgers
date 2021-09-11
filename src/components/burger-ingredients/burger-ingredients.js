@@ -1,7 +1,7 @@
 import {Tab} from '../tab/tab';
 import styles from './burger-ingredients.module.css';
 import IngredientsCategory from '../ingredients-category/ingredients-category';
-import { useEffect, useRef, useState, memo, useCallback } from 'react';
+import { useRef, useState, memo, useCallback } from 'react';
 
 const BurgerIngredients = memo(() => {
     const bunsRef = useRef(null);

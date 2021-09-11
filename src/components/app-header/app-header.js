@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import menuIcon from '../../images/menuIcon.svg';
 import headerStyles from './app-header.module.css';
 import mobileLogo from '../../images/mobileLogo.svg';

@@ -1,4 +1,3 @@
-import api from '../../utils/api';
 import { useEffect } from 'react';
 import { DndProvider } from "react-dnd";
 import ModalPopup from '../modal-popup/modal-popup';
@@ -21,13 +20,6 @@ import {
 
 import styles from './app.module.css';
 
-/*
-  Свериться с чек-листом
-  => Использовать redux-thunk
-  => Поправить экшены
-  => Разделить редюсер с попапами на несколько частей
-*/
-
 function App() {
   const dispatch = useDispatch();
   const {isInspectedElementPopupOpen, isOrderPopupOpen} = useSelector(state => ({
@@ -39,11 +31,11 @@ function App() {
 
   useEffect(() => {
       dispatch({type: SWITCH_IS_MOBILE_VALUE, value: width});
-  }, [width]);
+  }, [dispatch, width]);
 
   useEffect(() => {
       dispatch(getIngredients());
-  }, [])
+  }, [dispatch])
 
   return (
     <>

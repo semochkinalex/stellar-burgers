@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './order-details.module.css';
 import orderConfirmedIcon from '../../images/orderConfirmed.svg';
 import { useSelector } from 'react-redux';

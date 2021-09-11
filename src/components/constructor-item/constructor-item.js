@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import { useDrag, useDrop } from 'react-dnd';
 import styles from './constructor-item.module.css';
@@ -7,17 +7,17 @@ import { IngredientPropTypes } from '../../utils/prop-types';
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { REMOVE_BURGER_INGREDIENT, SWAP_INGREDIENTS } from '../../services/actions/constructor';
-import { IndentStyle } from 'typescript';
 
-const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
+const ConstructorItem = ({card: ingredient, type = undefined, index ,style}) => {
+    const id = ingredient._id;
     const ref = useRef(null);
     const dispatch = useDispatch();
-    const {isLocked = false, name, price, image, index} = ingredient;
+    const {isLocked = false, name, price, image} = ingredient;
 
     const handleRemoveElement = () => {
         dispatch({
             type: REMOVE_BURGER_INGREDIENT,
-            id: index,
+            index: index,
         })
     }
 
@@ -39,7 +39,7 @@ const ConstructorItem = ({card: ingredient, type = undefined, style}) => {
 
     const [{isDragging}, drag] = useDrag({
         type: "constructor",
-        item: {index: ingredient.index},
+        item: {id, index},
         collect: (monitor) => ({
             isDragging: monitor.isDragging(),
         }),

@@ -1,5 +1,5 @@
 import { useDrop } from "react-dnd";
-import {memo, useCallback, useMemo, useState} from 'react';
+import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
@@ -31,10 +31,10 @@ const BurgerConstructor = () => {
             { Object.keys(bun).length || ingredients.length ? 
                 <>
                 <ul className={styles.list}>
-                    {Object.keys(bun).length ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={{...bun, isLocked: true, name: bun.name + " (верх)"}} /> : ''}
+                    {Object.keys(bun).length ? <ConstructorItem style={{margin: "0 15px 15px 0"}} type="top" card={{...bun, isLocked: true, name: bun.name + " (верх)"}} /> : ''}
                     <div className={styles.content}>
-                            {ingredients.map((ingredient) => {     
-                                return <ConstructorItem card={ingredient} key={ingredient.index} />
+                            {ingredients.map((ingredient, index) => {     
+                                return <ConstructorItem card={ingredient} key={ingredient.index} index={index}/>
                             })}
                     </div>
                     {Object.keys(bun).length ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={{...bun, isLocked: true, name: bun.name + " (низ)"}} /> : ''}

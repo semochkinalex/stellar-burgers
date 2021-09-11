@@ -11,7 +11,7 @@ const BurgerIngredient = ({ingredient}) => {
 
     const {name, price, type, image, image_mobile, _id} = ingredient;
     const {mobile, count} = useSelector(store => ({
-        count: type == "bun" ? store.burger.bun._id == _id && 2 : store.burger.ingredients.filter(ingredient => ingredient._id == _id).length, // mb not the best decision 
+        count: type === "bun" ? store.burger.bun._id === _id && 2 : store.burger.ingredients.filter(ingredient => ingredient._id === _id).length, // mb not the best decision 
         mobile: store.config.isMobileIngredients,
     }));
 
@@ -28,7 +28,7 @@ const BurgerIngredient = ({ingredient}) => {
             type: OPEN_INSPECTED_INGREDIENT,
             ingredient: ingredient,
         })
-    }, [dispatch]);
+    }, [dispatch, ingredient]);
     
     return (
         <li className={styles.card} onClick={handleInspect} draggable ref={dragRef}> {/* onClick={addIngredient} */}
