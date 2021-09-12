@@ -1,46 +1,53 @@
-import PropTypes from 'prop-types';
-import {memo, useContext, useMemo} from 'react';
+import { useDrop } from "react-dnd";
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import BurgerCheck from '../burger-check/burger-check';
 import ConstructorItem from '../constructor-item/constructor-item';
-import ConstructorContext from '../../contexts/constructor-context';
+import { CHANGE_BURGER_BUN, ADD_BURGER_INDREDIENT } from '../../services/actions/constructor';
 
-const BurgerConstructor = memo(({order}) => {
-    const {constructorState : {bun, ingredients}} = useContext(ConstructorContext);
-    const isBunValid = useMemo(() => Boolean(Object.keys(bun).length), [bun]);
-    const sum = useMemo(() => (ingredients.reduce((sum, ingredient) => sum + ingredient.price, 0) + (Object.keys(bun).length ? bun.price*2 : 0)), [bun, ingredients]);
+const BurgerConstructor = () => {
+    const dispatch = useDispatch();
+    const bun = useSelector(store => store.burger.bun);
+    const ingredients = useSelector(store => store.burger.ingredients);
 
-    const handleOrder = () => {
-        const array = ingredients.concat([bun, bun]);
-        order(array.map((food) => food._id));
-    }
+    const [, constructorTarget] = useDrop({
+        accept: ["bun", "sauce", "main"],
+        drop({ingredient}) {
+            addIngredient(ingredient);
+        }
+    });
+
+    const addIngredient = useCallback((ingredient) => {
+        dispatch({
+            type: ingredient.type === 'bun' ? CHANGE_BURGER_BUN : ADD_BURGER_INDREDIENT,
+            ingredient: ingredient,
+        })
+    }, [dispatch]);
 
     return (
-        <section className={styles.constructor}>
-            {isBunValid || ingredients.length ? (
-            <>
-            <ul className={styles.list}>
-                {isBunValid ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="top" card={bun} /> : ''}
-                <div className={styles.content}>
-                    {ingredients.map((card, index) => {     
-                        return <ConstructorItem card={card} key={index} />
-                    })}
-                </div>
-                {isBunValid ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={bun} /> : ''}
-            </ul>
-            <BurgerCheck sum={sum} handleOrder={handleOrder} isValid={isBunValid} />
-            </>)
+        <section className={styles.constructor} ref={constructorTarget}>
+            { Object.keys(bun).length || ingredients.length ? 
+                <>
+                <ul className={styles.list}>
+                    {Object.keys(bun).length ? <ConstructorItem style={{margin: "0 15px 15px 0"}} type="top" card={{...bun, isLocked: true, name: bun.name + " (верх)"}} /> : ''}
+                    <div className={styles.content}>
+                            {ingredients.map((ingredient, index) => {     
+                                return <ConstructorItem card={ingredient} key={ingredient.index} index={index}/>
+                            })}
+                    </div>
+                    {Object.keys(bun).length ? <ConstructorItem style={{padding: "0 16px 0 0"}} type="bottom" card={{...bun, isLocked: true, name: bun.name + " (низ)"}} /> : ''}
+                </ul>
+                <BurgerCheck sum={0} />
+                </>
             : 
-            <p className={`text text_type_main-large ${styles.none}`}>
-                Выбирайте ингредиенты и составьте себе бургер
-            </p>
+                <p className={`text text_type_main-large ${styles.none}`}>
+                    Выбирайте ингредиенты и составьте себе бургер
+                </p>
             }
         </section>
     );
-});
-
-BurgerConstructor.propTypes = {
-    order: PropTypes.func.isRequired,
-}
+};
 
 export default BurgerConstructor;

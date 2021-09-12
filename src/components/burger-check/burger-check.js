@@ -1,8 +1,22 @@
-import PropTypes from 'prop-types';
 import styles from './burger-check.module.css';
-import {Button, CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
+import { handleOrder } from '../../services/actions/order';
+import { useDispatch, useSelector } from 'react-redux';
+import { Button, CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 
-const BurgerCheck = ({sum, handleOrder, isValid}) => {
+const BurgerCheck = () => {
+    const dispatch = useDispatch();
+    const {ingredients, bun} = useSelector(store => ({
+        bun: store.burger.bun,
+        ingredients: store.burger.ingredients,
+    }))
+
+    const sum = useSelector(store => store.burger.priceSum);
+    const isValid = useSelector(store => store.burger.isValidBurger);
+
+    const handleCheckout = () => {
+        dispatch(handleOrder(ingredients, bun));
+    }
+
     return (
         <div className={styles.check}>
             <p className="text text_type_main-large">
@@ -11,17 +25,11 @@ const BurgerCheck = ({sum, handleOrder, isValid}) => {
             <div className="m-1"></div>
             <CurrencyIcon type="primary" />
             <div className="m-3"></div>
-            <Button type="primary" size="large" onClick={handleOrder} disabled={!isValid}>
+            <Button type="primary" size="large" onClick={handleCheckout} disabled={!isValid}>
                 Оформить заказ
             </Button>
         </div>
     );
-}
-
-BurgerCheck.propTypes = {
-    sum: PropTypes.number.isRequired,
-    handleOrder: PropTypes.func.isRequired,
-    isValid: PropTypes.bool.isRequired,
 }
 
 export default BurgerCheck;

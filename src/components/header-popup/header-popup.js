@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import styles from './header-popup.module.css';
 import closeIcon from '../../images/closeIcon.svg';
 import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
@@ -7,15 +6,19 @@ import listIcon from '../../images/listIcon.svg';
 
 import { ArrowDownIcon, ArrowUpIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { CLOSE_HEADER_POPUP } from '../../services/actions/index';
 
 
-const HeaderPopup = ({isShown, togglePopup}) => {
+const HeaderPopup = () => {
+    const dispatch = useDispatch();
+    const isShown = useSelector(store => store.config.headerPopupOpen);
     // В будущем для адаптивной вёрстки, сейчас тут плохой код:(
     const [profileShown, setProfileShown] = useState(false);
+    const toggleProfile = () => setProfileShown(!profileShown);
 
-    const toggleProfile = () => {
-        setProfileShown(!profileShown);
-    }
+    const togglePopup = () => dispatch({type: CLOSE_HEADER_POPUP});
+
 
     return (
         <nav className={styles.navigation + (isShown ? ' ' + styles.shown : '')}>
@@ -70,11 +73,5 @@ const HeaderPopup = ({isShown, togglePopup}) => {
         </nav>
     );
 }
-
-HeaderPopup.propTypes = {
-    isShown: PropTypes.bool.isRequired,
-    togglePopup: PropTypes.func.isRequired,
-}
-
 
 export default HeaderPopup;

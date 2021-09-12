@@ -1,104 +1,63 @@
-import api from '../../utils/api';
-import { useEffect, useReducer, useState } from 'react';
+import { useEffect } from 'react';
+import { DndProvider } from "react-dnd";
 import ModalPopup from '../modal-popup/modal-popup';
 import AppHeader from '../app-header/app-header.js';
+import { HTML5Backend } from "react-dnd-html5-backend";
 import HeaderPopup from '../header-popup/header-popup.js';
 import OrderDetails from '../order-details/order-details';
-import IngredientContext from '../../contexts/ingredients-context';
-import ConstructorContext from '../../contexts/constructor-context';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import BurgerIngredients from '../burger-ingredients/burger-ingredients';
 import IngredientDetails from '../ingredient-details/ingredient-details';
+import useWindowSize from '../../utils/useWindowSize';
+import { SWITCH_IS_MOBILE_VALUE } from '../../services/actions/index';
+import { CLOSE_ORDER_POPUP } from '../../services/actions/order';
+import { CLOSE_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
+
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  getIngredients
+} from '../../services/actions/ingredients';
 
 import styles from './app.module.css';
 
-const constructorReducer = (state, {type, data}) => {
-  switch (type) {
-    case "add-bun":
-      return {...state, bun: data};
-    case "add-main":
-      return {...state, ingredients: [...state.ingredients, data]};
-    case "remove-main":
-      return {...state, ingredients: state.ingredient.filter((ingredient) => ingredient._id !== data.id)};
-    default:
-      throw new Error("Error in Reducer: " + type);
-  }
-}
-
 function App() {
-  const [constructorState, constructorDispatch] = useReducer(constructorReducer, {bun: {}, ingredients: []});
+  const dispatch = useDispatch();
+  const {isInspectedElementPopupOpen, isOrderPopupOpen} = useSelector(state => ({
+      isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
+      isOrderPopupOpen: state.order.orderPopupOpen,
+  }));
 
-  const [currentOrder, setCurrentOrder] = useState({});
-  const [isOrderDetailsOpened, setIsOrderDetailsOpened] = useState(false); // Заменить на true, чтобы показать
-  const [selectedIngredient, setSelectedIngredient] = useState(null); // Здесь должен быть изначально объект, но propTypes ругается
-  const [isIngredientPopupOpen, setIsIngredientPopupOpen] = useState(false);
-  const [isHeaderPopupShown, setIsHeaderPopupShown] = useState(false);
-
-  const [ingredients, setIngredients] = useState([]);
-
-  const toggleHeaderPopup = () => {
-    setIsHeaderPopupShown(!isHeaderPopupShown);
-  }
-
-  const toggleIngredientPopup = () => {
-    setIsIngredientPopupOpen(!isIngredientPopupOpen);
-  }
-
-  const toggleOrderDetails = () => {
-    setIsOrderDetailsOpened(!isOrderDetailsOpened);
-  }
-
-  const inspectIngredient = (ingredient) => {
-    toggleIngredientPopup();
-    setSelectedIngredient(ingredient);
-  }
-
-  const order = (ingredients) => {
-    api.handleOrder(ingredients)
-    .then(({name, order: {number}}) => {
-        toggleOrderDetails();
-        setCurrentOrder({
-          name,
-          number,
-        });
-    })
-    .catch((err) => {
-      console.log("Произошла ошибка при создании заказа");
-    })
-  }
+  const {width} = useWindowSize();
 
   useEffect(() => {
-      api.getIngredients()
-      .then(({data}) => {
-        setIngredients(data);
-      })
-      .catch(() => {
-        console.log("Произошла ошибка при получении ингредиентов.")
-      })
-  }, [])
+      dispatch({type: SWITCH_IS_MOBILE_VALUE, value: width});
+  }, [dispatch, width]);
+
+  useEffect(() => {
+      dispatch(getIngredients());
+  }, [dispatch])
 
   return (
     <>
-      {/* Popups */}
-      {isOrderDetailsOpened &&
-        <ModalPopup togglePopup={toggleOrderDetails}>
-          <OrderDetails order={currentOrder} />
+      {isOrderPopupOpen &&
+        <ModalPopup actionType={CLOSE_ORDER_POPUP}>
+          <OrderDetails />
         </ModalPopup>
       }
-      {isIngredientPopupOpen && 
-      <ModalPopup togglePopup={toggleIngredientPopup}>
-        <IngredientDetails ingredient={selectedIngredient} />
+
+      {isInspectedElementPopupOpen && 
+      <ModalPopup actionType={CLOSE_INSPECTED_INGREDIENT}>
+        <IngredientDetails />
       </ModalPopup>}
-      <HeaderPopup isShown={isHeaderPopupShown} togglePopup={toggleHeaderPopup} />
-      {/* Content */}
-      <AppHeader togglePopup={toggleHeaderPopup} />
+
+      <HeaderPopup />
+
+      <AppHeader />
       <main className={styles.main}>
-        <IngredientContext.Provider value={{ingredients}}>
-          <ConstructorContext.Provider value={{constructorState, constructorDispatch}}>
-            <BurgerIngredients inspectIngredient={inspectIngredient} />
-            <BurgerConstructor order={order} />
-          </ConstructorContext.Provider>
-        </IngredientContext.Provider>
+        <DndProvider backend={HTML5Backend}>
+          <BurgerIngredients />
+          <BurgerConstructor />
+        </DndProvider>
       </main>
     </>
   );

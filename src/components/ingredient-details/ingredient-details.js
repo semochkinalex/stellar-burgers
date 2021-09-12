@@ -1,14 +1,15 @@
 import styles from './ingredient-details.module.css';
-import { IngredientPropTypes } from '../../utils/prop-types'; 
+import { useSelector } from 'react-redux';
 
-const IngredientDetails = ({ingredient}) => {
-    if (!ingredient) return null;
+const IngredientDetails = () => {
+    const inspectedIngredient = useSelector(store => store.inspectedElement.inspectedIngredient);
+    if (!inspectedIngredient) return null;
     return (
         <>
             <p className="text text_type_main-large">Детали ингредиента</p>
-            <img className={styles.image} src={ingredient.image_large} alt={ingredient.name} />
+            <img className={styles.image} src={inspectedIngredient.image_large} alt={inspectedIngredient.name} />
             <p className={`text text_type_main-medium ${styles.name}`}>
-                {ingredient.name}
+                {inspectedIngredient.name}
             </p>
             <ul className={styles.list}>
                 <li className={styles.info}>
@@ -16,7 +17,7 @@ const IngredientDetails = ({ingredient}) => {
                     Калории, ккал
                 </p>
                 <p className="text text_type_digits-default text_color_inactive">
-                    {ingredient.calories}
+                    {inspectedIngredient.calories}
                 </p>
                 </li>
                 <li className={styles.info}>
@@ -24,7 +25,7 @@ const IngredientDetails = ({ingredient}) => {
                     Белки, г
                 </p>
                 <p className="text text_type_digits-default text_color_inactive">
-                    {ingredient.proteins}
+                    {inspectedIngredient.proteins}
                 </p>
                 </li>
                 <li className={styles.info}>
@@ -32,7 +33,7 @@ const IngredientDetails = ({ingredient}) => {
                     Жиры, г
                 </p>
                 <p className="text text_type_digits-default text_color_inactive">
-                    {ingredient.fat}
+                    {inspectedIngredient.fat}
                 </p>
                 </li>
                 <li className={styles.info}>
@@ -40,16 +41,12 @@ const IngredientDetails = ({ingredient}) => {
                     Углеводы, г
                 </p>
                 <p className="text text_type_digits-default text_color_inactive">
-                    {ingredient.carbohydrates}
+                    {inspectedIngredient.carbohydrates}
                 </p>
                 </li>
             </ul>
         </>
     );
-}
-
-IngredientDetails.propTypes = {
-    ingredient: IngredientPropTypes,
 }
 
 export default IngredientDetails;
