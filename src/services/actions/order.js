@@ -26,4 +26,4 @@ export function handleOrder(ingredients, bun) {
           dispatch({type: ORDER_REQUEST_FAIL});
         })
     };
-  }
+}
