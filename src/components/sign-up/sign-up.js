@@ -3,12 +3,14 @@ import {useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './sign-up.module.css';
 import UserForm from '../user-form/user-form';
+import { useHistory } from 'react-router-dom';
 import { setCookie } from '../../utils/cookie';
 import useFormWithValidation from '../../utils/use-form';
-import { login, UPDATE_ACCESS_TOKEN, UPDATE_USER_INFO } from '../../services/actions/user';
+import { updateAccessToken, updateUserInfo } from '../../services/actions/user';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const SignUp = () => {
+    const history = useHistory();
     const dispatch = useDispatch();
     const [values, errors, isValid, handleChange] = useFormWithValidation();
 
@@ -19,11 +21,14 @@ const SignUp = () => {
             email: values.email,
             password: values.password,
         })
-        .then((data) => {
-            if (data.success) {
-                const {user : {name, email}, accessToken, refreshToken} = data;
-                dispatch(login(name, email, accessToken, refreshToken));
+        .then(({success, user : {name, email}, accessToken, refreshToken}) => {
+            if (success) {
+                setCookie("token", refreshToken);
+                dispatch(updateUserInfo(name, email));
+                dispatch(updateAccessToken(accessToken));
+                return history.replace({pathname: "/constructor"});
             }
+            throw new Error("Couldn't create new user");
         })
         .catch((err) => {
             console.log(err);

@@ -1,33 +1,35 @@
 import api from '../../utils/api';
+import { useCallback } from 'react';
 import {useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './sign-in.module.css';
 import UserForm from '../user-form/user-form';
-import { login } from '../../services/actions/user';
+import { useHistory } from 'react-router-dom';
+import { setCookie } from '../../utils/cookie';
 import useFormWithValidation from '../../utils/use-form';
+import { updateAccessToken, updateUserInfo } from '../../services/actions/user';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const SignIn = () => {
+    const history = useHistory();
     const dispatch = useDispatch();
+    
     const [values, errors, isValid, handleChange] = useFormWithValidation();
 
-    const loginUser = (evt) => {
+    const loginUser = useCallback((evt) => {
         evt.preventDefault();
-        api.loginUser({
-            email: values.email,
-            password: values.password,
-        })
-        .then((data) => {
-            if (data.success) {
-                const {user : {name, email}, accessToken, refreshToken} = data;
-                dispatch(login(name, email, accessToken, refreshToken));
+        api.attemptLogin({email: values.email, password: values.password})
+        .then(({success, message, user : {name, email}, accessToken, refreshToken}) => {
+            if (success) {
+                setCookie("token", refreshToken);
+                dispatch(updateUserInfo(name, email));
+                dispatch(updateAccessToken(accessToken));
+                return history.replace({pathname: "/constructor"});
             }
-            throw new Error("Error in response: ", data.message)
+            throw new Error("Error in attemt to login.", message);
         })
-        .catch((err) => {
-            console.log(err);
-        })
-    }
+        .catch((message) => console.log(message));
+    }, [history, dispatch, api, values]);
 
     return (
         <section className={styles.container}>

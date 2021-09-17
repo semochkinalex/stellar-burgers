@@ -1,12 +1,13 @@
+import { useSelector } from 'react-redux';
 import { Redirect, Route } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 export function ProtectedRoute({ children, ...props }) {
+  const isAuthorized = useSelector(state => Boolean(state.user.token));
   return (
     <Route
       {...props}
       render={({ location }) =>
-        true ? (
+        isAuthorized ? (
           children
         ) : (
           <Redirect

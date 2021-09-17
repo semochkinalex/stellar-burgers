@@ -1,15 +1,16 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import api from '../../utils/api';
 import SignIn from '../sign-in/sign-in';
 import SignUp from '../sign-up/sign-up';
 import { DndProvider } from "react-dnd";
+import { useHistory } from 'react-router-dom';
+// import { login } from '../../services/actions/user';
 import { getCookie, setCookie } from '../../utils/cookie';
 import { Switch, Route } from 'react-router-dom';
 import ModalPopup from '../modal-popup/modal-popup';
 import AppHeader from '../app-header/app-header.js';
 import { HTML5Backend } from "react-dnd-html5-backend";
 import useWindowSize from '../../utils/useWindowSize';
-import { login, UPDATE_ACCESS_TOKEN, UPDATE_USER_INFO } from '../../services/actions/user';
 import HeaderPopup from '../header-popup/header-popup.js';
 import OrderDetails from '../order-details/order-details';
 import { CLOSE_ORDER_POPUP } from '../../services/actions/order';
@@ -27,10 +28,13 @@ import {
 } from '../../services/actions/ingredients';
 
 import styles from './app.module.css';
+import { getNewUserToken, getUserInfo, updateAccessToken } from '../../services/actions/user';
 
 function App() {
+  const history = useHistory();
   const dispatch = useDispatch();
-  const {isInspectedElementPopupOpen, isOrderPopupOpen} = useSelector(state => ({
+  const {accessToken, isOrderPopupOpen, isInspectedElementPopupOpen} = useSelector(state => ({
+    accessToken: state.user.token,
       isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
       isOrderPopupOpen: state.order.orderPopupOpen,
   }));
@@ -42,24 +46,26 @@ function App() {
   }, [dispatch, width]);
 
   useEffect(() => {
-      dispatch(getIngredients());
-  }, [dispatch]);
+    if (Boolean(accessToken)) return dispatch(getIngredients());
+  }, [dispatch, accessToken]);
 
   useEffect(() => {
-    const token = getCookie("token");
-    if (!token) return;
-    api.updateToken(token)
-    .then(({success, accessToken, refreshToken}) => {
-      if (success) return api.getUserInfo(accessToken).then(({success, user : {name, email}}) => {
-          if (success) return dispatch(login(name, email, accessToken, refreshToken));
-      })
-      // Обрабатываем обе ошибки ?
-      throw new Error("Error in API call");
-    })
-    .catch((err) => {
-      console.log(err);
-    })
+    const oldToken = getCookie("token");
+    if (oldToken) return attemptLogin(oldToken);
   }, []);
+
+  const attemptLogin = useCallback(refreshToken => {
+    api.updateToken(refreshToken)
+    .then(({success, accessToken, refreshToken}) => {
+      if (success) {
+        setCookie("token", refreshToken);
+        dispatch(getUserInfo(accessToken));
+        dispatch(updateAccessToken(accessToken));
+        return history.replace({pathname: "/constructor"});
+      }
+      throw new Error("Couldn't refresh token");
+    }).catch((message) => console.log(message));
+  }, [history, dispatch, api]);
 
   return (
     <>
