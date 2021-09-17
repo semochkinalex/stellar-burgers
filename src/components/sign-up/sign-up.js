@@ -26,7 +26,8 @@ const SignUp = () => {
                 setCookie("token", refreshToken);
                 dispatch(updateUserInfo(name, email));
                 dispatch(updateAccessToken(accessToken));
-                return history.replace({pathname: "/constructor"});
+                const previousPage = history.location.state ? history.location.state.from.pathname : "/constructor";
+                return history.replace({pathname: previousPage});
             }
             throw new Error("Couldn't create new user");
         })

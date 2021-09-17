@@ -30,8 +30,9 @@ const BurgerIngredient = ({ingredient}) => {
         })
     }, [dispatch, ingredient]);
     
+    // onClick={handleInspect}
     return (
-        <li className={styles.card} onClick={handleInspect} draggable ref={dragRef}> {/* onClick={addIngredient} */}
+        <li className={styles.card} draggable ref={dragRef}> {/* onClick={addIngredient} */}
             <img className={styles.image} alt={`${name}`} src={mobile ? image_mobile : image} draggable={false} />
             <div className={styles.price}>
                 <span className={`text text_type_main-medium ${styles.money}`}>

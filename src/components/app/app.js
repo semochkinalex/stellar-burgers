@@ -61,7 +61,8 @@ function App() {
         setCookie("token", refreshToken);
         dispatch(getUserInfo(accessToken));
         dispatch(updateAccessToken(accessToken));
-        return history.replace({pathname: "/constructor"});
+        const previousPage = history.location.state ? history.location.state.from.pathname : "/constructor";
+        return history.replace({pathname: previousPage});
       }
       throw new Error("Couldn't refresh token");
     }).catch((message) => console.log(message));
@@ -78,6 +79,9 @@ function App() {
           <Route path="/register">
             <SignUp />
           </Route>
+          <ProtectedRoute path="/ingredients/:id" exact={true}>
+            <IngredientDetails />
+          </ProtectedRoute>
           <ProtectedRoute path="/constructor" exact={true}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />

@@ -11,10 +11,13 @@ export function ProtectedRoute({ children, ...props }) {
           children
         ) : (
           <Redirect
-            to={{
-              pathname: '/login',
-              state: { from: location }
-            }}
+              // Передадим в пропс to не строку, а объект.
+              to={{
+                  // Маршрут, на который произойдёт переадресация
+                  pathname: '/login',
+                  // В from сохраним текущий маршрут
+                  state: { from: location }
+              }}
           />
         )
       }

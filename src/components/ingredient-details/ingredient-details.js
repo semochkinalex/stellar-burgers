@@ -1,12 +1,24 @@
-import styles from './ingredient-details.module.css';
 import { useSelector } from 'react-redux';
+import { useParams } from 'react-router-dom';
+
+import styles from './ingredient-details.module.css';
 
 const IngredientDetails = () => {
-    const inspectedIngredient = useSelector(store => store.inspectedElement.inspectedIngredient);
+    const { id } = useParams();
+    const {inspectedIngredient} = useSelector(store => {
+        return {
+            inspectedIngredient: store.ingredients.buns.find((bun) => bun._id === id)
+            ||
+            store.ingredients.mains.find((main) => main._id === id)
+            ||
+            store.ingredients.sauces.find((sauce) => sauce._id === id)
+        }
+    });
+    console.log(inspectedIngredient);
     if (!inspectedIngredient) return null;
     return (
-        <>
-            <p className="text text_type_main-large">Детали ингредиента</p>
+        <section className={styles.container}>
+        <p className={`text text_type_main-large ${styles.title}`}>Детали ингредиента</p>
             <img className={styles.image} src={inspectedIngredient.image_large} alt={inspectedIngredient.name} />
             <p className={`text text_type_main-medium ${styles.name}`}>
                 {inspectedIngredient.name}
@@ -45,7 +57,7 @@ const IngredientDetails = () => {
                 </p>
                 </li>
             </ul>
-        </>
+        </section>
     );
 }
 
