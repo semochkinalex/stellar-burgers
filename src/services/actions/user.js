@@ -4,7 +4,8 @@ import { getCookie, setCookie } from "../../utils/cookie";
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const UPDATE_ACCESS_TOKEN = 'UPDATE_ACCESS_TOKEN';
 
-export function getUserInfo(token) { // refresh token
+export function getUserInfo(token) { 
+    // refresh token
     return function(dispatch) {
         api.getUserInfo(token)
         .then(({success, user : {name, email}}) => {
@@ -17,9 +18,9 @@ export function getUserInfo(token) { // refresh token
     }
 }
 
-export function changeUserInfo(name, email, token) {
+export function changeUserInfo(name, email, password, token) {
     return function(dispatch) {
-        api.changeUserInfo(name, email, token)
+        api.changeUserInfo(name, email, password, token)
         .then(() => {
             dispatch({
                 type: UPDATE_USER_INFO,

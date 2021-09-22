@@ -1,0 +1,14 @@
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    max-width: 320px;
+    padding-bottom: 50px;
+}
+.confirmation {
+    display: flex;
+    justify-content: flex-end;
+}
+.none {
+    display: none;
+}

@@ -11,8 +11,12 @@ const useFormWithValidation = (initialValue = {}) => {
         setErrors({...errors, [name]: target.validationMessage});
         setIsValid(target.closest("form").checkValidity());
     }
-    // console.log(values);
-    return [values, errors, isValid, handleChange];
+
+    const changeValues = (newData) => {
+        setValues(newData);
+    }
+    
+    return [values, errors, isValid, handleChange, changeValues];
 }
 
 export default useFormWithValidation;

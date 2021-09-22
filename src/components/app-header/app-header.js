@@ -1,15 +1,14 @@
 import menuIcon from '../../images/menuIcon.svg';
 import headerStyles from './app-header.module.css';
 import mobileLogo from '../../images/mobileLogo.svg';
+// import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
+// import { OPEN_HEADER_POPUP } from '../../services/actions/index';
 import HeaderLink from '../header-link/header-link.js';
-import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
-import { OPEN_HEADER_POPUP } from '../../services/actions/index';
-
 import { Logo, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useDispatch, useSelector } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
 
 const AppHeader = () => {
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
     // const isMobileHeader = useSelector(store => store.config.isMobileHeader);
     // const togglePopup = () =>  dispatch({type: OPEN_HEADER_POPUP})

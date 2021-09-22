@@ -21,14 +21,21 @@ class Api {
             return this._handleOriginalResponse(res);
         })
     }
-    changeUserInfo(name, email, token) {
+    changeUserInfo(name, email, password, token) {
+        const userData = {
+            name,
+            email,
+            [password ? 'password' : '']: password,
+        }
+        console.log(userData, password);
+        if (password) userData.password = password;
         return fetch(`${this._baseUrl}/auth/user`, {
             method: "PATCH",
             headers : {
                 'Content-type': 'application/json',
                 "Authorization": token,
             },
-            body: JSON.stringify({email, name})
+            body: JSON.stringify(userData)
         })
     }
     getUserInfo(token) {

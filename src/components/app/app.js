@@ -30,7 +30,7 @@ import styles from './app.module.css';
 import { getUserInfo, updateAccessToken } from '../../services/actions/user';
 import ForgotPassword from '../forgot-password/forgot-password';
 import ResetPassword from '../reset-password/reset-password';
-import UserProfile from '../user-profile/user-profile';
+import UserProfile from '../profile/profile';
 
 function App() {
   const history = useHistory();
@@ -44,12 +44,12 @@ function App() {
   const {width} = useWindowSize();
 
   useEffect(() => {
-      dispatch({type: SWITCH_IS_MOBILE_VALUE, value: width});
-  }, [dispatch, width]);
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   useEffect(() => {
-    if (Boolean(accessToken)) return dispatch(getIngredients());
-  }, [dispatch, accessToken]);
+      dispatch({type: SWITCH_IS_MOBILE_VALUE, value: width});
+  }, [dispatch, width]);
 
   useEffect(() => {
     const oldToken = getCookie("token");
@@ -87,12 +87,12 @@ function App() {
           <Route path="/reset-password" exact={true}>
             <ResetPassword />
           </Route>
-          <ProtectedRoute path="/" exact={true}>
+          <Route path="/" exact={true}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
               <BurgerConstructor />
             </DndProvider>
-          </ProtectedRoute>
+          </Route>
           <ProtectedRoute path="/ingredients/:id" exact={true}>
             <IngredientDetails />
           </ProtectedRoute>
