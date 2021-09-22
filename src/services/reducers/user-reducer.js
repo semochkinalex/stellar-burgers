@@ -7,7 +7,7 @@ const initialState = {
     email: '',
     name: '',
 
-    token: '', // starts with bearer
+    token: null, // starts with bearer
 }
 
 export const userReducer = (state = initialState, action) => {

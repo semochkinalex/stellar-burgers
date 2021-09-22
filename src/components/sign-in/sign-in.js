@@ -24,8 +24,8 @@ const SignIn = () => {
                 setCookie("token", refreshToken);
                 dispatch(updateUserInfo(name, email));
                 dispatch(updateAccessToken(accessToken));
-                const previousPage = history.location.state ? history.location.state.from.pathname : "/constructor";
-                return history.replace({pathname: previousPage});
+                const previousPage = history.location.state ? history.location.state.from.pathname : "/";
+                return history.replace({pathname: previousPage});   
             }
             throw new Error("Error in attemt to login.", message);
         })
@@ -45,7 +45,7 @@ const SignIn = () => {
             </p>
             <div className="m-2"></div>
             <p className={`text text_type_main-default text_color_inactive ${styles.text}`}>
-                Забыли пароль? <Link className={`text text_type_main-default ${styles.link}`} to="/reset-password">Восстановить пароль</Link>
+                Забыли пароль? <Link className={`text text_type_main-default ${styles.link}`} to="/forgot-password">Восстановить пароль</Link>
             </p>
 
         </section>

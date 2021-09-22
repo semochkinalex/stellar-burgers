@@ -1,12 +1,27 @@
 import styles from './user-profile.module.css';
 import useFormWithValidation from '../../utils/use-form';
 import UserProfileInput from '../user-profile-input/user-profile-input';
-import { EmailInput } from '@ya.praktikum/react-developer-burger-ui-components';
-// import { EmailInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { useCallback } from 'react';
+import { changeUserInfo } from '../../services/actions/user';
 
 const UserProfile = () => {
+    const dispatch = useDispatch();
+    const {name, email, token} = useSelector(store => {
+        return {
+            name: store.user.name,
+            email: store.user.email,
+            token: store.user.token,
+        }
+    });
 
-    const [values, errors, isValid, handleChange] = useFormWithValidation();
+    const [values, errors, isValid, handleChange] = useFormWithValidation({name: name, email: email});
+
+    const handleSubmit = useCallback((evt) => {
+        evt.preventDefault();
+        dispatch(changeUserInfo(values.name, values.email, token));
+    }, [values]);
 
     return (
         <section className={styles.profile}>
@@ -25,7 +40,7 @@ const UserProfile = () => {
                         изменить свои персональные данные
                     </p>
             </nav>
-            <form className={styles.form}>
+            <form className={styles.form} onSubmit={handleSubmit}>
                 <UserProfileInput 
                     name={"name"}
                     type={"text"}
@@ -50,6 +65,16 @@ const UserProfile = () => {
                     placeholder={"Пароль"}
                     onChange={handleChange}
                 /> {/* Можно будет вставить RegExp */}
+                <div className={styles.confirmation, (values.name == name && values.email == email ? styles.none : '')}>
+                    <Button type="secondary" size="medium">
+                        Отмена
+                    </Button>
+                    <button type="submit" className={styles.submit}>
+                        <Button type="primary" size="large">
+                            Сохранить
+                        </Button>
+                    </button>
+                </div>
             </form>
             <></> {/* Сделано чтобы расположить по центру меню с формами. Ломается если удалить */}
         </section>

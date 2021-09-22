@@ -4,7 +4,6 @@ import SignIn from '../sign-in/sign-in';
 import SignUp from '../sign-up/sign-up';
 import { DndProvider } from "react-dnd";
 import { useHistory } from 'react-router-dom';
-// import { login } from '../../services/actions/user';
 import { getCookie, setCookie } from '../../utils/cookie';
 import { Switch, Route } from 'react-router-dom';
 import ModalPopup from '../modal-popup/modal-popup';
@@ -28,7 +27,10 @@ import {
 } from '../../services/actions/ingredients';
 
 import styles from './app.module.css';
-import { getNewUserToken, getUserInfo, updateAccessToken } from '../../services/actions/user';
+import { getUserInfo, updateAccessToken } from '../../services/actions/user';
+import ForgotPassword from '../forgot-password/forgot-password';
+import ResetPassword from '../reset-password/reset-password';
+import UserProfile from '../user-profile/user-profile';
 
 function App() {
   const history = useHistory();
@@ -61,7 +63,7 @@ function App() {
         setCookie("token", refreshToken);
         dispatch(getUserInfo(accessToken));
         dispatch(updateAccessToken(accessToken));
-        const previousPage = history.location.state ? history.location.state.from.pathname : "/constructor";
+        const previousPage = history.location.state ? history.location.state.from.pathname : "/";
         return history.replace({pathname: previousPage});
       }
       throw new Error("Couldn't refresh token");
@@ -73,20 +75,29 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <Switch>
-          <Route path="/login">
+        <Route path="/login" exact={true}>
             <SignIn />
           </Route>
-          <Route path="/register">
+          <Route path="/register" exact={true}>
             <SignUp />
           </Route>
-          <ProtectedRoute path="/ingredients/:id" exact={true}>
-            <IngredientDetails />
-          </ProtectedRoute>
-          <ProtectedRoute path="/constructor" exact={true}>
+          <Route path="/forgot-password" exact={true}>
+            <ForgotPassword />
+          </Route>
+          <Route path="/reset-password" exact={true}>
+            <ResetPassword />
+          </Route>
+          <ProtectedRoute path="/" exact={true}>
             <DndProvider backend={HTML5Backend}>
               <BurgerIngredients />
               <BurgerConstructor />
             </DndProvider>
+          </ProtectedRoute>
+          <ProtectedRoute path="/ingredients/:id" exact={true}>
+            <IngredientDetails />
+          </ProtectedRoute>
+          <ProtectedRoute path="/profile" exact={true}>
+            <UserProfile />
           </ProtectedRoute>
         </Switch>
       </main>

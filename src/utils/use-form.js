@@ -1,7 +1,7 @@
 import { useState } from "react";
 
-const useFormWithValidation = () => {
-    const [values, setValues] = useState({});
+const useFormWithValidation = (initialValue = {}) => {
+    const [values, setValues] = useState(initialValue);
     const [errors, setErrors] = useState({});
     const [isValid, setIsValid] = useState(true);
 
@@ -11,7 +11,7 @@ const useFormWithValidation = () => {
         setErrors({...errors, [name]: target.validationMessage});
         setIsValid(target.closest("form").checkValidity());
     }
-
+    // console.log(values);
     return [values, errors, isValid, handleChange];
 }
 

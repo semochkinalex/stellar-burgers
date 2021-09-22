@@ -17,6 +17,21 @@ export function getUserInfo(token) { // refresh token
     }
 }
 
+export function changeUserInfo(name, email, token) {
+    return function(dispatch) {
+        api.changeUserInfo(name, email, token)
+        .then(() => {
+            dispatch({
+                type: UPDATE_USER_INFO,
+                name, email
+            })
+        })
+        .catch((message) => {
+            console.log(message);
+        })
+    }
+}
+
 export function updateUserInfo(name, email) {
     return function(dispatch) {
         dispatch({
