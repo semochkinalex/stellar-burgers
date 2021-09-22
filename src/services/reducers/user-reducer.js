@@ -1,6 +1,7 @@
 import { 
+    LOGOUT,
     UPDATE_USER_INFO,
-    UPDATE_ACCESS_TOKEN
+    UPDATE_ACCESS_TOKEN,
  } from '../actions/user';
 
 const initialState = {
@@ -12,6 +13,9 @@ const initialState = {
 
 export const userReducer = (state = initialState, action) => {
     switch (action.type) {
+        case LOGOUT : {
+            return initialState;
+        }
         case UPDATE_USER_INFO : {
             return {...state, email: action.email, name: action.name};
         }

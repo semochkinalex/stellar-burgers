@@ -1,8 +1,6 @@
 import menuIcon from '../../images/menuIcon.svg';
 import headerStyles from './app-header.module.css';
 import mobileLogo from '../../images/mobileLogo.svg';
-// import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
-// import { OPEN_HEADER_POPUP } from '../../services/actions/index';
 import HeaderLink from '../header-link/header-link.js';
 import { Logo, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 // import { useDispatch, useSelector } from 'react-redux';
@@ -27,9 +25,12 @@ const AppHeader = () => {
 
             <Logo />
 
-            <HeaderLink to="/profile" icon={"profile"}>
-                Лента заказов
-            </HeaderLink>
+            <div className={headerStyles.wrapper}>
+                <HeaderLink to="/profile/edit" icon={"profile"}>
+                    Лента заказов
+                </HeaderLink>
+            </div>
+
         </nav>  
     </header>
     );

@@ -1,6 +1,6 @@
 import styles from './header-popup.module.css';
 import closeIcon from '../../images/closeIcon.svg';
-import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
+// import AppHeaderProfile from '../app-header-profile/app-header-profile.js';
 import burgerIcon from '../../images/burgerIcon.svg';
 import listIcon from '../../images/listIcon.svg';
 
@@ -30,9 +30,9 @@ const HeaderPopup = () => {
             </div>
             <ul className={styles.list}>
                 <li className={styles.element}>
-                    <AppHeaderProfile style={{
+                    {/* <AppHeaderProfile style={{
                        display: 'flex'
-                    }} text="medium" />   
+                    }} text="medium" />    */}
                     {!profileShown ? <ArrowDownIcon type="primary" onClick={toggleProfile} /> : <ArrowUpIcon type="primary" onClick={toggleProfile} />}
                 </li>
                 {

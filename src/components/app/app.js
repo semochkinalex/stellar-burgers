@@ -32,11 +32,18 @@ import ForgotPassword from '../forgot-password/forgot-password';
 import ResetPassword from '../reset-password/reset-password';
 import UserProfile from '../profile/profile';
 
+/*
+  404 страница
+  попапы с сообщениями об ошибке
+  уведомления об успехе
+  suspense (?)
+  анимация загрузки
+*/
+
 function App() {
   const history = useHistory();
   const dispatch = useDispatch();
-  const {accessToken, isOrderPopupOpen, isInspectedElementPopupOpen} = useSelector(state => ({
-    accessToken: state.user.token,
+  const {isOrderPopupOpen, isInspectedElementPopupOpen} = useSelector(state => ({
       isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
       isOrderPopupOpen: state.order.orderPopupOpen,
   }));
@@ -96,7 +103,7 @@ function App() {
           <ProtectedRoute path="/ingredients/:id" exact={true}>
             <IngredientDetails />
           </ProtectedRoute>
-          <ProtectedRoute path="/profile" exact={true}>
+          <ProtectedRoute path="/profile">
             <UserProfile />
           </ProtectedRoute>
         </Switch>

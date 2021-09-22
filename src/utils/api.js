@@ -9,6 +9,19 @@ class Api {
         if (res.ok) return res.json();
         return Promise.reject(`Ошибка: ${res.status}.`)
     }
+    logout(refreshToken, accessToken) {
+        return fetch(`${this._baseUrl}/auth/logout`, {
+            method: "POST",
+            body: JSON.stringify({token: refreshToken}),
+            headers : {
+                'Content-Type': 'application/json',
+                "Authorization": accessToken,
+            }
+        })
+        .then((res) => {
+            return this._handleOriginalResponse(res);
+        })
+    }
     updateToken(token) {
         return fetch(`${this._baseUrl}/auth/token`, {
             method: "POST",

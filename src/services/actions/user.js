@@ -1,8 +1,26 @@
 import api from "../../utils/api";
 import { getCookie, setCookie } from "../../utils/cookie";
 
+export const LOGOUT = 'LOGOUT';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const UPDATE_ACCESS_TOKEN = 'UPDATE_ACCESS_TOKEN';
+
+export function logout(accessToken) { 
+    // refresh token
+    return function(dispatch) {
+        api.logout(getCookie("token"), accessToken)
+        .then(({success}) => {
+            if (success) {
+                setCookie("token", '');
+                return dispatch({type: LOGOUT});
+            }
+            throw new Error("Unable to logout.");
+        })
+        .catch((message) => {
+            console.log(message);
+        });
+    }
+}
 
 export function getUserInfo(token) { 
     // refresh token

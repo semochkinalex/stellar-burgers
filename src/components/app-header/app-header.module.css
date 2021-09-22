@@ -23,6 +23,11 @@
     width: 40px;
     height: 40px;
 }
+.wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+}
 @media screen and (max-width: 1400px) {
     .header {
         justify-content: space-between;
