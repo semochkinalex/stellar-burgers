@@ -1,24 +1,15 @@
-import { useCallback, useEffect } from 'react';
 import api from '../../utils/api';
-import SignIn from '../sign-in/sign-in';
-import SignUp from '../sign-up/sign-up';
-import { DndProvider } from "react-dnd";
-import { useHistory } from 'react-router-dom';
-import { getCookie, setCookie } from '../../utils/cookie';
+import { getCookie } from '../../utils/cookie';
+import { useCallback, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
-import ModalPopup from '../modal-popup/modal-popup';
-import AppHeader from '../app-header/app-header.js';
-import { HTML5Backend } from "react-dnd-html5-backend";
 import useWindowSize from '../../utils/useWindowSize';
-import HeaderPopup from '../header-popup/header-popup.js';
-import OrderDetails from '../order-details/order-details';
+import { useHistory, useLocation } from 'react-router-dom';
 import { CLOSE_ORDER_POPUP } from '../../services/actions/order';
 import { SWITCH_IS_MOBILE_VALUE } from '../../services/actions/index';
 import { ProtectedRoute } from '../protected-route.js/protected-route';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import IngredientDetails from '../ingredient-details/ingredient-details';
 import { CLOSE_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
+
+import { SignIn, SignUp, MainPage, UserProfile, ResetPassword, ForgotPassword, IngredientDetails, ModalPopup, AppHeader, HeaderPopup, OrderDetails } from '../../pages';
 
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -27,10 +18,7 @@ import {
 } from '../../services/actions/ingredients';
 
 import styles from './app.module.css';
-import { getUserInfo, updateAccessToken } from '../../services/actions/user';
-import ForgotPassword from '../forgot-password/forgot-password';
-import ResetPassword from '../reset-password/reset-password';
-import UserProfile from '../profile/profile';
+import { getUserInfo, updateAccessToken, updateToken } from '../../services/actions/user';
 
 /*
   404 страница
@@ -41,11 +29,15 @@ import UserProfile from '../profile/profile';
 */
 
 function App() {
+  const location = useLocation();
+  const background = location.state && location.state.background.pathname == '/';
+  // console.log(background)
   const history = useHistory();
   const dispatch = useDispatch();
-  const {isOrderPopupOpen, isInspectedElementPopupOpen} = useSelector(state => ({
+  const {loggedIn, isOrderPopupOpen, isInspectedElementPopupOpen} = useSelector(state => ({
       isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
       isOrderPopupOpen: state.order.orderPopupOpen,
+      loggedIn: Boolean(state.user.token),
   }));
 
   const {width} = useWindowSize();
@@ -63,18 +55,15 @@ function App() {
     if (oldToken) return attemptLogin(oldToken);
   }, []);
 
+  useEffect(() => {
+    if (loggedIn) {
+      const previousPage = history.location.state?.from?.pathname ? history.location.state.from.pathname : "/";
+      return history.replace({pathname: previousPage});
+    }
+  }, [loggedIn])
+
   const attemptLogin = useCallback(refreshToken => {
-    api.updateToken(refreshToken)
-    .then(({success, accessToken, refreshToken}) => {
-      if (success) {
-        setCookie("token", refreshToken);
-        dispatch(getUserInfo(accessToken));
-        dispatch(updateAccessToken(accessToken));
-        const previousPage = history.location.state ? history.location.state.from.pathname : "/";
-        return history.replace({pathname: previousPage});
-      }
-      throw new Error("Couldn't refresh token");
-    }).catch((message) => console.log(message));
+    dispatch(updateToken(refreshToken));
   }, [history, dispatch, api]);
 
   return (
@@ -82,7 +71,7 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <Switch>
-        <Route path="/login" exact={true}>
+          <Route path="/login" exact={true}>
             <SignIn />
           </Route>
           <Route path="/register" exact={true}>
@@ -94,18 +83,15 @@ function App() {
           <Route path="/reset-password" exact={true}>
             <ResetPassword />
           </Route>
-          <Route path="/" exact={true}>
-            <DndProvider backend={HTML5Backend}>
-              <BurgerIngredients />
-              <BurgerConstructor />
-            </DndProvider>
-          </Route>
-          <ProtectedRoute path="/ingredients/:id" exact={true}>
-            <IngredientDetails />
-          </ProtectedRoute>
           <ProtectedRoute path="/profile">
             <UserProfile />
           </ProtectedRoute>
+          {!background && <Route path="/ingredients/:id" exact={true}>
+            <IngredientDetails />
+          </Route>}
+          <Route path="/">
+            <MainPage />
+          </Route>
         </Switch>
       </main>
       {isOrderPopupOpen &&
@@ -114,10 +100,13 @@ function App() {
         </ModalPopup>
       }
 
-      {isInspectedElementPopupOpen && 
-      <ModalPopup actionType={CLOSE_INSPECTED_INGREDIENT}>
-        <IngredientDetails />
-      </ModalPopup>}
+      {background && 
+      <Route path="/ingredients/:id" exact={true}>
+        <ModalPopup actionType={CLOSE_INSPECTED_INGREDIENT}>
+            <IngredientDetails />
+        </ModalPopup>
+      </Route>
+      }
 
       <HeaderPopup />
     </>

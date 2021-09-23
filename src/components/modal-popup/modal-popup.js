@@ -1,11 +1,14 @@
 import PropTypes from 'prop-types';
 import {memo, useEffect} from 'react';
+import {useHistory} from 'react-router-dom';
 import styles from './modal-popup.module.css';
 import ModalOverlay from '../modal-overlay/modal-overlay';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
+import { CLOSE_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
 
 const ModalPopup = memo(({actionType, children}) => {
+    const history = useHistory();
     const dispatch = useDispatch();  
     
     useEffect(() => {
@@ -18,7 +21,8 @@ const ModalPopup = memo(({actionType, children}) => {
     }
 
     const onClose = () => {
-        dispatch({type: actionType});
+        if (actionType !== CLOSE_INSPECTED_INGREDIENT) return dispatch({type: actionType});
+        history.replace({pathname: "/"});
     }
 
     return (

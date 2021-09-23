@@ -6,7 +6,6 @@ export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const UPDATE_ACCESS_TOKEN = 'UPDATE_ACCESS_TOKEN';
 
 export function logout(accessToken) { 
-    // refresh token
     return function(dispatch) {
         api.logout(getCookie("token"), accessToken)
         .then(({success}) => {
@@ -19,6 +18,20 @@ export function logout(accessToken) {
         .catch((message) => {
             console.log(message);
         });
+    }
+}
+
+export function updateToken(refreshToken) { 
+    return function(dispatch) {
+        api.updateToken(refreshToken)
+        .then(({success, accessToken, refreshToken}) => {
+          if (success) {
+            setCookie("token", refreshToken);
+            dispatch(getUserInfo(accessToken));
+            return dispatch(updateAccessToken(accessToken));
+          }
+          throw new Error("Couldn't refresh token");
+        }).catch((message) => console.log(message));
     }
 }
 
