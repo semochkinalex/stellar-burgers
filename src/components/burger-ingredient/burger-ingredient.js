@@ -1,16 +1,12 @@
-import { useCallback } from 'react';
 import { useDrag } from "react-dnd";
-import { useHistory, Link, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 import styles from './burger-ingredient.module.css';
 import { IngredientPropTypes } from '../../utils/prop-types';
 import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
-import { OPEN_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
 
 const BurgerIngredient = ({ingredient}) => {
-    // const history = useHistory();
     const location = useLocation();
-    // const dispatch = useDispatch();
     const {name, price, type, image, image_mobile, _id} = ingredient;
     const {mobile, count} = useSelector(store => ({
         count: type === "bun" ? store.burger.bun._id === _id && 2 : store.burger.ingredients.filter(ingredient => ingredient._id === _id).length, // mb not the best decision 
@@ -24,11 +20,6 @@ const BurgerIngredient = ({ingredient}) => {
             isDragging: monitor.isDragging(),
         })
     });
-
-    // const handleInspect = useCallback(() => {
-    //     dispatch({type: OPEN_INSPECTED_INGREDIENT, ingredient: ingredient});
-    //     history.push("/ingredients/" + _id);
-    // }, [dispatch])
 
     return (
         <Link to={{pathname: `/ingredients/${_id}`, state: { background: location}}} className={styles.link}>

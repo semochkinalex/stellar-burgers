@@ -1,9 +1,19 @@
 import {Tab} from '../tab/tab';
 import styles from './burger-ingredients.module.css';
-import IngredientsCategory from '../ingredients-category/ingredients-category';
 import { useRef, useState, memo, useCallback } from 'react';
+import { useSelector } from 'react-redux';
+import BurgerSkeletons from '../burger-skeletons/burger-skeletons';
+import IngredientsCategory from '../ingredients-category/ingredients-category';
 
 const BurgerIngredients = memo(() => {
+
+    const {ingredientsRequestSent, ingredientsRequestFailed} = useSelector(store => {
+      return {
+        ingredientsRequestSent: store.ingredients.ingredientsRequestSent,
+        ingredientsRequestFailed: store.ingredients.ingredientsRequestFailed,
+      }
+    })
+
     const bunsRef = useRef(null);
     const sauceRef = useRef(null);
     const mainRef = useRef(null);
@@ -15,6 +25,7 @@ const BurgerIngredients = memo(() => {
     }, []);
     
     const handleScroll = () => {
+      if (ingredientsRequestSent || ingredientsRequestFailed) return;
       const buns = bunsRef.current.getBoundingClientRect();
       const sauces = sauceRef.current.getBoundingClientRect();
       buns.y <= 0 ? (sauces.y <= 0 ? setSelectedMeal('main') : setSelectedMeal('sauce')): setSelectedMeal('buns');
@@ -37,9 +48,18 @@ const BurgerIngredients = memo(() => {
               </Tab>
             </div>
             <section className={styles.page} id="ingredient-scroll" onScroll={handleScroll}>
-                <IngredientsCategory title="Булки" ref={bunsRef} />
-                <IngredientsCategory title="Соусы" ref={sauceRef} />
-                <IngredientsCategory title="Начинки" ref={mainRef} />
+                {!ingredientsRequestSent  && !ingredientsRequestFailed ? 
+                <>
+                  <IngredientsCategory title="Булки" ref={bunsRef} />
+                  <IngredientsCategory title="Соусы" ref={sauceRef} />
+                  <IngredientsCategory title="Начинки" ref={mainRef} />
+                </>
+                :
+                ingredientsRequestSent ?
+                  <BurgerSkeletons /> // Network throttling to see effect :DDDD
+                :
+                <p>Fail</p>
+                }
             </section>
         </section>
     );
