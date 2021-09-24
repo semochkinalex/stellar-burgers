@@ -1,3 +1,13 @@
+@keyframes skeleton-loading {
+    0% {
+        background-color: #801AB2;
+      }
+    
+      100% {
+        background-color: #4C4CFF;
+      }
+}
+  
 .id {
     margin: 40px 0 20px;
     text-align: center;
@@ -16,4 +26,32 @@
 }
 .text:last-of-type {
     margin-bottom: 40px;
+}
+.s {
+    border-radius: 3px;
+    color: transparent;
+    animation: skeleton-loading 1s linear infinite alternate;
+}
+.id-s {
+    composes: s;
+    border-radius: 20px;
+    margin: auto;
+    text-align: center;
+    height: 170px;
+    width: 200px;
+}
+.identification-s {
+    composes: s;
+    width: 80%;
+    height: 30px;
+    margin: 30px auto;
+}
+.text-s {
+    composes: s;
+    height: 25px;
+    margin: 0 auto 15px;
+    width: 60%;
+}
+.text-s:last-child {
+    width: 50%;
 }

@@ -22,7 +22,7 @@ export const orderReducer = (state = initialState, action) => {
             return {...state, orderPopupOpen: true, orderData: action.order, orderRequestFailed: false, orderRequestSent: false};
         }
         case ORDER_REQUEST_PENDING : {
-            return {...state, orderRequestFailed: false, orderRequestSent: true}
+            return {...state, orderRequestFailed: false, orderRequestSent: true, orderPopupOpen: true} // Will show skeleton ui when pending
         }
         case ORDER_REQUEST_FAIL : {
             return {...state, orderRequestFailed: true, orderRequestSent: false}
