@@ -1,8 +1,8 @@
-import menuIcon from '../../images/menuIcon.svg';
+// import menuIcon from '../../images/menuIcon.svg';
+// import mobileLogo from '../../images/mobileLogo.svg';
 import headerStyles from './app-header.module.css';
-import mobileLogo from '../../images/mobileLogo.svg';
 import HeaderLink from '../header-link/header-link.js';
-import { Logo, BurgerIcon, ListIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
 // import { useDispatch, useSelector } from 'react-redux';
 
 const AppHeader = () => {

@@ -18,7 +18,7 @@ import {
 } from '../../services/actions/ingredients';
 
 import styles from './app.module.css';
-import { getUserInfo, updateAccessToken, updateToken } from '../../services/actions/user';
+import { updateToken } from '../../services/actions/user';
 
 /*
   404 страница
@@ -30,11 +30,11 @@ import { getUserInfo, updateAccessToken, updateToken } from '../../services/acti
 
 function App() {
   const location = useLocation();
-  const background = location.state && location.state.background.pathname == '/';
-  // console.log(background)
+  const background = location.state && location.state?.background;
+  console.log(location.state);
   const history = useHistory();
   const dispatch = useDispatch();
-  const {loggedIn, isOrderPopupOpen, isInspectedElementPopupOpen} = useSelector(state => ({
+  const {loggedIn, isOrderPopupOpen} = useSelector(state => ({
       isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
       isOrderPopupOpen: state.order.orderPopupOpen,
       loggedIn: Boolean(state.user.token),
@@ -94,6 +94,7 @@ function App() {
           </Route>
         </Switch>
       </main>
+
       {isOrderPopupOpen &&
         <ModalPopup actionType={CLOSE_ORDER_POPUP}>
           <OrderDetails />

@@ -1,5 +1,5 @@
 import api from '../../utils/api';
-import {Link} from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import UserForm from '../user-form/user-form';
 import styles from './reset-password.module.css';
 import useFormWithValidation from '../../utils/use-form';
@@ -7,11 +7,15 @@ import { PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-co
 import { useCallback } from 'react';
 
 const ResetPassword = () => {
+    const history = useHistory();
     const [values, errors, isValid, handleChange] = useFormWithValidation();
 
     const handleSubmit = useCallback((evt) => {
         evt.preventDefault();
-        api.resetPassword(values.password, values.code);
+        api.resetPassword(values.password, values.code)
+        .then(({success}) => {
+            if (success) return history.push("/login");
+        })
     }, [values])
 
     return (
