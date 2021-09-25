@@ -1,6 +1,5 @@
 import { useSelector } from 'react-redux';
 import { useParams, useHistory } from 'react-router-dom';
-import ModalOverlay from '../modal-overlay/modal-overlay';
 
 import styles from './ingredient-details.module.css';
 

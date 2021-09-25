@@ -1,8 +1,8 @@
-import UserProfile from '../components/profile/profile';
-import SignIn from '../components/sign-in/sign-in';
-import SignUp from '../components/sign-up/sign-up';
-import ResetPassword from '../components/reset-password/reset-password';
-import ForgotPassword from '../components/forgot-password/forgot-password';
+import UserProfile from './profile/profile';
+import SignIn from './sign-in/sign-in';
+import SignUp from './sign-up/sign-up';
+import ResetPassword from './reset-password/reset-password';
+import ForgotPassword from './forgot-password/forgot-password';
 import IngredientDetails from '../components/ingredient-details/ingredient-details';
 
 import ModalPopup from '../components/modal-popup/modal-popup';

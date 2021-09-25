@@ -58,7 +58,7 @@ const BurgerIngredients = memo(() => {
                 ingredientsRequestSent ?
                   <BurgerSkeletons /> // Network throttling to see effect :DDDD
                 :
-                  <BurgerSkeletons /> // 
+                  <BurgerSkeletons /> 
                 }
             </section>
         </section>

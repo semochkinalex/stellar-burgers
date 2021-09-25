@@ -1,7 +1,7 @@
 import styles from './profile.module.css';
 import { useCallback, useEffect } from 'react';
 import { Switch, NavLink, Route } from 'react-router-dom';
-import ProfileEdit from '../profile-edit/profile-edit';
+import ProfileEdit from '../../components/profile-edit/profile-edit';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeUserInfo, logout } from '../../services/actions/user';
 

@@ -29,10 +29,10 @@ import { updateToken } from '../../services/actions/user';
 */
 
 function App() {
-  const location = useLocation();
-  const background = location.state && location.state?.background;
-  console.log(location.state);
   const history = useHistory();
+  const location = useLocation();
+  const background = (history.action === "PUSH" || history.action === "REPLACE") && location.state && location.state?.background;
+  
   const dispatch = useDispatch();
   const {loggedIn, isOrderPopupOpen} = useSelector(state => ({
       isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,

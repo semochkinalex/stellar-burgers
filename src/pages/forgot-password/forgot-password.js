@@ -1,6 +1,6 @@
 import api from '../../utils/api';
 import {Link, useHistory} from 'react-router-dom';
-import UserForm from '../user-form/user-form';
+import UserForm from '../../components/user-form/user-form';
 import styles from './forgot-password.module.css';
 import useFormWithValidation from '../../utils/use-form';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';

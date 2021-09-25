@@ -2,7 +2,7 @@ import api from '../../utils/api';
 import {useDispatch} from 'react-redux';
 import { Link } from 'react-router-dom';
 import styles from './sign-up.module.css';
-import UserForm from '../user-form/user-form';
+import UserForm from '../../components/user-form/user-form';
 import { useHistory } from 'react-router-dom';
 import { setCookie } from '../../utils/cookie';
 import useFormWithValidation from '../../utils/use-form';
