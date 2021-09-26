@@ -1,64 +1,115 @@
-import { useEffect } from 'react';
-import { DndProvider } from "react-dnd";
-import ModalPopup from '../modal-popup/modal-popup';
-import AppHeader from '../app-header/app-header.js';
-import { HTML5Backend } from "react-dnd-html5-backend";
-import HeaderPopup from '../header-popup/header-popup.js';
-import OrderDetails from '../order-details/order-details';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
-import BurgerIngredients from '../burger-ingredients/burger-ingredients';
-import IngredientDetails from '../ingredient-details/ingredient-details';
+import api from '../../utils/api';
+import { getCookie } from '../../utils/cookie';
+import { useCallback, useEffect } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import useWindowSize from '../../utils/useWindowSize';
-import { SWITCH_IS_MOBILE_VALUE } from '../../services/actions/index';
+import { useHistory, useLocation } from 'react-router-dom';
 import { CLOSE_ORDER_POPUP } from '../../services/actions/order';
+import { SWITCH_IS_MOBILE_VALUE } from '../../services/actions/index';
+import { ProtectedRoute } from '../protected-route.js/protected-route';
 import { CLOSE_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
 
+import { SignIn, SignUp, MainPage, UserProfile, ResetPassword, ForgotPassword, IngredientDetails, ModalPopup, AppHeader, HeaderPopup, OrderDetails } from '../../pages';
+
 import { useDispatch, useSelector } from 'react-redux';
+
 import {
   getIngredients
 } from '../../services/actions/ingredients';
 
 import styles from './app.module.css';
+import { updateToken } from '../../services/actions/user';
+
+/*
+  404 страница
+  попапы с сообщениями об ошибке
+  уведомления об успехе
+  suspense (?)
+  анимация загрузки
+*/
 
 function App() {
+  const history = useHistory();
+  const location = useLocation();
+  const background = (history.action === "PUSH" || history.action === "REPLACE") && location.state && location.state?.background;
+  
   const dispatch = useDispatch();
-  const {isInspectedElementPopupOpen, isOrderPopupOpen} = useSelector(state => ({
+  const {loggedIn, isOrderPopupOpen} = useSelector(state => ({
       isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
       isOrderPopupOpen: state.order.orderPopupOpen,
+      loggedIn: Boolean(state.user.token),
   }));
 
   const {width} = useWindowSize();
+
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   useEffect(() => {
       dispatch({type: SWITCH_IS_MOBILE_VALUE, value: width});
   }, [dispatch, width]);
 
   useEffect(() => {
-      dispatch(getIngredients());
-  }, [dispatch])
+    const oldToken = getCookie("token");
+    if (oldToken) return attemptLogin(oldToken);
+  }, []);
+
+  useEffect(() => {
+    if (loggedIn) {
+      const previousPage = history.location.state?.from?.pathname ? history.location.state.from.pathname : "/";
+      return history.replace({pathname: previousPage});
+    }
+  }, [loggedIn])
+
+  const attemptLogin = useCallback(refreshToken => {
+    dispatch(updateToken(refreshToken));
+  }, [history, dispatch, api]);
 
   return (
     <>
+      <AppHeader />
+      <main className={styles.main}>
+        <Switch>
+          <Route path="/login" exact={true}>
+            <SignIn />
+          </Route>
+          <Route path="/register" exact={true}>
+            <SignUp />
+          </Route>
+          <Route path="/forgot-password" exact={true}>
+            <ForgotPassword />
+          </Route>
+          <Route path="/reset-password" exact={true}>
+            <ResetPassword />
+          </Route>
+          <ProtectedRoute path="/profile">
+            <UserProfile />
+          </ProtectedRoute>
+          {!background && <Route path="/ingredients/:id" exact={true}>
+            <IngredientDetails />
+          </Route>}
+          <Route path="/">
+            <MainPage />
+          </Route>
+        </Switch>
+      </main>
+
       {isOrderPopupOpen &&
         <ModalPopup actionType={CLOSE_ORDER_POPUP}>
           <OrderDetails />
         </ModalPopup>
       }
 
-      {isInspectedElementPopupOpen && 
-      <ModalPopup actionType={CLOSE_INSPECTED_INGREDIENT}>
-        <IngredientDetails />
-      </ModalPopup>}
+      {background && 
+      <Route path="/ingredients/:id" exact={true}>
+        <ModalPopup actionType={CLOSE_INSPECTED_INGREDIENT}>
+            <IngredientDetails />
+        </ModalPopup>
+      </Route>
+      }
 
       <HeaderPopup />
-
-      <AppHeader />
-      <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <BurgerIngredients />
-          <BurgerConstructor />
-        </DndProvider>
-      </main>
     </>
   );
 }
