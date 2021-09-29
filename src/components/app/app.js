@@ -19,6 +19,7 @@ import {
 
 import styles from './app.module.css';
 import { updateToken } from '../../services/actions/user';
+import Feed from '../../pages/feed/feed';
 
 /*
   404 страница
@@ -76,6 +77,9 @@ function App() {
           </Route>
           <Route path="/register" exact={true}>
             <SignUp />
+          </Route>
+          <Route path="/feed" exact={true}>
+            <Feed />
           </Route>
           <Route path="/forgot-password" exact={true}>
             <ForgotPassword />

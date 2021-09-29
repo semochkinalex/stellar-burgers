@@ -3,7 +3,6 @@ import styles from './burger-skeletons.module.css';
 
 const BurgerSkeletons = () => {
     const array = Array(4).fill(null).map((u, i) => i);
-    console.log(array);
     return (
         <>
             <span className={styles.title}>qwdqwdqwd</span>
