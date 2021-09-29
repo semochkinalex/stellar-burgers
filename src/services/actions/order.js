@@ -2,12 +2,36 @@ import api from '../../utils/api';
 import { RESET_BURGER } from './constructor';
 export const OPEN_ORDER_POPUP = 'OPEN_ORDER_POPUP';
 export const CLOSE_ORDER_POPUP = 'CLOSE_ORDER_POPUP';
-export const ORDER_REQUEST_PENDING = 'ORDER_REQUEST_PENDING';
-export const ORDER_REQUEST_FAIL = 'ORDER_REQUEST_FAIL';
+export const ORDER_POPUP_REQUEST_PENDING = 'ORDER_POPUP_REQUEST_PENDING';
+export const ORDER_POPUP_REQUEST_FAIL = 'ORDER_POPUP_REQUEST_FAIL';
+
+export const ORDERS_REQUEST_SUCCESS = 'ORDERS_REQUEST_SUCCESS';
+export const ORDERS_REQUEST_FAIL =  'ORDERS_REQUEST_FAIL';
+export const ORDERS_REQUEST_PENDING = 'ORDERS_REQUEST_PENDING';
+
+export function getInitialOrders() {
+    return function(dispatch) {
+        dispatch({type: ORDERS_REQUEST_PENDING});
+        api.getInitialOrders()
+        .then((res) => {
+            if (res && res.success) {
+                return dispatch({
+                    type: ORDERS_REQUEST_SUCCESS,
+                    orders: res.orders,
+                })
+            }
+            throw new Error("Произошла ошибка при получении списка заказов.")
+        })
+        .catch((err) => {
+          console.log(err);
+          dispatch({type: ORDERS_REQUEST_FAIL});
+        })
+    };
+}
 
 export function handleOrder(ingredients, bun) {
     return function(dispatch) {
-        dispatch({type: ORDER_REQUEST_PENDING});
+        dispatch({type: ORDER_POPUP_REQUEST_PENDING});
         const data = ingredients.concat([bun, bun]).map((e) => e._id);
         api.handleOrder(data)
         .then((res) => {
@@ -23,7 +47,7 @@ export function handleOrder(ingredients, bun) {
         })
         .catch((err) => {
           console.log(err);
-          dispatch({type: ORDER_REQUEST_FAIL});
+          dispatch({type: ORDER_POPUP_REQUEST_FAIL});
         })
     };
 }

@@ -1,0 +1,21 @@
+.element {
+    position: relative;
+    display: flex;
+    list-style-type: none;
+    width: 50px;
+    height: 50px;
+
+    border: solid 2px transparent;
+    border-radius: 50%;
+    background-image: linear-gradient(#1C1C21,#1C1C21), 
+                      linear-gradient(to right, #801AB2, #4C4CFF);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    right: 10px;
+}
+
+.image {
+    width: 48px;
+    height: 48px;
+    object-fit: cover; 
+}

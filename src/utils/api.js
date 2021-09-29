@@ -1,5 +1,3 @@
-import { getCookie } from "./cookie";
-
 class Api {
     constructor(baseUrl) {
         this._baseUrl = baseUrl;
@@ -67,6 +65,12 @@ class Api {
         .then((res) => {
             return this._handleOriginalResponse(res);
         });
+    }
+    getInitialOrders() {
+        return fetch(`${this._baseUrl}/orders/all`)
+        .then((res) => {
+            return this._handleOriginalResponse(res);
+        })
     }
     
     handleOrder(ingredients) {
