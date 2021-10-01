@@ -15,17 +15,15 @@ const Statistics = () => {
 
     const {doneOrders, pendingOrders} = useSelector(store => {
         return {
-            doneOrders: resizeArray(store.order.orders.filter((order) => order.status === "done").map((order) => order.number), 10),
-            pendingOrders: resizeArray(store.order.orders.filter((order) => order.status !== "done").map((order) => order.number), 10),
+            doneOrders: resizeArray(store.orders.orders.filter((order) => order.status === "done").map((order) => order.number), 10),
+            pendingOrders: resizeArray(store.orders.orders.filter((order) => order.status !== "done").map((order) => order.number), 10),
         }
     })
 
-    console.log(doneOrders, pendingOrders)
-
     const {total, totalToday} = useSelector(store => {
         return {
-            total: store.order.total,
-            totalToday: store.order.totalToday,
+            total: store.orders.total,
+            totalToday: store.orders.totalToday,
         }
     })
 
@@ -35,8 +33,8 @@ const Statistics = () => {
                 <OrdersCollection title={"Готовы"} list={doneOrders} extraClassName={styles.green} />
                 <OrdersCollection title={"В работе"} list={pendingOrders} />
             </div>
-            <DigitDisplay title={"Выполнено за все время:"} number={total} />
-            <DigitDisplay title={"Выполнено за сегодня:"} number={totalToday} />
+            <DigitDisplay title={"Выполнено за все время:"} number={total || 0} />
+            <DigitDisplay title={"Выполнено за сегодня:"} number={totalToday || 0} />
         </section>
     );
 }

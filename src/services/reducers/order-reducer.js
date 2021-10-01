@@ -17,11 +17,11 @@ const initialState = {
     orderRequestSent: false,
     orderRequestFailed: false,
 
-    orders: [],
-    total: null,
-    totalToday: null,
-    ordersRequestSent: false,
-    ordersRequestFailed: false,
+    // orders: [],
+    // total: null,
+    // totalToday: null,
+    // ordersRequestSent: false,
+    // ordersRequestFailed: false,
 }
 
 export const orderReducer = (state = initialState, action) => {
@@ -38,15 +38,15 @@ export const orderReducer = (state = initialState, action) => {
         case CLOSE_ORDER_POPUP : {
             return {...state, orderPopupOpen: false};
         }
-        case ORDERS_REQUEST_PENDING : {
-            return {...state, ordersRequestSent: true, orderRequestFailed: false};
-        }
-        case ORDERS_REQUEST_FAIL : {
-            return {...state, ordersRequestSent: false, orderRequestFailed: true};
-        }
-        case ORDERS_REQUEST_SUCCESS : {
-            return {...state, orders: action.orders, total: action.total, totalToday: action.totalToday};
-        }
+        // case ORDERS_REQUEST_PENDING : {
+        //     return {...state, ordersRequestSent: true, orderRequestFailed: false};
+        // }
+        // case ORDERS_REQUEST_FAIL : {
+        //     return {...state, ordersRequestSent: false, orderRequestFailed: true};
+        // }
+        // case ORDERS_REQUEST_SUCCESS : {
+        //     return {...state, orders: action.orders, total: action.total, totalToday: action.totalToday};
+        // }
         default: 
             return state;   
     }

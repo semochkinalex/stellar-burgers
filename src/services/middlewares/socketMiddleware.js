@@ -1,4 +1,4 @@
-import { updateFeed } from '../actions/order';
+import { updateFeed } from '../actions/orders';
 import {
     WS_CONNECTION_START,
     WS_CONNECTION_SUCCESS,
