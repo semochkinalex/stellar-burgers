@@ -15,10 +15,7 @@ export function getInitialOrders() {
         api.getInitialOrders()
         .then((res) => {
             if (res && res.success) {
-                return dispatch({
-                    type: ORDERS_REQUEST_SUCCESS,
-                    orders: res.orders,
-                })
+                return dispatch(updateFeed(res.orders, res.total, res.totalToday));
             }
             throw new Error("Произошла ошибка при получении списка заказов.")
         })
@@ -26,6 +23,17 @@ export function getInitialOrders() {
           console.log(err);
           dispatch({type: ORDERS_REQUEST_FAIL});
         })
+    };
+}
+
+export function updateFeed(orders, total, totalToday) {
+    return function(dispatch) {
+        dispatch({
+            type: ORDERS_REQUEST_SUCCESS,
+            orders: orders,
+            total: total,
+            totalToday: totalToday,
+        });
     };
 }
 

@@ -1,11 +1,13 @@
 .container {
-    padding: 0;
+    padding: 0 8px 0 0;
     height: fit-content;
     overflow-y: scroll;
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
     gap: 16px;
+    height: fit-content;
+    max-height: 80vh;
 }
 .container::-webkit-scrollbar {
     width: 8px;

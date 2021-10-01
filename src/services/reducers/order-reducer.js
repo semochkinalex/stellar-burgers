@@ -18,6 +18,8 @@ const initialState = {
     orderRequestFailed: false,
 
     orders: [],
+    total: null,
+    totalToday: null,
     ordersRequestSent: false,
     ordersRequestFailed: false,
 }
@@ -43,7 +45,7 @@ export const orderReducer = (state = initialState, action) => {
             return {...state, ordersRequestSent: false, orderRequestFailed: true};
         }
         case ORDERS_REQUEST_SUCCESS : {
-            return {...state, orders: action.orders};
+            return {...state, orders: action.orders, total: action.total, totalToday: action.totalToday};
         }
         default: 
             return state;   

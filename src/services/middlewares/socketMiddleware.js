@@ -1,3 +1,4 @@
+import { updateFeed } from '../actions/order';
 import {
     WS_CONNECTION_START,
     WS_CONNECTION_SUCCESS,
@@ -24,62 +25,21 @@ export const socketMiddleware = () => {
             socket.onopen = event => {
                 dispatch({type: WS_CONNECTION_SUCCESS, payload: event});
             }
-        } 
-        if (socket) {
+        
             socket.onclose = event => {
                 dispatch({ type: WS_CONNECTION_CLOSED, payload: event });
             };
-        }
-
-        if (socket) {
+        
             socket.onerror = event => {
                 dispatch({ type: WS_CONNECTION_ERROR, payload: event });
             };
-        }
-
-        if (socket) {
+        
             socket.onmessage = event => {
-                const { data } = event;
-                const parsedData = JSON.parse(data);
-                console.log(parsedData);
-                // const { success, ...restParsedData } = parsedData;
-      
-                // dispatch({ type: onMessage, payload: restParsedData });
+                console.log("ONMESSAGE");
+                const {success, orders = [], total = 0, totalToday = 0} = JSON.parse(event.data);
+                success && dispatch(updateFeed(orders, total, totalToday));
             };
-        }
-
-        // console.log(url);
-        // console.log(token);
-
-        // if (type === wsInit && user) {
-        //   socket = new WebSocket(`${wsUrl}?token=${token}`);
-        // }
-        // if (socket) {
-        //   socket.onopen = event => {
-        //     dispatch({ type: onOpen, payload: event });
-        //   };
-  
-        //   socket.onerror = event => {
-        //     dispatch({ type: onError, payload: event });
-        //   };
-  
-        //   socket.onmessage = event => {
-        //     const { data } = event;
-        //     const parsedData = JSON.parse(data);
-        //     const { success, ...restParsedData } = parsedData;
-  
-        //     dispatch({ type: onMessage, payload: restParsedData });
-        //   };
-  
-        //   socket.onclose = event => {
-        //     dispatch({ type: onClose, payload: event });
-        //   };
-  
-        //   if (type === wsSendMessage) {
-        //     const message = { ...payload, token: user.token };
-        //     socket.send(JSON.stringify(message));
-        //   }
-        // }
+        }   
   
         next(action);
       };
