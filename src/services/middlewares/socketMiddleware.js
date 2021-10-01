@@ -13,10 +13,11 @@ export const socketMiddleware = () => {
         const { dispatch, getState} = store;
         const { type, payload } = action;
 
-        const { token } = getState().user; // token is with bearer  
+        const user = getState().user; // token is with bearer  
 
-        if (type === WS_CONNECTION_START) {
-            socket = new WebSocket(payload); // payload = url
+        if (user.token && type === WS_CONNECTION_START) {
+            socket = new WebSocket(payload);
+            // socket = new WebSocket(`${payload}?token=${user?.token.split(" ")[1]}`); // payload = url
         }
 
         if (socket) {

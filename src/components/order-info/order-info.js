@@ -24,17 +24,22 @@ const OrderInfo = memo(({order : {status, name, number, ingredients, createdAt}}
                 {createdAt}
             </p>
             <h3 className={`text text_type_main-medium ${styles.name}`}>{name}</h3>
-            {/* ingredients */}
             <ul className={styles.ingredients}>
                 {
                     ingredientsData.map((ingredient, i) => {
-                        // Потом доверстаю нормально
-                        return <IngredientIcon ingredient={ingredient} index={i} key={i} />
+                        return i < 7 || ingredientsData.length === 8 ?
+                        <IngredientIcon ingredient={ingredient} index={i} key={i} />
+                        :
+                        i === 8 ?
+                        <IngredientIcon ingredient={ingredient} index={i} key={i} last={true} size={ingredientsData.length} />
+                        :
+                        null;
                     })
                 }
             </ul>
             <span className={`text text_type_digits-medium ${styles.price}`}>{
-                ingredientsData.reduce((acc, ingredient) => acc + ingredient.price, 0)
+                // ingredientsData.reduce((acc, ingredient) => acc + ingredient.price, 0)
+                0
             }</span>
         </li>
     );

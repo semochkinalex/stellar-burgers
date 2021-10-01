@@ -27,7 +27,7 @@ const AppHeader = () => {
 
             <div className={headerStyles.wrapper}>
                 <HeaderLink to="/profile/edit" icon={"profile"}>
-                    Лента заказов
+                    Личный профиль
                 </HeaderLink>
             </div>
 
