@@ -2,9 +2,10 @@ import { memo, useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
 import styles from './order-info.module.css';
-import {useRouteMatch, Link} from 'react-router-dom';
+import {useRouteMatch, Link, useLocation} from 'react-router-dom';
 
 const OrderInfo = memo(({order : {name, number, ingredients, createdAt, _id}}) => {
+    const location = useLocation();
     const { url } = useRouteMatch();
     
     const { initialIngredients } = useSelector(store => {
@@ -19,7 +20,7 @@ const OrderInfo = memo(({order : {name, number, ingredients, createdAt, _id}}) =
     }, [ingredients]);
 
     return (
-        <Link to={{pathname: `${url}/${_id}`}} style={{ textDecoration: 'none' }}>
+        <Link to={{pathname: `${url}/${_id}`, state: { background: location}}} style={{ textDecoration: 'none' }}>
             <li className={styles.order}>
                 <p className={`text text_type_digits-default ${styles.id}`}>
                     #{number}
@@ -32,10 +33,10 @@ const OrderInfo = memo(({order : {name, number, ingredients, createdAt, _id}}) =
                     {
                         ingredientsData.map((ingredient, i) => {
                             return i < 7 || ingredientsData.length === 8 ?
-                            <IngredientIcon ingredient={ingredient} index={i} key={i} />
+                            <li className={styles.element} style={{right: `${10*i}px`}} key={i}><IngredientIcon ingredient={ingredient} /></li>
                             :
                             i === 8 ?
-                            <IngredientIcon ingredient={ingredient} index={i} key={i} last={true} size={ingredientsData.length} />
+                            <li className={styles.element} style={{right: `${10*i}px`}} key={i}><IngredientIcon ingredient={ingredient} last={true} size={ingredientsData.length} /></li>
                             :
                             null;
                         })

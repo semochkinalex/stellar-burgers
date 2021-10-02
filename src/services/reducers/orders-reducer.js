@@ -2,6 +2,8 @@ import {
     ORDERS_REQUEST_PENDING,
     ORDERS_REQUEST_FAIL,
     ORDERS_REQUEST_SUCCESS,
+    OPEN_ORDER_SUMMARY_POPUP,
+    CLOSE_ORDER_SUMMARY_POPUP
  } from '../actions/orders';
 
 const initialState = {
@@ -10,6 +12,8 @@ const initialState = {
     totalToday: null,
     ordersRequestSent: false,
     ordersRequestFailed: false,
+
+    orderPopupOpen: false,
 }
 
 export const ordersReducer = (state = initialState, action) => {
@@ -22,6 +26,12 @@ export const ordersReducer = (state = initialState, action) => {
         }
         case ORDERS_REQUEST_SUCCESS : {
             return {...state, orders: action.orders, total: action.total, totalToday: action.totalToday};
+        }
+        case OPEN_ORDER_SUMMARY_POPUP : {
+            return {...state, orderPopupOpen: true};
+        }
+        case CLOSE_ORDER_SUMMARY_POPUP : {
+            return {...state, orderPopupOpen: false};
         }
         default: 
             return state;   

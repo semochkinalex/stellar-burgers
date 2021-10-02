@@ -20,6 +20,8 @@ import {
 import styles from './app.module.css';
 import { updateToken } from '../../services/actions/user';
 import Feed from '../../pages/feed/feed';
+import OrderSummary from '../order-summary/order-summary';
+import { CLOSE_ORDER_SUMMARY_POPUP } from '../../services/actions/orders';
 
 /*
   404 страница
@@ -32,12 +34,14 @@ import Feed from '../../pages/feed/feed';
 function App() {
   const history = useHistory();
   const location = useLocation();
+  
   const background = (history.action === "PUSH" || history.action === "REPLACE") && location.state && location.state?.background;
   
   const dispatch = useDispatch();
   const {loggedIn, isOrderPopupOpen} = useSelector(state => ({
       isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
       isOrderPopupOpen: state.order.orderPopupOpen,
+      isOrderSummaryPopupOpen: state.orders.orderPopupOpen,
       loggedIn: Boolean(state.user.token),
   }));
 
@@ -78,7 +82,7 @@ function App() {
           <Route path="/register" exact={true}>
             <SignUp />
           </Route>
-          <Route path="/feed" exact={true}>
+          <Route path="/feed">
             <Feed />
           </Route>
           <Route path="/forgot-password" exact={true}>
@@ -107,8 +111,16 @@ function App() {
 
       {background && 
       <Route path="/ingredients/:id" exact={true}>
-        <ModalPopup actionType={CLOSE_INSPECTED_INGREDIENT}>
+        <ModalPopup actionType={null}>
             <IngredientDetails />
+        </ModalPopup>
+      </Route>
+      }
+
+      {background && 
+      <Route path="/feed/:id" exact={true}>
+        <ModalPopup actionType={null} link={"feed"}>
+            <OrderSummary />
         </ModalPopup>
       </Route>
       }
