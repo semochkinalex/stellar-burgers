@@ -4,6 +4,22 @@ import { getCookie, setCookie } from "../../utils/cookie";
 export const LOGOUT = 'LOGOUT';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const UPDATE_ACCESS_TOKEN = 'UPDATE_ACCESS_TOKEN';
+export const UPDATE_ORDER_HISTORY = 'UPDATE_ORDER_HISTORY';
+
+export function getUsersOrderHistory(accessToken) { 
+    return function(dispatch) {
+        api.getUsersOrderHistory(accessToken)
+        .then((res) => {
+            if (res.success) {
+                dispatch({type: UPDATE_ORDER_HISTORY, orders: res.orders})
+            }
+            throw new Error("Couldn't get user's orders")
+        })
+        .catch((message) => {
+            console.log(message);
+        })
+    }
+}
 
 export function logout(accessToken) { 
     return function(dispatch) {

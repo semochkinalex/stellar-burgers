@@ -5,6 +5,7 @@ import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './order-summary.module.css';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
+import { ifError } from 'assert';
 
 const OrderSummary = () => {
     const { id } = useParams();
@@ -14,16 +15,17 @@ const OrderSummary = () => {
             orders: store.orders.orders,
             initialIngredients: [...store.ingredients.buns, ...store.ingredients.sauces, ...store.ingredients.mains],
         }
-    })
+    });
 
     const selectedOrder = useMemo(() => {
         return orders.find((order) => order._id == id);
     }, [orders, id]);
 
-    const colorClassName = useMemo(() => selectedOrder.status === 'done' ? styles.green : '',[selectedOrder]);
+    const colorClassName = useMemo(() => selectedOrder && selectedOrder.status === 'done' ? styles.green : '',[selectedOrder]);
 
     const displayedData = useMemo(() => {
         const data = [];
+        if (!selectedOrder) return data;
         const ingredients = selectedOrder.ingredients.map((ingredient) => { // no duplicates
             return initialIngredients.find((el) => el._id === ingredient);
         })
@@ -37,6 +39,8 @@ const OrderSummary = () => {
 
 
     const price = useMemo(() => displayedData.reduce((acc, val) => acc + (val.price * (val.count || 1)), 0), [displayedData]);
+
+    if (!selectedOrder) return null;
     return (
             <section className={styles.container}>
                 <p className={`text text_type_digits-default ${styles.id}`}>#{selectedOrder.number}</p>

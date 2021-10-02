@@ -20,6 +20,18 @@ class Api {
             return this._handleOriginalResponse(res);
         })
     }
+    getUsersOrderHistory(token) {
+        return fetch(`${this._baseUrl}/orders`, {
+            method: "GET",
+            headers : {
+                'Content-type': 'application/json',
+                "Authorization": token,
+            },
+        })
+        .then((res) => {
+            return this._handleOriginalResponse(res);
+        })
+    }
     updateToken(token) {
         return fetch(`${this._baseUrl}/auth/token`, {
             method: "POST",

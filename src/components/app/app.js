@@ -21,15 +21,10 @@ import styles from './app.module.css';
 import { updateToken } from '../../services/actions/user';
 import Feed from '../../pages/feed/feed';
 import OrderSummary from '../order-summary/order-summary';
-import { CLOSE_ORDER_SUMMARY_POPUP } from '../../services/actions/orders';
+import { getInitialOrders } from '../../services/actions/orders';
+import { WS_CONNECTION_START } from '../../services/actions/socket';
 
-/*
-  404 страница
-  попапы с сообщениями об ошибке
-  уведомления об успехе
-  suspense (?)
-  анимация загрузки
-*/
+const url = 'wss://norma.nomoreparties.space/orders/all';
 
 function App() {
   const history = useHistory();
@@ -50,6 +45,11 @@ function App() {
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (!loggedIn) return dispatch(getInitialOrders()); // is user isn't logged in we get data from https
+    dispatch({type: WS_CONNECTION_START, payload: url}); // if he is we get data from wss
+  }, [App]);
 
   useEffect(() => {
       dispatch({type: SWITCH_IS_MOBILE_VALUE, value: width});
@@ -82,6 +82,11 @@ function App() {
           <Route path="/register" exact={true}>
             <SignUp />
           </Route>
+          {!background && <Route path="/feed/:id" exact={true}>
+            <section className={styles.center}>
+              <OrderSummary />
+            </section>
+          </Route>}
           <Route path="/feed">
             <Feed />
           </Route>
@@ -95,7 +100,9 @@ function App() {
             <UserProfile />
           </ProtectedRoute>
           {!background && <Route path="/ingredients/:id" exact={true}>
-            <IngredientDetails />
+            <section className={styles.center}>
+              <IngredientDetails />
+            </section>
           </Route>}
           <Route path="/">
             <MainPage />
@@ -120,6 +127,14 @@ function App() {
       {background && 
       <Route path="/feed/:id" exact={true}>
         <ModalPopup actionType={null} link={"feed"}>
+            <OrderSummary />
+        </ModalPopup>
+      </Route>
+      }
+      
+      {background && 
+      <Route path="/profile/orders/:id" exact={true}>
+        <ModalPopup actionType={null} link={"profile/orders"}>
             <OrderSummary />
         </ModalPopup>
       </Route>

@@ -8,28 +8,19 @@ import { WS_CONNECTION_START } from '../../services/actions/socket';
 
 const url = 'wss://norma.nomoreparties.space/orders/all';
 
-const OrderList = () => {
-    const dispatch = useDispatch();
-    const {orders} = useSelector(store => store.orders);
-    const {loggedIn} = useSelector(store => {
-        return {
-            loggedIn: Boolean(store.user.token)
-        }
-    });
-
-    useEffect(() => {
-        if (!loggedIn) return dispatch(getInitialOrders()); // is user isn't logged in we get data from https
-        if (!orders) return dispatch({type: WS_CONNECTION_START, payload: url}); // if he is we get data from wss
-    }, [OrderList]);
-
-    return (
-        <ul className={styles.container}>
+const OrderList = ({orders, custom}) => {
+    return (orders || orders?.length ? 
+        (<ul className={styles.container} style={custom}>
             {
                 orders.map((order) => {
                     return <OrderInfo order={order} key={order._id} />
                 })
             }
-        </ul>
+        </ul>)
+        :
+        <p className="text text_type_main-large">
+            Нет заказов
+        </p>
     )
 }
 
