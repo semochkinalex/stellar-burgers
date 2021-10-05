@@ -24,8 +24,6 @@ import OrderSummary from '../order-summary/order-summary';
 import { getInitialOrders } from '../../services/actions/orders';
 import { WS_CONNECTION_START } from '../../services/actions/socket';
 
-const url = 'wss://norma.nomoreparties.space/orders/all';
-
 function App() {
   const history = useHistory();
   const location = useLocation();
@@ -45,11 +43,6 @@ function App() {
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
-
-  useEffect(() => {
-    if (!loggedIn) return dispatch(getInitialOrders()); // is user isn't logged in we get data from https
-    dispatch({type: WS_CONNECTION_START, payload: url}); // if he is we get data from wss
-  }, [App]);
 
   useEffect(() => {
       dispatch({type: SWITCH_IS_MOBILE_VALUE, value: width});

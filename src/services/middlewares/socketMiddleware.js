@@ -16,9 +16,8 @@ export const socketMiddleware = () => {
 
         const user = getState().user; // token is with bearer  
 
-        if (user.token && type === WS_CONNECTION_START) {
+        if (type === WS_CONNECTION_START) {
             socket = new WebSocket(payload);
-            // socket = new WebSocket(`${payload}?token=${user?.token.split(" ")[1]}`); // payload = url
         }
 
         if (socket) {

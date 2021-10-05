@@ -1,23 +1,21 @@
 import api from '../../utils/api';
+import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
 import UserForm from '../../components/user-form/user-form';
 import styles from './forgot-password.module.css';
 import useFormWithValidation from '../../utils/use-form';
 import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useCallback } from 'react';
+import { forgotPassword } from '../../services/actions/user';
 
 const ForgotPassword = () => {
+    const dispatch = useDispatch();
     const history = useHistory();
     const [values, errors, isValid, handleChange] = useFormWithValidation();
 
     const handleSubmit = useCallback((evt) => {
         evt.preventDefault();
-        
-        api.forgotPassword(values.email)
-        .then(({success}) => {
-            if (success) history.push("/reset-password");
-        })
-        .catch((message) => console.log(message));
+        dispatch(forgotPassword({email: values.email}, () => history.push("/reset-password")));
     }, [values])
 
     return (

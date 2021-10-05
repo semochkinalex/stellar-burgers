@@ -8,3 +8,9 @@ export function addSocketConnection(url) {
         dispatch({type: WS_CONNECTION_START, payload: url});
     };
 }
+
+export function removeSocketConnection() {
+    return function(dispatch) {
+        dispatch({type: WS_CONNECTION_CLOSED});
+    };
+}

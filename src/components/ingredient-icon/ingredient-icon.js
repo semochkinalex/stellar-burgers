@@ -1,7 +1,7 @@
 import styles from './ingredient-icon.module.css';
 
 const IngredientIcon = ({ingredient, last, size}) => {
-    if (!ingredient) return;
+    if (!ingredient) return null;
     return (
         <div className={styles.element}>
             <img className={styles.image} src={ingredient.image_mobile} alt="Image" />

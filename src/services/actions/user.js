@@ -11,7 +11,7 @@ export function getUsersOrderHistory(accessToken) {
         api.getUsersOrderHistory(accessToken)
         .then((res) => {
             if (res.success) {
-                dispatch({type: UPDATE_ORDER_HISTORY, orders: res.orders})
+                return dispatch({type: UPDATE_ORDER_HISTORY, orders: res.orders});
             }
             throw new Error("Couldn't get user's orders")
         })
@@ -96,5 +96,62 @@ export function updateAccessToken(token) {
             type: UPDATE_ACCESS_TOKEN,
             token,
         });
+    }
+}
+
+export function signUp(data, callback) {
+    return function(dispatch) {
+        api.createNewUser({
+            name: data.name,
+            email: data.email,
+            password: data.password,
+        })
+        .then(({success, user : {name, email}, accessToken, refreshToken}) => {
+            if (success) {
+                setCookie("token", refreshToken);
+                dispatch(updateUserInfo(name, email));
+                dispatch(updateAccessToken(accessToken));
+                return callback();
+            }
+            throw new Error("Couldn't create new user");
+        })
+        .catch((message) => {
+            console.log(message);
+        })
+    }
+}
+
+export function signIn(data, callback) {
+    return function(dispatch) {
+        api.attemptLogin({email: data.email, password: data.password})
+        .then(({success, message, user : {name, email}, accessToken, refreshToken}) => {
+            if (success) {
+                setCookie("token", refreshToken);
+                dispatch(updateUserInfo(name, email));
+                dispatch(updateAccessToken(accessToken));
+                return callback();   
+            }
+            throw new Error("Error in attemt to login.", message);
+        })
+        .catch((message) => console.log(message));
+    }
+}
+
+export function forgotPassword(data, callback) {
+    return function(dispatch) {
+        api.forgotPassword(data.email)
+        .then(({success}) => {
+            if (success) callback();
+        })
+        .catch((message) => console.log(message));
+    }
+}
+
+export function resetPassword(data, callback) {
+    return function(dispatch) {
+        api.resetPassword(data.password, data.code)
+        .then(({success}) => {
+            if (success) return callback();
+        })
     }
 }

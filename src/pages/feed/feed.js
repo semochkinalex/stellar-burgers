@@ -1,10 +1,21 @@
 import styles from './feed.module.css';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import OrderList from '../../components/orders-list/orders-list';
 import Statistics from '../../components/statistics/statistics';
+import { useEffect } from 'react';
+import { addSocketConnection, removeSocketConnection } from '../../services/actions/socket';
+
+const url = 'wss://norma.nomoreparties.space/orders/all';
 
 const Feed = () => {
+    const dispatch = useDispatch();
     const {orders} = useSelector(store => store.orders);
+    
+    useEffect(() => {
+        dispatch(addSocketConnection(url));
+        return () => {removeSocketConnection()};
+    }, [Feed])
+
     return (
         <section className={styles.container}>
             <div className={styles.orders}>

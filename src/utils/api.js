@@ -85,12 +85,13 @@ class Api {
         })
     }
     
-    handleOrder(ingredients) {
+    handleOrder(ingredients, token) {
         return fetch(`${this._baseUrl}/orders`, {
             method: "POST",
             body: JSON.stringify({ingredients}),
             headers : {
                 'Content-Type': 'application/json',
+                Authorization: token,
             }
         })
         .then((res) => {

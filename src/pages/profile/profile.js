@@ -9,7 +9,7 @@ import OrderList from '../../components/orders-list/orders-list';
 const UserProfile = () => {
     const dispatch = useDispatch();
     const token = useSelector(store => store.user.token);
-    const orders = useSelector(store => store.user.orders);
+    const orders = useSelector(store => store.user.orderHistory);
 
     const handleLogout = useCallback(() => {
         dispatch(logout(token));
@@ -22,10 +22,10 @@ const UserProfile = () => {
     return (
         <section className={styles.profile}>
             <nav className={styles.navigation}>
-                    <NavLink className={`text text_type_main-medium text_color_inactive ${styles.link}`} activeClassName={styles.active} to="/profile/edit">
+                    <NavLink className={`text text_type_main-medium text_color_inactive ${styles.link}`} activeStyle={{color: "white"}} to="/profile/edit">
                         Профиль
                     </NavLink>
-                    <NavLink className={`text text_type_main-medium text_color_inactive ${styles.link}`} activeClassName={styles.active} to="/profile/orders">
+                    <NavLink className={`text text_type_main-medium text_color_inactive ${styles.link}`} activeStyle={{color: "white"}} to="/profile/orders">
                         История заказов
                     </NavLink>
                     <button className={`text text_type_main-medium text_color_inactive ${styles.link}`} onClick={handleLogout}>

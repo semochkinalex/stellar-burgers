@@ -7,7 +7,7 @@ import UserForm from '../../components/user-form/user-form';
 import { useHistory } from 'react-router-dom';
 import { setCookie } from '../../utils/cookie';
 import useFormWithValidation from '../../utils/use-form';
-import { updateAccessToken, updateUserInfo } from '../../services/actions/user';
+import { signIn, updateAccessToken, updateUserInfo } from '../../services/actions/user';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const SignIn = () => {
@@ -18,18 +18,10 @@ const SignIn = () => {
 
     const loginUser = useCallback((evt) => {
         evt.preventDefault();
-        api.attemptLogin({email: values.email, password: values.password})
-        .then(({success, message, user : {name, email}, accessToken, refreshToken}) => {
-            if (success) {
-                setCookie("token", refreshToken);
-                dispatch(updateUserInfo(name, email));
-                dispatch(updateAccessToken(accessToken));
-                const previousPage = history.location.state ? history.location.state.from.pathname : "/";
-                return history.replace({pathname: previousPage});   
-            }
-            throw new Error("Error in attemt to login.", message);
-        })
-        .catch((message) => console.log(message));
+        dispatch(signIn({email: values.email, password: values.password}, () => {
+            const previousPage = history.location.state ? history.location.state.from.pathname : "/";
+            return history.replace({pathname: previousPage});   
+        }));
     }, [history, dispatch, api, values]);
 
     return (

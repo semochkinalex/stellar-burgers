@@ -6,7 +6,7 @@ import UserForm from '../../components/user-form/user-form';
 import { useHistory } from 'react-router-dom';
 import { setCookie } from '../../utils/cookie';
 import useFormWithValidation from '../../utils/use-form';
-import { updateAccessToken, updateUserInfo } from '../../services/actions/user';
+import { signUp } from '../../services/actions/user';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const SignUp = () => {
@@ -16,24 +16,10 @@ const SignUp = () => {
 
     const registerUser = (evt) => {
         evt.preventDefault();
-        api.createNewUser({
-            name: values.name,
-            email: values.email,
-            password: values.password,
-        })
-        .then(({success, user : {name, email}, accessToken, refreshToken}) => {
-            if (success) {
-                setCookie("token", refreshToken);
-                dispatch(updateUserInfo(name, email));
-                dispatch(updateAccessToken(accessToken));
-                const previousPage = history.location.state ? history.location.state.from.pathname : "/";
-                return history.replace({pathname: previousPage});
-            }
-            throw new Error("Couldn't create new user");
-        })
-        .catch((err) => {
-            console.log(err);
-        })
+        dispatch(signUp({name: values.name, email: values.email, password: values.password}, () => {
+            const previousPage = history.location.state ? history.location.state.from.pathname : "/";
+            return history.replace({pathname: previousPage});
+        }))
     }
 
     return (

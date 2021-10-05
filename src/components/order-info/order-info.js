@@ -19,6 +19,14 @@ const OrderInfo = memo(({order : {name, number, ingredients, createdAt, _id}}) =
         }))];
     }, [ingredients]);
 
+    const orderPrice = useMemo(() => {
+        const data = [];
+        initialIngredients.forEach((ingredient) => {
+            ingredients.some((el) => el === ingredient._id) && data.push({...ingredient, count: ingredients.filter(v => v === ingredient._id).length});
+        })
+        return data.reduce((acc, el) => acc + (el.price * el.count), 0);
+    }, [initialIngredients, ingredients]);
+
     return (
         <Link to={{pathname: `${url}/${_id}`, state: { background: location}}} style={{ textDecoration: 'none' }}>
             <li className={styles.order}>
@@ -43,8 +51,7 @@ const OrderInfo = memo(({order : {name, number, ingredients, createdAt, _id}}) =
                     }
                 </ul>
                 <span className={`text text_type_digits-medium ${styles.price}`}>{
-                    // ingredientsData.reduce((acc, ingredient) => acc + ingredient.price, 0)
-                    0
+                    orderPrice
                 }</span>
             </li>
         </Link>
