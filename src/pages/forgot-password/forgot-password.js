@@ -19,8 +19,8 @@ const ForgotPassword = () => {
     }, [values])
 
     return (
-        <section className={styles.container} onSubmit={handleSubmit}>
-            <UserForm title="Восстановление пароля" submitText="Восстановить" isValid={isValid}>
+        <section className={styles.container}>
+            <UserForm title="Восстановление пароля" submitText="Восстановить" isValid={isValid} onSubmit={handleSubmit}>
                 <Input onChange={handleChange} value={values.email || ''} error={Boolean(errors.email)} errorText={errors.email} name={'email'} type="email" placeholder={"Укажите e-mail"} required />
             </UserForm>
             <p className={`text text_type_main-default text_color_inactive ${styles.text}`}>

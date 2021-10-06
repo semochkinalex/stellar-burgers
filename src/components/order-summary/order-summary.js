@@ -1,21 +1,30 @@
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './order-summary.module.css';
 import IngredientIcon from '../ingredient-icon/ingredient-icon';
-import { ifError } from 'assert';
+import { useDispatch } from 'react-redux';
+import { addSocketConnection } from '../../services/actions/socket';
+
+const url = 'wss://norma.nomoreparties.space/orders/all';
 
 const OrderSummary = () => {
+    const dispatch = useDispatch();
     const { id } = useParams();
-
+    
     const {orders, initialIngredients} = useSelector(store => {
         return {
             orders: store.orders.orders,
             initialIngredients: [...store.ingredients.buns, ...store.ingredients.sauces, ...store.ingredients.mains],
         }
     });
+
+    useEffect(() => {
+        if (!orders.length) return dispatch(addSocketConnection(url));
+    }, [])
+
 
     const selectedOrder = useMemo(() => {
         return orders.find((order) => order._id == id);

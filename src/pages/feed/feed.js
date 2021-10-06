@@ -14,7 +14,7 @@ const Feed = () => {
     useEffect(() => {
         dispatch(addSocketConnection(url));
         return () => {removeSocketConnection()};
-    }, [Feed])
+    }, [])
 
     return (
         <section className={styles.container}>

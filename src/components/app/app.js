@@ -27,7 +27,7 @@ import { WS_CONNECTION_START } from '../../services/actions/socket';
 function App() {
   const history = useHistory();
   const location = useLocation();
-  
+
   const background = (history.action === "PUSH" || history.action === "REPLACE") && location.state && location.state?.background;
   
   const dispatch = useDispatch();
@@ -75,7 +75,8 @@ function App() {
           <Route path="/register" exact={true}>
             <SignUp />
           </Route>
-          {!background && <Route path="/feed/:id" exact={true}>
+          {!background && 
+          <Route path="/feed/:id" exact={true}>
             <section className={styles.center}>
               <OrderSummary />
             </section>
