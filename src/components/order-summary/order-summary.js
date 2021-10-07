@@ -3,35 +3,35 @@ import { useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 
-import styles from './order-summary.module.css';
-import IngredientIcon from '../ingredient-icon/ingredient-icon';
 import { useDispatch } from 'react-redux';
+import styles from './order-summary.module.css';
+import { useRouteMatch } from 'react-router-dom';
+import IngredientIcon from '../ingredient-icon/ingredient-icon';
 import { addSocketConnection } from '../../services/actions/socket';
 
-const url = 'wss://norma.nomoreparties.space/orders/all';
+const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 
 const OrderSummary = () => {
-    const dispatch = useDispatch();
     const { id } = useParams();
+    const {url} = useRouteMatch();
+    const dispatch = useDispatch();
     
     const {orders, initialIngredients} = useSelector(store => {
         return {
-            orders: store.orders.orders,
+            orders: url.includes("profile") ? store.user.orderHistory : store.orders.orders,
             initialIngredients: [...store.ingredients.buns, ...store.ingredients.sauces, ...store.ingredients.mains],
         }
     });
 
     useEffect(() => {
-        if (!orders.length) return dispatch(addSocketConnection(url));
+        if (!orders.length) return dispatch(addSocketConnection(wsUrl));
     }, [])
-
 
     const selectedOrder = useMemo(() => {
         return orders.find((order) => order._id == id);
     }, [orders, id]);
 
-    const colorClassName = useMemo(() => selectedOrder && selectedOrder.status === 'done' ? styles.green : '',[selectedOrder]);
-
+    
     const displayedData = useMemo(() => {
         const data = [];
         if (!selectedOrder) return data;
@@ -45,7 +45,8 @@ const OrderSummary = () => {
         })
         return data;
     }, [orders]);
-
+    
+    const colorClassName = useMemo(() => selectedOrder && selectedOrder.status === 'done' ? styles.green : '',[selectedOrder]);
 
     const price = useMemo(() => displayedData.reduce((acc, val) => acc + (val.price * (val.count || 1)), 0), [displayedData]);
 
