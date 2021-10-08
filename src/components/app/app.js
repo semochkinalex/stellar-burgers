@@ -20,22 +20,14 @@ import {
 import styles from './app.module.css';
 import { updateToken } from '../../services/actions/user';
 
-/*
-  404 страница
-  попапы с сообщениями об ошибке
-  уведомления об успехе
-  suspense (?)
-  анимация загрузки
-*/
-
 function App() {
   const history = useHistory();
   const location = useLocation();
+  
   const background = (history.action === "PUSH" || history.action === "REPLACE") && location.state && location.state?.background;
   
   const dispatch = useDispatch();
   const {loggedIn, isOrderPopupOpen} = useSelector(state => ({
-      isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
       isOrderPopupOpen: state.order.orderPopupOpen,
       loggedIn: Boolean(state.user.token),
   }));
@@ -87,7 +79,9 @@ function App() {
             <UserProfile />
           </ProtectedRoute>
           {!background && <Route path="/ingredients/:id" exact={true}>
-            <IngredientDetails />
+            <section className={styles.center}>
+              <IngredientDetails />
+            </section>
           </Route>}
           <Route path="/">
             <MainPage />

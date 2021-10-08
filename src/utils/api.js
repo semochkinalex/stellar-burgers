@@ -68,7 +68,12 @@ class Api {
             return this._handleOriginalResponse(res);
         });
     }
-    
+    getFeed() {
+        return fetch(`${this._baseUrl}/orders/all`)
+        .then((res) => {
+            return this._handleOriginalResponse(res);
+        })
+    }
     handleOrder(ingredients) {
         return fetch(`${this._baseUrl}/orders`, {
             method: "POST",
