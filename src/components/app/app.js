@@ -21,20 +21,17 @@ import styles from './app.module.css';
 import { updateToken } from '../../services/actions/user';
 import Feed from '../../pages/feed/feed';
 import OrderSummary from '../order-summary/order-summary';
-import { getInitialOrders } from '../../services/actions/orders';
-import { WS_CONNECTION_START } from '../../services/actions/socket';
 
 function App() {
   const history = useHistory();
   const location = useLocation();
 
-  const background = (history.action === "PUSH" || history.action === "REPLACE") && location.state && location.state?.background;
+  const background = (history.action === "PUSH" || history.replace === "REPLACE") && location.state && location.state.background;
   
   const dispatch = useDispatch();
+
   const {loggedIn, isOrderPopupOpen} = useSelector(state => ({
-      isInspectedElementPopupOpen: state.inspectedElement.inspectedIngredientPopupOpen,
       isOrderPopupOpen: state.order.orderPopupOpen,
-      isOrderSummaryPopupOpen: state.orders.orderPopupOpen,
       loggedIn: Boolean(state.user.token),
   }));
 
@@ -53,22 +50,24 @@ function App() {
     if (oldToken) return attemptLogin(oldToken);
   }, []);
 
+  const attemptLogin = useCallback(refreshToken => {
+    dispatch(updateToken(refreshToken));
+  }, [history, dispatch, api]);
+
   useEffect(() => {
     if (loggedIn) {
-      const previousPage = history.location.state?.from?.pathname ? history.location.state.from.pathname : "/";
+      // console.log(history.location.pathname)
+      const previousPage = history.location.pathname;
       return history.replace({pathname: previousPage});
     }
   }, [loggedIn])
 
-  const attemptLogin = useCallback(refreshToken => {
-    dispatch(updateToken(refreshToken));
-  }, [history, dispatch, api]);
 
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <Switch>
+        <Switch location={background || location}>
           <Route path="/login" exact={true}>
             <SignIn />
           </Route>
