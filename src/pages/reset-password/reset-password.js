@@ -1,4 +1,3 @@
-import api from '../../utils/api';
 import {Link, useHistory} from 'react-router-dom';
 import UserForm from '../../components/user-form/user-form';
 import styles from './reset-password.module.css';
@@ -16,7 +15,7 @@ const ResetPassword = () => {
     const handleSubmit = useCallback((evt) => {
         evt.preventDefault();
         dispatch(resetPassword({password: values.password, code: values.code}, () => history.push("/login")));
-    }, [values])
+    }, [values, dispatch, history])
 
     return (
         <section className={styles.container}>

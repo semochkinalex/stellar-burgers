@@ -1,14 +1,12 @@
-import api from '../../utils/api';
-import { useCallback, useMemo } from 'react';
-import {useDispatch} from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
 import styles from './sign-in.module.css';
-import UserForm from '../../components/user-form/user-form';
+import { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import useFormWithValidation from '../../utils/use-form';
+import { Link, Redirect } from 'react-router-dom';
 import { signIn } from '../../services/actions/user';
+import { useSelector, useDispatch } from 'react-redux';
+import useFormWithValidation from '../../utils/use-form';
+import UserForm from '../../components/user-form/user-form';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useSelector } from 'react-redux';
 
 const SignIn = () => {
     const history = useHistory();
@@ -25,7 +23,7 @@ const SignIn = () => {
         dispatch(signIn({email: values.email, password: values.password}, () => {
             return history.replace({pathname: previousPage});   
         }));
-    }, [history, dispatch, api, values]);
+    }, [history, dispatch, values, previousPage]);
 
     return (
         isAuthorized ? <Redirect to={{pathname: previousPage}} /> :

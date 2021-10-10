@@ -42,7 +42,7 @@ function App() {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(getUsersOrderHistory(token));
+    if (loggedIn) dispatch(getUsersOrderHistory(token));
   }, [token])
 
   useEffect(() => {
@@ -78,6 +78,12 @@ function App() {
           <Route path="/register" exact={true}>
             <SignUp />
           </Route>
+          <Route path="/forgot-password" exact={true}>
+            <ForgotPassword />
+          </Route>
+          <Route path="/reset-password" exact={true}>
+            <ResetPassword />
+          </Route>
           {!background && 
           <Route path="/feed/:id" exact={true}>
             <section className={styles.center}>
@@ -87,25 +93,19 @@ function App() {
           <Route path="/feed">
             <Feed />
           </Route>
-          <Route path="/forgot-password" exact={true}>
-            <ForgotPassword />
-          </Route>
-          <Route path="/reset-password" exact={true}>
-            <ResetPassword />
-          </Route>
           <ProtectedRoute exact path={"/profile/orders/:id"}>
             <section className={styles.center}>
               <OrderSummary />
             </section>
-          </ProtectedRoute>
-          <ProtectedRoute path="/profile">
-            <UserProfile />
-          </ProtectedRoute>
           {!background && <Route path="/ingredients/:id" exact={true}>
             <section className={styles.center}>
               <IngredientDetails />
             </section>
           </Route>}
+          </ProtectedRoute>
+          <ProtectedRoute path="/profile">
+            <UserProfile />
+          </ProtectedRoute>
           <Route path="/">
             <MainPage />
           </Route>

@@ -3,9 +3,6 @@ import {
     CLOSE_ORDER_POPUP,
     ORDER_POPUP_REQUEST_PENDING,
     ORDER_POPUP_REQUEST_FAIL,
-    ORDERS_REQUEST_PENDING,
-    ORDERS_REQUEST_FAIL,
-    ORDERS_REQUEST_SUCCESS,
  } from '../actions/order';
 
 const initialState = {

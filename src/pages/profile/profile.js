@@ -1,9 +1,9 @@
 import styles from './profile.module.css';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { Switch, NavLink, Route } from 'react-router-dom';
 import ProfileEdit from '../../components/profile-edit/profile-edit';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUsersOrderHistory, logout } from '../../services/actions/user';
+import { logout } from '../../services/actions/user';
 import OrderList from '../../components/orders-list/orders-list';
 
 const UserProfile = () => {

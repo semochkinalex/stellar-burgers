@@ -1,12 +1,11 @@
-import api from '../../utils/api';
 import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import {Link, useHistory} from 'react-router-dom';
-import UserForm from '../../components/user-form/user-form';
 import styles from './forgot-password.module.css';
 import useFormWithValidation from '../../utils/use-form';
-import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import UserForm from '../../components/user-form/user-form';
 import { forgotPassword } from '../../services/actions/user';
+import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const ForgotPassword = () => {
     const dispatch = useDispatch();
@@ -16,7 +15,7 @@ const ForgotPassword = () => {
     const handleSubmit = useCallback((evt) => {
         evt.preventDefault();
         dispatch(forgotPassword({email: values.email}, () => history.push("/reset-password")));
-    }, [values])
+    }, [values, dispatch, history])
 
     return (
         <section className={styles.container}>
