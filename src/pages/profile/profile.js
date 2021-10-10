@@ -15,10 +15,6 @@ const UserProfile = () => {
         dispatch(logout(token));
     }, [dispatch]);
 
-    useEffect(() => {
-        dispatch(getUsersOrderHistory(token));
-    }, [])
-
     return (
         <section className={styles.profile}>
             <nav className={styles.navigation}>

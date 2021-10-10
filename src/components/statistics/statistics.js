@@ -13,17 +13,12 @@ const resizeArray = (array, lenght) => {
 
 const Statistics = () => {
 
-    const {doneOrders, pendingOrders} = useSelector(store => {
+    const {total, totalToday, doneOrders, pendingOrders} = useSelector(store => {
         return {
-            doneOrders: resizeArray(store.orders.orders.filter((order) => order.status === "done").map((order) => order.number), 10),
-            pendingOrders: resizeArray(store.orders.orders.filter((order) => order.status !== "done").map((order) => order.number), 10),
-        }
-    })
-
-    const {total, totalToday} = useSelector(store => {
-        return {
-            total: store.orders.total,
-            totalToday: store.orders.totalToday,
+            total: store.feed.total,
+            totalToday: store.feed.totalToday,
+            doneOrders: resizeArray(store.feed.feed.filter((order) => order.status === "done").map((order) => order.number), 10),
+            pendingOrders: resizeArray(store.feed.feed.filter((order) => order.status !== "done").map((order) => order.number), 10),
         }
     })
 

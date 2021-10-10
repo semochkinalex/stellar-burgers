@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import styles from './orders-list.module.css';
 import OrderInfo from '../order-info/order-info';
 import { useDispatch, useSelector } from 'react-redux';
-import { getInitialOrders } from '../../services/actions/orders';
+import { getInitialOrders } from '../../services/actions/feed';
 import { WS_CONNECTION_START } from '../../services/actions/socket';
 
 

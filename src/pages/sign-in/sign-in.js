@@ -1,30 +1,34 @@
 import api from '../../utils/api';
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import {useDispatch} from 'react-redux';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import styles from './sign-in.module.css';
 import UserForm from '../../components/user-form/user-form';
 import { useHistory } from 'react-router-dom';
-import { setCookie } from '../../utils/cookie';
 import useFormWithValidation from '../../utils/use-form';
-import { signIn, updateAccessToken, updateUserInfo } from '../../services/actions/user';
+import { signIn } from '../../services/actions/user';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
 
 const SignIn = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const isAuthorized = useSelector(state => Boolean(state.user.token));
     
     const [values, errors, isValid, handleChange] = useFormWithValidation();
+
+    const previousPage = useMemo(() => history.location.state ? history.location.state.from.pathname : "/", [history]);
 
     const loginUser = useCallback((evt) => {
         evt.preventDefault();
         dispatch(signIn({email: values.email, password: values.password}, () => {
-            const previousPage = history.location.state ? history.location.state.from.pathname : "/";
             return history.replace({pathname: previousPage});   
         }));
     }, [history, dispatch, api, values]);
 
     return (
+        isAuthorized ? <Redirect to={{pathname: previousPage}} /> :
         <section className={styles.container}>
 
             <UserForm submitText="Войти" title="Вход" isValid={isValid} onSubmit={loginUser}>

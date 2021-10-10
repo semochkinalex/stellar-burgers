@@ -13,12 +13,13 @@ const wsUrl = 'wss://norma.nomoreparties.space/orders/all';
 
 const OrderSummary = () => {
     const { id } = useParams();
-    const {url} = useRouteMatch();
+    const { url } = useRouteMatch();
+
     const dispatch = useDispatch();
     
     const {orders, initialIngredients} = useSelector(store => {
         return {
-            orders: url.includes("profile") ? store.user.orderHistory : store.orders.orders,
+            orders: url.includes("profile") ? store.user.orderHistory : store.feed.feed,
             initialIngredients: [...store.ingredients.buns, ...store.ingredients.sauces, ...store.ingredients.mains],
         }
     });

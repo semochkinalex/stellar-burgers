@@ -1,5 +1,5 @@
 import api from "../../utils/api";
-import { getCookie, setCookie } from "../../utils/cookie";
+import { getLocalStorageKey, setLocalStorageKey } from "../../utils/use-local-storage";
 
 export const LOGOUT = 'LOGOUT';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
@@ -23,10 +23,12 @@ export function getUsersOrderHistory(accessToken) {
 
 export function logout(accessToken) { 
     return function(dispatch) {
-        api.logout(getCookie("token"), accessToken)
+        const refreshToken = getLocalStorageKey("token");
+        api.logout(refreshToken, accessToken)
         .then(({success}) => {
             if (success) {
-                setCookie("token", '');
+                console.log("LOGOUT");
+                setLocalStorageKey("token", "");
                 return dispatch({type: LOGOUT});
             }
             throw new Error("Unable to logout.");
@@ -42,7 +44,8 @@ export function updateToken(refreshToken) {
         api.updateToken(refreshToken)
         .then(({success, accessToken, refreshToken}) => {
           if (success) {
-            setCookie("token", refreshToken);
+            console.log("UPDATE TOKEN");
+            setLocalStorageKey("token", refreshToken);
             dispatch(getUserInfo(accessToken));
             return dispatch(updateAccessToken(accessToken));
           }
@@ -108,7 +111,7 @@ export function signUp(data, callback) {
         })
         .then(({success, user : {name, email}, accessToken, refreshToken}) => {
             if (success) {
-                setCookie("token", refreshToken);
+                setLocalStorageKey("token", refreshToken);
                 dispatch(updateUserInfo(name, email));
                 dispatch(updateAccessToken(accessToken));
                 return callback();
@@ -126,7 +129,7 @@ export function signIn(data, callback) {
         api.attemptLogin({email: data.email, password: data.password})
         .then(({success, message, user : {name, email}, accessToken, refreshToken}) => {
             if (success) {
-                setCookie("token", refreshToken);
+                setLocalStorageKey("token", refreshToken);
                 dispatch(updateUserInfo(name, email));
                 dispatch(updateAccessToken(accessToken));
                 return callback();   

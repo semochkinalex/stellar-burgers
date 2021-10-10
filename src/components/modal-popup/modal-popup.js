@@ -6,7 +6,7 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { CLOSE_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
-import { CLOSE_ORDER_SUMMARY_POPUP } from '../../services/actions/orders';
+import { CLOSE_ORDER_SUMMARY_POPUP } from '../../services/actions/feed';
 
 const ModalPopup = memo(({actionType, link = '', children}) => {
     const history = useHistory();

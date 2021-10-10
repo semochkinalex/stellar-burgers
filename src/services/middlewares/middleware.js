@@ -1,4 +1,5 @@
-import { updateFeed } from '../actions/orders';
+import { updateFeed } from '../actions/feed';
+
 import {
     WS_CONNECTION_START,
     WS_CONNECTION_SUCCESS,
@@ -6,15 +7,13 @@ import {
     WS_CONNECTION_CLOSED,
   } from '../actions/socket';
 
-export const socketMiddleware = () => {
+export const middleware = () => {
     return store => {
       let socket = null;
   
       return next => action => {
         const { dispatch, getState} = store;
         const { type, payload } = action;
-
-        const user = getState().user; // token is with bearer  
 
         if (type === WS_CONNECTION_START) {
             socket = new WebSocket(payload);
@@ -34,9 +33,8 @@ export const socketMiddleware = () => {
             };
         
             socket.onmessage = event => {
-                console.log("ONMESSAGE");
-                const {success, orders = [], total = 0, totalToday = 0} = JSON.parse(event.data);
-                success && dispatch(updateFeed(orders, total, totalToday));
+              const {success, orders = [], total = 0, totalToday = 0} = JSON.parse(event.data);
+              success && dispatch(updateFeed(orders, total, totalToday));
             };
         }   
   

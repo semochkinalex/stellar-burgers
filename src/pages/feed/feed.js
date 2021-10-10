@@ -9,7 +9,8 @@ const url = 'wss://norma.nomoreparties.space/orders/all';
 
 const Feed = () => {
     const dispatch = useDispatch();
-    const {orders} = useSelector(store => store.orders);
+
+    const { feed } = useSelector(store => store.feed);
     
     useEffect(() => {
         dispatch(addSocketConnection(url));
@@ -18,12 +19,12 @@ const Feed = () => {
 
     return (
         <section className={styles.container}>
-            <div className={styles.orders}>
-                <p className="text text_type_main-medium">
-                    Лента заказов
-                </p>
-                <OrderList orders={orders} />
-            </div>
+        <div className={styles.orders}>
+            <p className="text text_type_main-medium">
+                Лента заказов
+            </p>
+            <OrderList orders={feed} />
+        </div>
             <Statistics />
         </section>
     );

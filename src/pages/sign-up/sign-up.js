@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import styles from './sign-up.module.css';
 import UserForm from '../../components/user-form/user-form';
 import { useHistory } from 'react-router-dom';
-import { setCookie } from '../../utils/cookie';
 import useFormWithValidation from '../../utils/use-form';
 import { signUp } from '../../services/actions/user';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
