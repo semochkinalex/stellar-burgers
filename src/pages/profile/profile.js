@@ -1,24 +1,27 @@
 import styles from './profile.module.css';
-import { useCallback, useEffect } from 'react';
+import { useCallback } from 'react';
 import { Switch, NavLink, Route } from 'react-router-dom';
 import ProfileEdit from '../../components/profile-edit/profile-edit';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeUserInfo, logout } from '../../services/actions/user';
+import { logout } from '../../services/actions/user';
+import OrderList from '../../components/orders-list/orders-list';
 
 const UserProfile = () => {
     const dispatch = useDispatch();
     const token = useSelector(store => store.user.token);
+    const orders = useSelector(store => store.user.orderHistory);
+
     const handleLogout = useCallback(() => {
         dispatch(logout(token));
-    }, [dispatch])
+    }, [dispatch]);
 
     return (
         <section className={styles.profile}>
             <nav className={styles.navigation}>
-                    <NavLink className={`text text_type_main-medium text_color_inactive ${styles.link}`} activeClassName={styles.active} to="/profile/edit">
+                    <NavLink className={`text text_type_main-medium text_color_inactive ${styles.link}`} activeStyle={{color: "white"}} to="/profile/edit">
                         Профиль
                     </NavLink>
-                    <NavLink className={`text text_type_main-medium text_color_inactive ${styles.link}`} activeClassName={styles.active} to="/profile/history">
+                    <NavLink className={`text text_type_main-medium text_color_inactive ${styles.link}`} activeStyle={{color: "white"}} to="/profile/orders">
                         История заказов
                     </NavLink>
                     <button className={`text text_type_main-medium text_color_inactive ${styles.link}`} onClick={handleLogout}>
@@ -30,8 +33,11 @@ const UserProfile = () => {
                     </p>
             </nav>
             <Switch>
-                <Route path="/profile/edit">
+                <Route path="/profile/edit" exact={true}>
                     <ProfileEdit />
+                </Route>
+                <Route path="/profile/orders">
+                    <OrderList orders={orders} custom={{marginTop: "-70px"}} />
                 </Route>
             </Switch>
             <></> {/* Сделано чтобы расположить по центру меню с формами. Ломается если удалить */}

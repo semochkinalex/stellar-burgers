@@ -1,0 +1,9 @@
+.container {
+    min-width: 524px;
+}
+.orders {
+    display: flex;
+}
+.green {
+    color: #00CCCC;
+}

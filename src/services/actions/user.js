@@ -1,16 +1,34 @@
 import api from "../../utils/api";
-import { getCookie, setCookie } from "../../utils/cookie";
+import { getLocalStorageKey, setLocalStorageKey } from "../../utils/use-local-storage";
 
 export const LOGOUT = 'LOGOUT';
 export const UPDATE_USER_INFO = 'UPDATE_USER_INFO';
 export const UPDATE_ACCESS_TOKEN = 'UPDATE_ACCESS_TOKEN';
+export const UPDATE_ORDER_HISTORY = 'UPDATE_ORDER_HISTORY';
+
+export function getUsersOrderHistory(accessToken) { 
+    return function(dispatch) {
+        api.getUsersOrderHistory(accessToken)
+        .then((res) => {
+            if (res.success) {
+                return dispatch({type: UPDATE_ORDER_HISTORY, orders: res.orders});
+            }
+            throw new Error("Couldn't get user's orders")
+        })
+        .catch((message) => {
+            console.log(message);
+        })
+    }
+}
 
 export function logout(accessToken) { 
     return function(dispatch) {
-        api.logout(getCookie("token"), accessToken)
+        const refreshToken = getLocalStorageKey("token");
+        api.logout(refreshToken, accessToken)
         .then(({success}) => {
             if (success) {
-                setCookie("token", '');
+                console.log("LOGOUT");
+                setLocalStorageKey("token", "");
                 return dispatch({type: LOGOUT});
             }
             throw new Error("Unable to logout.");
@@ -26,7 +44,8 @@ export function updateToken(refreshToken) {
         api.updateToken(refreshToken)
         .then(({success, accessToken, refreshToken}) => {
           if (success) {
-            setCookie("token", refreshToken);
+            console.log("UPDATE TOKEN");
+            setLocalStorageKey("token", refreshToken);
             dispatch(getUserInfo(accessToken));
             return dispatch(updateAccessToken(accessToken));
           }
@@ -80,5 +99,62 @@ export function updateAccessToken(token) {
             type: UPDATE_ACCESS_TOKEN,
             token,
         });
+    }
+}
+
+export function signUp(data, callback) {
+    return function(dispatch) {
+        api.createNewUser({
+            name: data.name,
+            email: data.email,
+            password: data.password,
+        })
+        .then(({success, user : {name, email}, accessToken, refreshToken}) => {
+            if (success) {
+                setLocalStorageKey("token", refreshToken);
+                dispatch(updateUserInfo(name, email));
+                dispatch(updateAccessToken(accessToken));
+                return callback();
+            }
+            throw new Error("Couldn't create new user");
+        })
+        .catch((message) => {
+            console.log(message);
+        })
+    }
+}
+
+export function signIn(data, callback) {
+    return function(dispatch) {
+        api.attemptLogin({email: data.email, password: data.password})
+        .then(({success, message, user : {name, email}, accessToken, refreshToken}) => {
+            if (success) {
+                setLocalStorageKey("token", refreshToken);
+                dispatch(updateUserInfo(name, email));
+                dispatch(updateAccessToken(accessToken));
+                return callback();   
+            }
+            throw new Error("Error in attemt to login.", message);
+        })
+        .catch((message) => console.log(message));
+    }
+}
+
+export function forgotPassword(data, callback) {
+    return function(dispatch) {
+        api.forgotPassword(data.email)
+        .then(({success}) => {
+            if (success) callback();
+        })
+        .catch((message) => console.log(message));
+    }
+}
+
+export function resetPassword(data, callback) {
+    return function(dispatch) {
+        api.resetPassword(data.password, data.code)
+        .then(({success}) => {
+            if (success) return callback();
+        })
     }
 }

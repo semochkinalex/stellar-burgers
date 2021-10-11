@@ -6,11 +6,11 @@ import ModalOverlay from '../modal-overlay/modal-overlay';
 import {CloseIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import { CLOSE_INSPECTED_INGREDIENT } from '../../services/actions/inspected-element';
+import { CLOSE_ORDER_SUMMARY_POPUP } from '../../services/actions/feed';
 
-const ModalPopup = memo(({actionType, children}) => {
+const ModalPopup = memo(({actionType, link = '', children}) => {
     const history = useHistory();
-    const dispatch = useDispatch();  
-    
+    const dispatch = useDispatch(); 
     useEffect(() => {
         document.addEventListener('keydown', closeByKey);
         return () => {document.removeEventListener('keydown', closeByKey)};
@@ -21,8 +21,8 @@ const ModalPopup = memo(({actionType, children}) => {
     }
 
     const onClose = () => {
-        if (actionType !== CLOSE_INSPECTED_INGREDIENT) return dispatch({type: actionType});
-        history.replace({pathname: "/"});
+        if (actionType) return dispatch({type: actionType});
+        history.replace({pathname: `/${link}`});
     }
 
     return (
@@ -38,7 +38,7 @@ const ModalPopup = memo(({actionType, children}) => {
 })
 
 ModalPopup.propTypes = {
-    actionType: PropTypes.string.isRequired,
+    actionType: PropTypes.string,
     children: PropTypes.node.isRequired,
 }
 

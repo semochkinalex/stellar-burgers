@@ -27,6 +27,6 @@
 .link:hover {
     cursor: pointer;
 }
-.active {
+.current {
     color: white;
 }

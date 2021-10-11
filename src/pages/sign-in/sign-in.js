@@ -1,38 +1,32 @@
-import api from '../../utils/api';
-import { useCallback } from 'react';
-import {useDispatch} from 'react-redux';
-import { Link } from 'react-router-dom';
 import styles from './sign-in.module.css';
-import UserForm from '../../components/user-form/user-form';
+import { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
-import { setCookie } from '../../utils/cookie';
+import { Link, Redirect } from 'react-router-dom';
+import { signIn } from '../../services/actions/user';
+import { useSelector, useDispatch } from 'react-redux';
 import useFormWithValidation from '../../utils/use-form';
-import { updateAccessToken, updateUserInfo } from '../../services/actions/user';
+import UserForm from '../../components/user-form/user-form';
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const SignIn = () => {
     const history = useHistory();
     const dispatch = useDispatch();
+
+    const isAuthorized = useSelector(state => Boolean(state.user.token));
     
     const [values, errors, isValid, handleChange] = useFormWithValidation();
 
+    const previousPage = useMemo(() => history.location.state ? history.location.state.from.pathname : "/", [history]);
+
     const loginUser = useCallback((evt) => {
         evt.preventDefault();
-        api.attemptLogin({email: values.email, password: values.password})
-        .then(({success, message, user : {name, email}, accessToken, refreshToken}) => {
-            if (success) {
-                setCookie("token", refreshToken);
-                dispatch(updateUserInfo(name, email));
-                dispatch(updateAccessToken(accessToken));
-                const previousPage = history.location.state ? history.location.state.from.pathname : "/";
-                return history.replace({pathname: previousPage});   
-            }
-            throw new Error("Error in attemt to login.", message);
-        })
-        .catch((message) => console.log(message));
-    }, [history, dispatch, api, values]);
+        dispatch(signIn({email: values.email, password: values.password}, () => {
+            return history.replace({pathname: previousPage});   
+        }));
+    }, [history, dispatch, values, previousPage]);
 
     return (
+        isAuthorized ? <Redirect to={{pathname: previousPage}} /> :
         <section className={styles.container}>
 
             <UserForm submitText="Войти" title="Вход" isValid={isValid} onSubmit={loginUser}>

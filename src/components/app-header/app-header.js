@@ -1,5 +1,6 @@
 // import menuIcon from '../../images/menuIcon.svg';
 // import mobileLogo from '../../images/mobileLogo.svg';
+import { Link } from 'react-router-dom';
 import headerStyles from './app-header.module.css';
 import HeaderLink from '../header-link/header-link.js';
 import { Logo } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -23,11 +24,11 @@ const AppHeader = () => {
                 </HeaderLink>
             </ul>
 
-            <Logo />
+            <Link to="/"><Logo /></Link>
 
             <div className={headerStyles.wrapper}>
                 <HeaderLink to="/profile/edit" icon={"profile"}>
-                    Лента заказов
+                    Личный профиль
                 </HeaderLink>
             </div>
 

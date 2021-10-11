@@ -8,17 +8,18 @@ const OrderSubmit = () => {
     const history = useHistory();
     const dispatch = useDispatch();
 
-    const {ingredients, bun, isLoggedIn} = useSelector(store => ({
+    const {ingredients, bun, isLoggedIn, token} = useSelector(store => ({
         bun: store.burger.bun,
         ingredients: store.burger.ingredients,
         isLoggedIn: Boolean(store.user.token),
+        token: store.user.token,
     }))
 
     const sum = useSelector(store => store.burger.priceSum);
     const isValid = useSelector(store => store.burger.isValidBurger);
 
     const handleCheckout = () => {
-        isLoggedIn ? dispatch(handleOrder(ingredients, bun)) : history.replace({pathname: "/login"});
+        isLoggedIn ? dispatch(handleOrder(ingredients, bun, token)) : history.replace({pathname: "/login"});
     }
 
     return (

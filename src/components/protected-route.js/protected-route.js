@@ -3,7 +3,7 @@ import { Redirect, Route } from 'react-router-dom';
 
 export function ProtectedRoute({ children, ...props }) {
   const isAuthorized = useSelector(state => Boolean(state.user.token));
-  return (
+    return (
     <Route
       {...props}
       render={({ location }) =>
@@ -15,7 +15,6 @@ export function ProtectedRoute({ children, ...props }) {
               to={{
                   // Маршрут, на который произойдёт переадресация
                   pathname: '/login',
-                  // В from сохраним текущий маршрут
                   state: { from: location }
               }}
           />

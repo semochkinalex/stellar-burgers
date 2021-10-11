@@ -1,5 +1,3 @@
-import { getCookie } from "./cookie";
-
 class Api {
     constructor(baseUrl) {
         this._baseUrl = baseUrl;
@@ -17,6 +15,18 @@ class Api {
                 'Content-Type': 'application/json',
                 "Authorization": accessToken,
             }
+        })
+        .then((res) => {
+            return this._handleOriginalResponse(res);
+        })
+    }
+    getUsersOrderHistory(token) {
+        return fetch(`${this._baseUrl}/orders`, {
+            method: "GET",
+            headers : {
+                'Content-type': 'application/json',
+                "Authorization": token,
+            },
         })
         .then((res) => {
             return this._handleOriginalResponse(res);
@@ -68,13 +78,20 @@ class Api {
             return this._handleOriginalResponse(res);
         });
     }
+    getInitialOrders() {
+        return fetch(`${this._baseUrl}/orders/all`)
+        .then((res) => {
+            return this._handleOriginalResponse(res);
+        })
+    }
     
-    handleOrder(ingredients) {
+    handleOrder(ingredients, token) {
         return fetch(`${this._baseUrl}/orders`, {
             method: "POST",
             body: JSON.stringify({ingredients}),
             headers : {
                 'Content-Type': 'application/json',
+                Authorization: token,
             }
         })
         .then((res) => {

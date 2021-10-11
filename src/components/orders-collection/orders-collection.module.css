@@ -1,0 +1,19 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+.list {
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+.title {
+    margin-bottom: 24px;
+}
+.element {
+    padding: 0;
+    margin: 0;
+    list-style-type: none;
+}

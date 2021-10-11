@@ -6,6 +6,7 @@ import { ingredientReducer } from './ingredients-reducer';
 import { constructorReducer } from './constructor-reducer';
 import { inspectedElementReducer } from './inspected-element-reducer';
 import { userReducer } from './user-reducer';
+import { feedReducer } from './feed-reducer';
 
 const initialState = {
     headerPopupOpen: false,
@@ -35,5 +36,6 @@ export const rootReducer = combineReducers({
     burger: constructorReducer,
     inspectedElement: inspectedElementReducer,
     order: orderReducer,
+    feed: feedReducer,
     user: userReducer,
 });

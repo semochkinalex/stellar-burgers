@@ -1,8 +1,8 @@
 import { 
     OPEN_ORDER_POPUP,
     CLOSE_ORDER_POPUP,
-    ORDER_REQUEST_PENDING,
-    ORDER_REQUEST_FAIL,
+    ORDER_POPUP_REQUEST_PENDING,
+    ORDER_POPUP_REQUEST_FAIL,
  } from '../actions/order';
 
 const initialState = {
@@ -13,7 +13,6 @@ const initialState = {
     orderPopupOpen: false,
     orderRequestSent: false,
     orderRequestFailed: false,
-
 }
 
 export const orderReducer = (state = initialState, action) => {
@@ -21,10 +20,10 @@ export const orderReducer = (state = initialState, action) => {
         case OPEN_ORDER_POPUP : {
             return {...state, orderPopupOpen: true, orderData: action.order, orderRequestFailed: false, orderRequestSent: false};
         }
-        case ORDER_REQUEST_PENDING : {
+        case ORDER_POPUP_REQUEST_PENDING : {
             return {...state, orderRequestFailed: false, orderRequestSent: true, orderPopupOpen: true} // Will show skeleton ui when pending
         }
-        case ORDER_REQUEST_FAIL : {
+        case ORDER_POPUP_REQUEST_FAIL : {
             return {...state, orderRequestFailed: true, orderRequestSent: false}
         }
         case CLOSE_ORDER_POPUP : {

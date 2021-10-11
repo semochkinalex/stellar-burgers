@@ -1,22 +1,21 @@
-import api from '../../utils/api';
 import {Link, useHistory} from 'react-router-dom';
 import UserForm from '../../components/user-form/user-form';
 import styles from './reset-password.module.css';
 import useFormWithValidation from '../../utils/use-form';
 import { PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useCallback } from 'react';
+import { useDispatch } from 'react-redux';
+import { resetPassword } from '../../services/actions/user';
 
 const ResetPassword = () => {
+    const dispatch = useDispatch();
     const history = useHistory();
     const [values, errors, isValid, handleChange] = useFormWithValidation();
 
     const handleSubmit = useCallback((evt) => {
         evt.preventDefault();
-        api.resetPassword(values.password, values.code)
-        .then(({success}) => {
-            if (success) return history.push("/login");
-        })
-    }, [values])
+        dispatch(resetPassword({password: values.password, code: values.code}, () => history.push("/login")));
+    }, [values, dispatch, history])
 
     return (
         <section className={styles.container}>
