@@ -51,8 +51,9 @@ const OrderSummary = () => {
 
     const price = useMemo(() => displayedData.reduce((acc, val) => acc + (val.price * (val.count || 1)), 0), [displayedData]);
 
-    if (!selectedOrder) return null;
+    // if (!selectedOrder) return null;
     return (
+            selectedOrder ? 
             <section className={styles.container}>
                 <p className={`text text_type_digits-default ${styles.id}`}>#{selectedOrder.number}</p>
                 <h2 className={`text text_type_main-medium ${styles.name}`}>{selectedOrder.name}</h2>
@@ -82,6 +83,8 @@ const OrderSummary = () => {
                     </div>
                 </div>
             </section>
+            :
+            <p className={`text text_type_main-large`}>Заказ не найдён. Возможно он не ваш</p>
     );
 }
 

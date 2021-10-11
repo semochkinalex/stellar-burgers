@@ -84,6 +84,11 @@ function App() {
           <Route path="/reset-password" exact={true}>
             <ResetPassword />
           </Route>
+          {!background && <Route path="/ingredients/:id" exact={true}>
+            <section className={styles.center}>
+              <IngredientDetails />
+            </section>
+          </Route>}
           {!background && 
           <Route path="/feed/:id" exact={true}>
             <section className={styles.center}>
@@ -97,11 +102,6 @@ function App() {
             <section className={styles.center}>
               <OrderSummary />
             </section>
-          {!background && <Route path="/ingredients/:id" exact={true}>
-            <section className={styles.center}>
-              <IngredientDetails />
-            </section>
-          </Route>}
           </ProtectedRoute>
           <ProtectedRoute path="/profile">
             <UserProfile />
