@@ -4,7 +4,7 @@ import {
     FEED_REQUEST_SUCCESS,
  } from '../actions/feed';
 
-const initialState = {
+export const initialState = {
     feed: [],
 
     total: null,
@@ -20,10 +20,10 @@ export const feedReducer = (state = initialState, action) => {
             return {...state, feed: action.feed, total: action.total, totalToday: action.totalToday};
         }
         case FEED_REQUEST_FAIL : {
-            return {...state, ordersRequestSent: false, orderRequestFailed: true};
+            return {...state, feedRequestSent: false, feedRequestFailed: true};
         }
         case FEED_REQUEST_PENDING : {
-            return {...state, ordersRequestSent: true, orderRequestFailed: false};
+            return {...state, feedRequestSent: true, feedRequestFailed: false};
         }
         default: 
             return state;   

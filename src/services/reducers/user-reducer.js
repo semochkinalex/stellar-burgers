@@ -5,7 +5,7 @@ import {
     UPDATE_ORDER_HISTORY,
  } from '../actions/user';
 
-const initialState = {
+export const initialState = {
     email: '',
     name: '',
 

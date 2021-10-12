@@ -5,10 +5,7 @@ import {
     ORDER_POPUP_REQUEST_FAIL,
  } from '../actions/order';
 
-const initialState = {
-    inspectedIngredientPopupOpen: false,
-    inspectedIngredient: {},
-
+export const initialState = {
     orderData: {},
     orderPopupOpen: false,
     orderRequestSent: false,
