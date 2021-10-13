@@ -1,5 +1,5 @@
 import api from '../../utils/api';
-import { RESET_BURGER } from './constructor';
+import { resetBurger } from './constructor';
 import { getUsersOrderHistory } from './user';
 export const OPEN_ORDER_POPUP = 'OPEN_ORDER_POPUP';
 export const CLOSE_ORDER_POPUP = 'CLOSE_ORDER_POPUP';
@@ -18,7 +18,7 @@ export function handleOrder(ingredients, bun, token) {
                     type: OPEN_ORDER_POPUP,
                     order: {name, number},
                 });
-                dispatch({type: RESET_BURGER});
+                dispatch(resetBurger());
                 return dispatch(getUsersOrderHistory(token));
             }
             throw new Error("Произошла ошибка при создании заказа.")

@@ -5,28 +5,21 @@ import { useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import OrderSubmit from '../order-submit/order-submit';
 import ConstructorItem from '../constructor-item/constructor-item';
-import { CHANGE_BURGER_BUN, ADD_BURGER_INDREDIENT } from '../../services/actions/constructor';
+import { addIngredient } from '../../services/actions/constructor';
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
     const bun = useSelector(store => store.burger.bun);
     const ingredients = useSelector(store => store.burger.ingredients);
 
+    const isBunValid = useMemo(() => Object.keys(bun).length, [bun]);
+
     const [, constructorTarget] = useDrop({
         accept: ["bun", "sauce", "main"],
         drop({ingredient}) {
-            addIngredient(ingredient);
+            dispatch(addIngredient(ingredient));
         }
     });
-
-    const addIngredient = useCallback((ingredient) => {
-        dispatch({
-            type: ingredient.type === 'bun' ? CHANGE_BURGER_BUN : ADD_BURGER_INDREDIENT,
-            ingredient: ingredient,
-        })
-    }, [dispatch]);
-
-    const isBunValid = useMemo(() => Object.keys(bun).length, [bun]);
 
     return (
         <section className={styles.constructor} ref={constructorTarget}>

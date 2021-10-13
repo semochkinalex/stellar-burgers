@@ -4,7 +4,7 @@ import {
     INGREDIENT_REQUEST_SUCCESS,
 } from '../actions/ingredients';
 
-const initialState = {
+export const initialState = {
     buns: [],
     sauces: [],
     mains: [],
@@ -30,6 +30,7 @@ export const ingredientReducer = (state = initialState, action) => {
             }
         }
         case INGREDIENT_REQUEST_SUCCESS : {
+            console.log(action.ingredients);
             return {
                 ...state,
                 ingredientsRequestSent: false,

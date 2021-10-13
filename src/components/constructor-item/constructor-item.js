@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { IngredientPropTypes } from '../../utils/prop-types';
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { REMOVE_BURGER_INGREDIENT, SWAP_INGREDIENTS } from '../../services/actions/constructor';
+import { removeIngredient, swapIngredients, SWAP_INGREDIENTS } from '../../services/actions/constructor';
 
 const ConstructorItem = ({card: ingredient, type = undefined, index ,style}) => {
     const id = ingredient._id;
@@ -15,10 +15,7 @@ const ConstructorItem = ({card: ingredient, type = undefined, index ,style}) => 
     const {isLocked = false, name, price, image} = ingredient;
 
     const handleRemoveElement = () => {
-        dispatch({
-            type: REMOVE_BURGER_INGREDIENT,
-            index: index,
-        })
+        dispatch(removeIngredient(index));
     }
 
     const [, drop] = useDrop({
@@ -32,7 +29,7 @@ const ConstructorItem = ({card: ingredient, type = undefined, index ,style}) => 
             const hoverClientY = clientOffset.y - hoverBoundingRect.top;
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
-            dispatch({type: SWAP_INGREDIENTS, from: dragIndex, to: hoverIndex});
+            dispatch(swapIngredients(dragIndex, hoverIndex));
             item.index = hoverIndex;
         }
     });

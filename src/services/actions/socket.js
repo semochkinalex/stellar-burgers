@@ -4,13 +4,9 @@ export const WS_CONNECTION_ERROR = 'WS_CONNECTION_ERROR';
 export const WS_CONNECTION_CLOSED = 'WS_CONNECTION_CLOSED';
 
 export function addSocketConnection(url) {
-    return function(dispatch) {
-        dispatch({type: WS_CONNECTION_START, payload: url});
-    };
+    return {type: WS_CONNECTION_START, payload: url};
 }
 
 export function removeSocketConnection() {
-    return function(dispatch) {
-        dispatch({type: WS_CONNECTION_CLOSED});
-    };
+    return {type: WS_CONNECTION_CLOSED}
 }

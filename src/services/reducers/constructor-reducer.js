@@ -7,7 +7,7 @@ import {
     UPDATE_BURGER_ORDER,
 } from '../actions/constructor';
 
-const initialState = {
+export const initialState = {
     index: 0,
     bun: {},
     ingredients: [],

@@ -4,7 +4,6 @@ import { SWITCH_IS_MOBILE_VALUE, CLOSE_HEADER_POPUP, OPEN_HEADER_POPUP } from '.
 import { orderReducer } from './order-reducer';
 import { ingredientReducer } from './ingredients-reducer';
 import { constructorReducer } from './constructor-reducer';
-import { inspectedElementReducer } from './inspected-element-reducer';
 import { userReducer } from './user-reducer';
 import { feedReducer } from './feed-reducer';
 
@@ -34,7 +33,6 @@ export const rootReducer = combineReducers({
     ingredients: ingredientReducer,
     config: globalConfig,
     burger: constructorReducer,
-    inspectedElement: inspectedElementReducer,
     order: orderReducer,
     feed: feedReducer,
     user: userReducer,
