@@ -4,7 +4,7 @@ import {
     FEED_REQUEST_SUCCESS,
  } from '../actions/feed';
 
-import { feedReducer, initialState } from '../reducers/feed-reducer';
+import { feedReducer, initialState } from './feed-reducer';
 
 describe("Feed reducer", () => {
     it("Initial state", () => {

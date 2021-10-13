@@ -1,5 +1,5 @@
 import { INGREDIENT_REQUEST_FAIL, INGREDIENT_REQUEST_PENDING, INGREDIENT_REQUEST_SUCCESS } from '../actions/ingredients';
-import { ingredientReducer, initialState } from '../reducers/ingredients-reducer';
+import { ingredientReducer, initialState } from './ingredients-reducer';
 
 const data = [
     {

@@ -5,7 +5,7 @@ import {
     UPDATE_ORDER_HISTORY,
  } from '../actions/user';
 
-import { userReducer, initialState } from '../reducers/user-reducer';
+import { userReducer, initialState } from './user-reducer';
 
 const data = {
     name: "Alex",

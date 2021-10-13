@@ -5,7 +5,7 @@ import {
     ORDER_POPUP_REQUEST_FAIL,
  } from '../actions/order';
 
-import { orderReducer, initialState } from '../reducers/order-reducer';
+import { orderReducer, initialState } from './order-reducer';
 
 const data = {
     number: 1,
