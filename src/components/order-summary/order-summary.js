@@ -6,7 +6,7 @@ import {CurrencyIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch } from 'react-redux';
 import styles from './order-summary.module.css';
 import { useRouteMatch } from 'react-router-dom';
-import IngredientIcon from '../ingredient-icon/ingredient-icon';
+import IngredientIcon from '../ingredient-icon/ingredient-icon.js';
 import { addSocketConnection } from '../../services/actions/socket';
 
 const wsUrl = 'wss://norma.nomoreparties.space/orders/all';

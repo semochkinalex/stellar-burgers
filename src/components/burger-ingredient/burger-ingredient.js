@@ -3,13 +3,13 @@ import { Link, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import styles from './burger-ingredient.module.css';
 import { IngredientPropTypes } from '../../utils/prop-types';
-import {CurrencyIcon, Counter} from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 
 const BurgerIngredient = ({ingredient}) => {
     const location = useLocation();
     const {name, price, type, image, image_mobile, _id} = ingredient;
     const {mobile, count} = useSelector(store => ({
-        count: type === "bun" ? store.burger.bun._id === _id && 2 : store.burger.ingredients.filter(ingredient => ingredient._id === _id).length, // mb not the best decision 
+        count: store.burger.bun && (type === "bun" ? store.burger.bun._id === _id && 2 : store.burger.ingredients.filter(ingredient => ingredient._id === _id).length), // mb not the best decision 
         mobile: store.config.isMobileIngredients,
     }));
 

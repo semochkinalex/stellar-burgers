@@ -1,7 +1,13 @@
-import PropTypes from 'prop-types'
+import React from 'react';
+
 import styles from './digit-display.module.css';
 
-const DigitDisplay = ({number, title}) => {
+type TDigitDisplay = {
+    title: string;
+    number: number;
+}
+
+export const DigitDisplay: React.FC<TDigitDisplay> = ({number, title}) => {
     return (
         <div className={styles.container}>
             <p className={`text text_type_main-default`}>{title}</p>
@@ -9,10 +15,3 @@ const DigitDisplay = ({number, title}) => {
         </div>
     );
 }
-
-DigitDisplay.propTypes = {
-    title: PropTypes.string.isRequired,
-    number: PropTypes.number.isRequired,
-}
-
-export default DigitDisplay;

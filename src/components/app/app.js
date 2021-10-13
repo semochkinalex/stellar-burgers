@@ -3,7 +3,7 @@ import { useCallback, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import useWindowSize from '../../utils/useWindowSize';
 import { useHistory, useLocation } from 'react-router-dom';
-import { CLOSE_ORDER_POPUP } from '../../services/actions/order';
+import { CLOSE_ORDER_POPUP } from '../../services/constants/index';
 import { SWITCH_IS_MOBILE_VALUE } from '../../services/actions/index';
 import { ProtectedRoute } from '../protected-route.js/protected-route';
 

@@ -1,11 +1,11 @@
-import { updateFeed } from '../actions/feed';
+import { updateFeed } from '../actions/feed.tsx';
 
 import {
     WS_CONNECTION_START,
     WS_CONNECTION_SUCCESS,
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
-  } from '../actions/socket';
+  } from '../constants/index';
 
 export const middleware = () => {
     return store => {

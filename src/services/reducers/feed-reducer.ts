@@ -1,20 +1,32 @@
+import { TFeedActions } from '../actions/feed';
 import { 
     FEED_REQUEST_FAIL,
     FEED_REQUEST_PENDING,
     FEED_REQUEST_SUCCESS,
- } from '../actions/feed';
+ } from '../constants/index';
 
-export const initialState = {
+import { TOrder } from '../types/data';
+
+
+type TFeedState = {
+    feed: ReadonlyArray<TOrder>
+    total: number;
+    totalToday: number;
+    feedRequestSent: boolean;
+    feedRequestFailed: boolean;
+}
+
+export const initialState: TFeedState = {
     feed: [],
 
-    total: null,
-    totalToday: null,
+    total: 0,
+    totalToday: 0,
 
     feedRequestSent: false,
     feedRequestFailed: false,
 }
 
-export const feedReducer = (state = initialState, action) => {
+export const feedReducer = (state = initialState, action: TFeedActions) => {
     switch (action.type) {
         case FEED_REQUEST_SUCCESS : {
             return {...state, feed: action.feed, total: action.total, totalToday: action.totalToday};

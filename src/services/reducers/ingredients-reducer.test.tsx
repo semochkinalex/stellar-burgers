@@ -1,26 +1,13 @@
-import { INGREDIENT_REQUEST_FAIL, INGREDIENT_REQUEST_PENDING, INGREDIENT_REQUEST_SUCCESS } from '../actions/ingredients';
+import { INGREDIENT_REQUEST_FAIL, INGREDIENT_REQUEST_PENDING, INGREDIENT_REQUEST_SUCCESS } from '../constants/index';
+import { bun, meat } from '../types/example-data';
 import { ingredientReducer, initialState } from './ingredients-reducer';
 
 const data = [
-    {
-        name: "Хлеб",
-        type: "bun"
-    },
-    {
-        name: "Стейк",
-        type: "main"
-    },
-    {
-        name: "Барбекю соус",
-        type: "sauce"
-    }
+    bun,
+    meat
 ]
 
 describe("Ingredients reducer", () => {
-    it("Initial state", () => {
-        expect(ingredientReducer(undefined, {})).toEqual(initialState);
-    })
-
     it("Fetch ingredients pending", () => {
         expect(ingredientReducer(initialState, {type: INGREDIENT_REQUEST_PENDING})).toEqual({
             ...initialState,
@@ -40,7 +27,6 @@ describe("Ingredients reducer", () => {
             ...initialState,
             buns: [data[0]],
             mains: [data[1]],
-            sauces: [data[2]]
         })
     })
 }) 

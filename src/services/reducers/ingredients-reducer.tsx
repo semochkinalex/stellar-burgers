@@ -1,10 +1,21 @@
+import { TIngredientsActions } from '../actions/ingredients';
 import {
     INGREDIENT_REQUEST_FAIL,
     INGREDIENT_REQUEST_PENDING,
     INGREDIENT_REQUEST_SUCCESS,
-} from '../actions/ingredients';
+} from '../constants/index';
+import { TIngredient } from '../types/data';
 
-export const initialState = {
+export type TIngredientsState = {
+    buns: ReadonlyArray<TIngredient>;
+    sauces: ReadonlyArray<TIngredient>;
+    mains: ReadonlyArray<TIngredient>;
+
+    ingredientsRequestSent: boolean;
+    ingredientsRequestFailed: boolean;
+}
+
+export const initialState: TIngredientsState = {
     buns: [],
     sauces: [],
     mains: [],
@@ -13,7 +24,7 @@ export const initialState = {
     ingredientsRequestFailed: false,
 }
 
-export const ingredientReducer = (state = initialState, action) => {
+export const ingredientReducer = (state = initialState, action: TIngredientsActions) => {
     switch(action.type) {
         case INGREDIENT_REQUEST_PENDING : {
             return {

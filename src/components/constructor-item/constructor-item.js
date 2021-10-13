@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import { IngredientPropTypes } from '../../utils/prop-types';
 import {DragIcon} from '@ya.praktikum/react-developer-burger-ui-components';
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { removeIngredient, swapIngredients, SWAP_INGREDIENTS } from '../../services/actions/constructor';
+import { removeIngredient, swapIngredients } from '../../services/actions/constructor.tsx';
 
 const ConstructorItem = ({card: ingredient, type = undefined, index ,style}) => {
     const id = ingredient._id;

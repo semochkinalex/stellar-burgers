@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useMemo } from 'react';
 import { useSelector } from 'react-redux';
-import IngredientIcon from '../ingredient-icon/ingredient-icon';
+import IngredientIcon from '../ingredient-icon/ingredient-icon.js';
 import styles from './order-info.module.css';
 import {useRouteMatch, Link, useLocation} from 'react-router-dom';
 

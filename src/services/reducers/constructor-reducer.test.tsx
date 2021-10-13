@@ -1,7 +1,6 @@
-import { resetBurger, addIngredient, removeIngredient, swapIngredients, RESET_BURGER, CHANGE_BURGER_BUN, REMOVE_BURGER_INGREDIENT, SWAP_INGREDIENTS, ADD_BURGER_INDREDIENT } from '../actions/constructor';
-
-const bun = {name: "Булка", price: 100, type: "bun"};
-const meat = {name: "Мясо", price: 1000, type: "main"};
+import { RESET_BURGER, CHANGE_BURGER_BUN, REMOVE_BURGER_INGREDIENT, SWAP_INGREDIENTS, ADD_BURGER_INDREDIENT } from '../constants/index';
+import {resetBurger, addIngredient, removeIngredient, swapIngredients} from '../actions/constructor';
+import { bun, meat } from '../types/example-data';
 
 describe('Actions with burger-constructor', () => {
   it('Reset burger', () => {

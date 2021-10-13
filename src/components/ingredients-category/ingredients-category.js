@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styles from './ingredients-category.module.css';
-import BurgerIngredient from '../burger-ingredient/burger-ingredient.js';
+import BurgerIngredient from '../burger-ingredient/burger-ingredient';
 import { useSelector } from 'react-redux';
 
 const IngredientsCategory = React.forwardRef(({title}, ref) => {

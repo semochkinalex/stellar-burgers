@@ -3,16 +3,25 @@ import {
     CLOSE_ORDER_POPUP,
     ORDER_POPUP_REQUEST_PENDING,
     ORDER_POPUP_REQUEST_FAIL,
- } from '../actions/order';
+ } from '../constants/index';
 
-export const initialState = {
-    orderData: {},
+import { TOrderActions } from '../actions/order';
+
+type TOrderState = {
+    orderData: {name: string, number: number};
+    orderPopupOpen: boolean;
+    orderRequestSent: boolean;
+    orderRequestFailed: boolean;
+}
+
+export const initialState: TOrderState = {
+    orderData: {name: '', number: 0},
     orderPopupOpen: false,
     orderRequestSent: false,
     orderRequestFailed: false,
 }
 
-export const orderReducer = (state = initialState, action) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
     switch (action.type) {
         case OPEN_ORDER_POPUP : {
             return {...state, orderPopupOpen: true, orderData: action.order, orderRequestFailed: false, orderRequestSent: false};

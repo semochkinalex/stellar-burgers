@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import DigitDisplay from '../digit-display/digit-display';
+import { DigitDisplay } from '../digit-display/digit-display.tsx';
 import OrdersCollection from '../orders-collection/orders-collection';
 import styles from './statistics.module.css';
 

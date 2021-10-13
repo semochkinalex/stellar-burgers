@@ -2,15 +2,13 @@ import {
     FEED_REQUEST_FAIL,
     FEED_REQUEST_PENDING,
     FEED_REQUEST_SUCCESS,
- } from '../actions/feed';
+ } from '../constants/index';
+
+import { feed } from '../types/example-data';
 
 import { feedReducer, initialState } from './feed-reducer';
 
 describe("Feed reducer", () => {
-    it("Initial state", () => {
-        expect(feedReducer(undefined, {})).toEqual(initialState);
-    })
-
     it("Fetch feed pending", () => {
         expect(feedReducer(initialState, {type: FEED_REQUEST_PENDING})).toEqual({
             ...initialState,
@@ -26,9 +24,9 @@ describe("Feed reducer", () => {
     })
 
     it("Fetch feed success", () => {
-        expect(feedReducer(initialState, {type: FEED_REQUEST_SUCCESS, feed: ["a", "b", "c"], total: 999, totalToday: 666})).toEqual({
+        expect(feedReducer(initialState, {type: FEED_REQUEST_SUCCESS, feed: feed, total: 999, totalToday: 666})).toEqual({
             ...initialState,
-            feed: ["a", "b", "c"],
+            feed: feed,
             total: 999,
             totalToday: 666,
         })

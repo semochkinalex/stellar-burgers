@@ -5,14 +5,14 @@ import { useSelector } from 'react-redux';
 import styles from './burger-constructor.module.css';
 import OrderSubmit from '../order-submit/order-submit';
 import ConstructorItem from '../constructor-item/constructor-item';
-import { addIngredient } from '../../services/actions/constructor';
+import { addIngredient } from '../../services/actions/constructor.tsx';
 
 const BurgerConstructor = () => {
     const dispatch = useDispatch();
     const bun = useSelector(store => store.burger.bun);
     const ingredients = useSelector(store => store.burger.ingredients);
 
-    const isBunValid = useMemo(() => Object.keys(bun).length, [bun]);
+    const isBunValid = useMemo(() => Boolean(bun), [bun]);
 
     const [, constructorTarget] = useDrop({
         accept: ["bun", "sauce", "main"],
