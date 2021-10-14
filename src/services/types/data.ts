@@ -23,8 +23,3 @@ export type TOrder = {
     readonly number: number;
     readonly ingredients: string[];
 }
-
-export type TOrders = {
-    readonly success: boolean;
-    readonly orders: ReadonlyArray<TOrder>;
-}

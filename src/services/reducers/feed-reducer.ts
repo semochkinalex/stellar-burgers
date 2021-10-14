@@ -26,7 +26,7 @@ export const initialState: TFeedState = {
     feedRequestFailed: false,
 }
 
-export const feedReducer = (state = initialState, action: TFeedActions) => {
+export const feedReducer = (state = initialState, action: TFeedActions): TFeedState => {
     switch (action.type) {
         case FEED_REQUEST_SUCCESS : {
             return {...state, feed: action.feed, total: action.total, totalToday: action.totalToday};

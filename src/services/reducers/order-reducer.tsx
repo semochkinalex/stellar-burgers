@@ -21,7 +21,7 @@ export const initialState: TOrderState = {
     orderRequestFailed: false,
 }
 
-export const orderReducer = (state = initialState, action: TOrderActions) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
     switch (action.type) {
         case OPEN_ORDER_POPUP : {
             return {...state, orderPopupOpen: true, orderData: action.order, orderRequestFailed: false, orderRequestSent: false};

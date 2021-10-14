@@ -6,7 +6,7 @@ import {
     FEED_REQUEST_PENDING,
     FEED_REQUEST_SUCCESS,
 } from '../constants/index';
-import { TOrders } from '../types/data';
+import { TOrder } from '../types/data';
 
 interface IFeedPending {
     readonly type: typeof FEED_REQUEST_PENDING;
@@ -18,12 +18,12 @@ interface IFeedFail {
 
 interface IFeedSuccess {
     readonly type: typeof FEED_REQUEST_SUCCESS;
-    readonly feed: TOrders;
+    readonly feed: ReadonlyArray<TOrder>;
     readonly total: number;
     readonly totalToday: number;  
 }
 
-export const feedSuccess = (orders: TOrders, total: number, totalToday: number): IFeedSuccess => {
+export const feedSuccess = (orders: ReadonlyArray<TOrder>, total: number, totalToday: number): IFeedSuccess => {
     return {
         type: FEED_REQUEST_SUCCESS,
 
@@ -36,7 +36,7 @@ export const feedSuccess = (orders: TOrders, total: number, totalToday: number):
 
 export type TFeedActions = IFeedPending | IFeedFail | IFeedSuccess;
 
-export const updateFeed: AppThunk = (orders: TOrders, total: number, totalToday: number) => (dispatch: AppDispatch) => {
+export const updateFeed: AppThunk = (orders: ReadonlyArray<TOrder>, total: number, totalToday: number) => (dispatch: AppDispatch) => {
     dispatch(feedSuccess(orders, total, totalToday));
 };
 

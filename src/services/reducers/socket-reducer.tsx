@@ -15,7 +15,7 @@ const initialState: TSocketState = {
   socketConnected: false,
 };
   
-export const socketReducer = (state = initialState, action: TSocketActions) => {
+export const socketReducer = (state = initialState, action: TSocketActions): TSocketState => {
     switch (action.type) {
       case WS_CONNECTION_START : { 
         return {

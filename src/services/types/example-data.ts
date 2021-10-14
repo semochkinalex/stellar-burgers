@@ -1,4 +1,4 @@
-import { TIngredient, TOrders } from "./data";
+import { TIngredient, TOrder } from "./data";
 
 export const bun: TIngredient = {
     "_id": "60d3b41abdacab0026a733c6",
@@ -30,7 +30,16 @@ export const meat: TIngredient = {
     "__v": 0
 };
 
-export const feed: TOrders = {
+export const exampleUserOrder: TOrder = {
+    _id: "615c65d77deb54001ba5f586",
+    createdAt: "2021-10-05T14:48:55.692Z",
+    ingredients: ["60d3b41abdacab0026a733cd", "60d3b41abdacab0026a733cc", "60d3b41abdacab0026a733c7"],
+    name: "Флюоресцентный space spicy бургер",
+    number: 4249,
+    status: "done",
+    updatedAt: "2021-10-05T14:48:55.829Z",
+}
+export const feed: {success: boolean, orders: ReadonlyArray<TOrder>} = {
     success: true,
     orders: [],
 }

@@ -1,11 +1,20 @@
+import { TUserActions } from '../actions/user';
 import { 
     LOGOUT,
     UPDATE_USER_INFO,
     UPDATE_ACCESS_TOKEN,
     UPDATE_ORDER_HISTORY,
- } from '../actions/user';
+} from '../constants/index';
+import { TOrder } from '../types/data';
 
-export const initialState = {
+type TUserState = {
+    email: string;
+    name: string;
+    orderHistory: ReadonlyArray<TOrder>;
+    token: string | null;
+}
+
+export const initialState: TUserState = {
     email: '',
     name: '',
 
@@ -14,7 +23,7 @@ export const initialState = {
     token: null, // starts with bearer
 }
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions): TUserState => {
     switch (action.type) {
         case LOGOUT : {
             return initialState;

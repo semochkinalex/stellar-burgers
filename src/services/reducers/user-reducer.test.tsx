@@ -3,22 +3,19 @@ import {
     UPDATE_USER_INFO,
     UPDATE_ACCESS_TOKEN,
     UPDATE_ORDER_HISTORY,
- } from '../actions/user';
+ } from '../constants/index';
+import { exampleUserOrder } from '../types/example-data';
 
 import { userReducer, initialState } from './user-reducer';
 
 const data = {
     name: "Alex",
     email: "alex@gmail.com",
-    orderHistory: [1,2,3],
+    orderHistory: [exampleUserOrder, exampleUserOrder, exampleUserOrder],
     token: "wqdqwpjoqwfq[hfqofhowqfqoiwfqhw",
 }
 
 describe('Actions with user', () => {
-    it("Initial state", () => {
-        expect(userReducer(undefined, {})).toEqual(initialState);
-    })
-
     it("Logout user", () => {
         expect(userReducer(data, {type: LOGOUT})).toEqual(initialState)
     })
@@ -47,9 +44,9 @@ describe('Actions with user', () => {
     })
 
     it ("Update order history", () => {
-        expect(userReducer(data, {type: UPDATE_ORDER_HISTORY, orders: [1,2,3,4]})).toEqual({
+        expect(userReducer(data, {type: UPDATE_ORDER_HISTORY, orders: [...data.orderHistory, exampleUserOrder]})).toEqual({
             ...data,
-            orderHistory: [...data.orderHistory, 4] 
+            orderHistory: [...data.orderHistory, exampleUserOrder] 
         })
     })
 })

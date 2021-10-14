@@ -24,7 +24,7 @@ export const initialState: TIngredientsState = {
     ingredientsRequestFailed: false,
 }
 
-export const ingredientReducer = (state = initialState, action: TIngredientsActions) => {
+export const ingredientReducer = (state = initialState, action: TIngredientsActions): TIngredientsState => {
     switch(action.type) {
         case INGREDIENT_REQUEST_PENDING : {
             return {

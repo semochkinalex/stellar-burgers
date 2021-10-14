@@ -14,7 +14,7 @@ const ResetPassword = () => {
 
     const handleSubmit = useCallback((evt) => {
         evt.preventDefault();
-        dispatch(resetPassword({password: values.password, code: values.code}, () => history.push("/login")));
+        resetPassword({password: values.password, code: values.code}, () => history.push("/login"));
     }, [values, dispatch, history])
 
     return (
