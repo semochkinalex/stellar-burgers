@@ -1,6 +1,6 @@
 import api from '../../utils/api';
 import { resetBurger } from './constructor';
-import { getUsersOrderHistory } from './user';
+import { getUsersOrderHistory, IUpdateOrderHistory } from './user';
 import { AppThunk, AppDispatch } from '../types';
 
 import { 
@@ -9,6 +9,7 @@ import {
     ORDER_POPUP_REQUEST_PENDING,
     ORDER_POPUP_REQUEST_FAIL,
  } from '../constants/index';
+ 
 import { TIngredient } from '../types/data';
 
 interface IOrderPending {
@@ -45,9 +46,8 @@ export const handleOrder: AppThunk = (ingredients: ReadonlyArray<TIngredient>, b
                 order: {name, number},
             });
             dispatch(resetBurger());
-            return dispatch(getUsersOrderHistory(token));
-        }
-        throw new Error("Произошла ошибка при создании заказа.")
+            dispatch(getUsersOrderHistory(token));
+        } else { throw new Error("Произошла ошибка при создании заказа.") } 
     })
     .catch((err) => {
       console.log(err);

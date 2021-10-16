@@ -10,7 +10,7 @@ import { Input } from '@ya.praktikum/react-developer-burger-ui-components';
 const ForgotPassword = () => {
     const dispatch = useDispatch();
     const history = useHistory();
-    const [values, errors, isValid, handleChange] = useFormWithValidation();
+    const {values, errors, isValid, handleChange} = useFormWithValidation();
 
     const handleSubmit = useCallback((evt) => {
         evt.preventDefault();

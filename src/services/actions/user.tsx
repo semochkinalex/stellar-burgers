@@ -12,7 +12,7 @@ import {
 
 import { TOrder } from "../types/data";
 
-interface IUpdateOrderHistory {
+export interface IUpdateOrderHistory {
     readonly type: typeof UPDATE_ORDER_HISTORY;
     readonly orders: ReadonlyArray<TOrder>
 }
@@ -38,9 +38,8 @@ export const getUsersOrderHistory: AppThunk = (accessToken: string) => (dispatch
     api.getUsersOrderHistory(accessToken)
     .then((res) => {
         if (res.success) {
-            return dispatch({type: UPDATE_ORDER_HISTORY, orders: res.orders});
-        }
-        throw new Error("Couldn't get user's orders")
+            dispatch({type: UPDATE_ORDER_HISTORY, orders: res.orders});
+        } else { throw new Error("Couldn't get user's orders") }
     })
     .catch((message) => {
         console.log(message);

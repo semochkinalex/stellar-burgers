@@ -1,7 +1,7 @@
 export type TIngredient = {
     readonly _id: string;
     readonly name: string;
-    readonly type: string;
+    readonly type: "bun" | "main" | "sauce";
     readonly image: string;
     readonly image_large: string;
     readonly image_mobile: string;
@@ -12,6 +12,10 @@ export type TIngredient = {
     readonly calories: number;
     readonly price: number;
     readonly __v: number;
+
+    count?: number;
+    index?: number;
+    isLocked?: boolean;
 }
 
 export type TOrder = {
@@ -22,4 +26,23 @@ export type TOrder = {
     readonly updatedAt: string;
     readonly number: number;
     readonly ingredients: string[];
+}
+
+export interface IHistoryState {
+    location: {
+        pathname: string,
+        state: {
+            from: {
+                pathname: string;
+            }
+        }
+    }
+    replace: any; // чё тут O_O
+    action: string;
+}
+
+export interface ILocationState {
+    state: {
+        background: string;
+    }
 }
