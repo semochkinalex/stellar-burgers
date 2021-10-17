@@ -3,10 +3,9 @@ import { useCallback, useEffect } from 'react';
 import { Switch, Route } from 'react-router-dom';
 import { useHistory, useLocation } from 'react-router-dom';
 import { CLOSE_ORDER_POPUP } from '../../services/constants/index';
-import { SWITCH_IS_MOBILE_VALUE } from '../../services/constants/index';
 import { ProtectedRoute } from '../protected-route.js/protected-route';
 
-import { SignIn, SignUp, MainPage, UserProfile, ResetPassword, ForgotPassword, IngredientDetails, ModalPopup, AppHeader, HeaderPopup, OrderDetails } from '../../pages';
+import { SignIn, SignUp, MainPage, UserProfile, ResetPassword, ForgotPassword, IngredientDetails, ModalPopup, AppHeader, OrderDetails } from '../../pages';
 
 import { useDispatch, useSelector } from '../../services/hooks';
 
@@ -143,8 +142,6 @@ function App() {
         </ModalPopup>
       </Route>
       }
-
-      <HeaderPopup />
     </>
   );
 }
