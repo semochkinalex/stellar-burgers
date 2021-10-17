@@ -1,4 +1,4 @@
-import { updateFeed } from '../actions/feed.tsx';
+import { updateFeed } from '../actions/feed';
 
 import {
     WS_CONNECTION_START,
@@ -7,11 +7,13 @@ import {
     WS_CONNECTION_CLOSED,
   } from '../constants/index';
 
+import { AnyAction } from "redux";
+
 export const middleware = () => {
-    return store => {
-      let socket = null;
+    return (store: { dispatch: any; }) => {
+      let socket: WebSocket | null = null;
   
-      return next => action => {
+      return (next: (a: AnyAction) => void) => (action: AnyAction) => {
         const { dispatch } = store;
         const { type, payload } = action;
 

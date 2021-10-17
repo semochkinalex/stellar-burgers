@@ -28,7 +28,9 @@ const OrderSummary: React.FC<IOrderSummary> = () => {
     });
 
     useEffect(() => {
-        if (!orders.length) return dispatch(addSocketConnection(wsUrl));
+        if (!orders.length) {
+            dispatch(addSocketConnection(wsUrl))
+        };
     }, [])
 
     const selectedOrder = useMemo(() => {
@@ -39,10 +41,11 @@ const OrderSummary: React.FC<IOrderSummary> = () => {
     const displayedData = useMemo(() => {
         const data: Array<TIngredient> = [];
         if (!selectedOrder) return data;
-        const ingredients = selectedOrder.ingredients.map((ingredient: TIngredient) => { // no duplicates
-            return initialIngredients.find((el) => el._id === ingredient);
-        })
-        ingredients.forEach((ingredient: TIngredient) => {
+        const ingredients: any = selectedOrder.ingredients.map((ingredient: string) => { // no duplicates
+            return initialIngredients.find((el: TIngredient) => el._id === ingredient);
+        });
+        ingredients.forEach((ingredient: TIngredient | undefined) => {
+            if (!ingredient) return;
             const count = ingredient.type === "bun" ? 2 : ingredients.filter((element: TIngredient) => element._id === ingredient._id).length;
             const newData: TIngredient = {...ingredient, count};
             !data.find((element) => element._id === ingredient._id) && data.push(newData);

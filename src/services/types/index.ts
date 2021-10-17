@@ -13,7 +13,7 @@ import { TIndexActions } from '../actions';
 
 export type TApplicationActions = TConstructorActions | TFeedActions | TUserActions | TSocketActions | TIngredientsActions | TOrderActions | TIndexActions;
 export type RootState = ReturnType<typeof store.getState>;
-export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ActionCreator<
-  ThunkAction<ReturnType, Action, RootState, TApplicationActions>
+ThunkAction<ReturnType, Action, RootState, TApplicationActions>
 >;
+export type AppDispatch = typeof store.dispatch | AppThunk;

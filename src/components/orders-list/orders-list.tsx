@@ -9,7 +9,7 @@ interface IOrderList {
 }
 
 const OrderList: React.FC<IOrderList> = ({orders, custom}) => {
-    return (orders && orders.length ? 
+    return (orders.length ? 
         (<ul className={styles.container} style={custom}>
             {
                 orders.map((order) => {

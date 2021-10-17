@@ -46,10 +46,10 @@ const OrderInfo = memo<IOrderInfo>(({order : {name, number, ingredients, created
                 <ul className={styles.ingredients}>
                     {
                         ingredientsData.map((ingredient, i) => {
-                            return i < 7 || ingredientsData.length === 8 ?
+                            return ingredient && (i < 7 || ingredientsData.length === 8) ?
                             <li className={styles.element} style={{right: `${10*i}px`}} key={i}><IngredientIcon ingredient={ingredient} /></li>
                             :
-                            i === 8 ?
+                            ingredient && i === 8 ?
                             <li className={styles.element} style={{right: `${10*i}px`}} key={i}><IngredientIcon ingredient={ingredient} last={true} size={ingredientsData.length} /></li>
                             :
                             null;

@@ -27,7 +27,7 @@ const BurgerConstructor = () => {
                 <>
                 <ul className={styles.list}>
 
-                    {isBunValid ? <ConstructorItem index={-2} style={{margin: "0 15px 15px 0"}} type="top" card={{...bun, isLocked: true, name: bun.name + " (верх)"}} /> : ''}
+                    {bun && isBunValid ? <ConstructorItem index={-2} style={{margin: "0 15px 15px 0"}} type="top" card={{...bun, isLocked: true, name: bun.name + " (верх)"}} /> : ''}
 
                     <div className={styles.content}>
                             {ingredients.map((ingredient: TIngredient, index: number) => {     
@@ -35,7 +35,7 @@ const BurgerConstructor = () => {
                             })}
                     </div>
 
-                    {isBunValid ? <ConstructorItem index={-1} style={{padding: "0 16px 0 0"}} type="bottom" card={{...bun, isLocked: true, name: bun.name + " (низ)"}} /> : ''}
+                    {bun && isBunValid ? <ConstructorItem index={-1} style={{padding: "0 16px 0 0"}} type="bottom" card={{...bun, isLocked: true, name: bun.name + " (низ)"}} /> : ''}
 
                 </ul>
                 <OrderSubmit />

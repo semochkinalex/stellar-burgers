@@ -4,7 +4,7 @@ import { DigitDisplay } from '../digit-display/digit-display';
 import OrdersCollection from '../orders-collection/orders-collection';
 import styles from './statistics.module.css';
 
-const resizeArray = (array: ReadonlyArray<TOrder>, lenght: number) => {
+const resizeArray = (array: ReadonlyArray<number>, lenght: number) => {
     const ans = [];
     for (let i = 0; i < lenght; ++i) {
         array[i] && ans.push(array[i]);

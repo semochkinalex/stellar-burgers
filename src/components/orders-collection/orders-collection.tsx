@@ -5,7 +5,7 @@ import styles from './orders-collection.module.css';
 interface IOrdersCollection {
     title: string;
     extraClassName?: string;
-    list: ReadonlyArray<TOrder>
+    list: ReadonlyArray<number>
 }
 
 const OrdersCollection: React.FC<IOrdersCollection> = ({title, extraClassName, list = []}) => {
