@@ -1,4 +1,5 @@
-import { addSocketConnection, removeSocketConnection, WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../actions/socket';
+import { WS_CONNECTION_START, WS_CONNECTION_CLOSED } from '../constants/index';
+import { addSocketConnection, removeSocketConnection } from '../actions/socket';
 
 describe('Actions with sockets', () => {
   it('Start connection', () => {
